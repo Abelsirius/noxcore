@@ -1,0 +1,20 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+
+@Component({
+  selector: 'app-hero',
+  standalone: true,
+  imports: [CommonModule, MatButtonModule],
+  templateUrl: './hero.html',
+  styleUrls: ['./hero.scss'],
+})
+export class HeroComponent {
+ 
+  scrollToCollection() {
+    const collectionSection = document.getElementById('collection-shadow');
+    if (collectionSection) {
+      collectionSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+}

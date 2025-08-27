@@ -1,0 +1,14 @@
+    .container {
+      max-width: 1200px;
+    }
+    header
+    {
+    background: rgba(0, 0, 0, 0.7);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      opacity: 1;
+      transition:0.3s ease;
+    }
+    .scrolled {
+        transform: translateY(-20px);
+      opacity: 0;
+    }   
