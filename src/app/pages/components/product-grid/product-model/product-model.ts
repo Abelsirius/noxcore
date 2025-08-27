@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
@@ -22,7 +22,7 @@ import { CartService } from '../../../services/cart';
   template: `
     <div 
       *ngIf="isOpen" 
-      class="fixed inset-0 z-50 flex items-center justify-center p-4"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 "
       (click)="onClose()"
     >
       <!-- Backdrop -->
@@ -30,7 +30,7 @@ import { CartService } from '../../../services/cart';
 
       <!-- Modal Content -->
       <div 
-        class="relative bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden animate-slide-up"
+        class="relative bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden animate-slide-up overflow-y-auto min-h-[350px]"
         (click)="$event.stopPropagation()"
       >
         <!-- Close Button -->
@@ -43,7 +43,7 @@ import { CartService } from '../../../services/cart';
 
         <div class="grid grid-cols-1 lg:grid-cols-2 h-full">
           <!-- Product Image -->
-          <div class="relative bg-gray-100">
+          <div class="relative h-[250px] md:h-full bg-gray-100">
             <img 
               [src]="selectedImage" 
               [alt]="product?.name"
@@ -177,7 +177,6 @@ export class ProductModalComponent implements OnInit {
   @Input() product: Product | null = null;
   @Input() isOpen = false;
   @Output() close = new EventEmitter<void>();
-
   selectedImage = '';
   selectedSize = '';
   quantity = 1;
