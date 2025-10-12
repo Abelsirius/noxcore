@@ -23,7 +23,7 @@ import { MatDialog } from '@angular/material/dialog';
       <div class="container mx-auto max-w-6xl">
         <!-- Section Title -->
         <div class="text-center mb-12">
-          <h2 class="text-4xl font-bold text-white mb-4">COLECCIÓN SHADOW</h2>
+          <h2 class="text-4xl font-bold text-white mb-4">STYLE COLLECTION  {{nameColeccion.toUpperCase()}} </h2>
           <div class="w-24 h-1 bg-accent-500 mx-auto"></div>
         </div>
 
@@ -68,9 +68,10 @@ import { MatDialog } from '@angular/material/dialog';
 
             <!-- Product Info -->
             <div class="p-6">
+              <p class="text-[11px] px-2 py-1 mb-1 font-semibold  bg-[#EF4444] rounded-lg  ">Disponible por tiempo limitado.</p>
               <h3 class="text-lg font-semibold text-white mb-2">{{product.name}}</h3>
               
-              <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center justify-between mb-2">
                 <div class="flex items-center space-x-2">
                   <span class="text-2xl font-bold text-accent-500">
                     S/. {{product.price.toFixed(2)}}
@@ -83,7 +84,7 @@ import { MatDialog } from '@angular/material/dialog';
                   </span>
                 </div>
               </div>
-
+                <span class="text-sm">🎃 Edición Halloween.</span>
               <div class="flex justify-between items-center">
                 <button 
                   class="bg-accent-500 text-white text-sm px-4 py-2 rounded hover:bg-accent-600 transition-colors"
@@ -119,11 +120,11 @@ import { MatDialog } from '@angular/material/dialog';
         </div>
 
         <!-- Load More -->
-        <div class="text-center mt-12">
+        <!-- <div class="text-center mt-12">
           <button class="btn-secondary text-lg px-8 py-3">
             Ver Más Productos
           </button>
-        </div>
+        </div> -->
       </div>
     </section>
 
@@ -145,7 +146,8 @@ export class ProductGridComponent implements OnInit {
   products: Product[] = [];
   selectedProduct: Product | null = null;
   isModalOpen = false;
-
+   
+  nameColeccion = 'BREATheDivinity';
   constructor(private productService: ProductService) {}
 
   ngOnInit() {

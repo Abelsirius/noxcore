@@ -32,6 +32,7 @@
               [matBadge]="cartCount$ | async"
               matBadgeColor="accent"
               [matBadgeHidden]="(cartCount$ | async) === 0"
+              (click)="openCart()"
             >
             </button>
           </div>
