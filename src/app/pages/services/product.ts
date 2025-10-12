@@ -49,7 +49,6 @@ Ideales para entrenar con intensidad y estilo.
       category: 'Camisetas',
       sizes: ['S', 'M', 'L'],
       inStock: true,
-      isNew: true,
       discount: 25
     },
     {
