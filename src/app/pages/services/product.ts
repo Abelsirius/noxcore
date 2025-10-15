@@ -74,14 +74,63 @@ Ideales para entrenar con intensidad y estilo.
     },
     
   ];
-
+  private productsSoon: Product[] = [
+    {
+      id: '1',
+      name: 'Color negro con estampado Blanco',
+      description: `
+      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
+Ideales para entrenar con intensidad y estilo.
+🔥 Oscuros, cómodos y hechos para dominar.
+      `,
+      price: 59.90,
+      originalPrice: 89.00,
+      image: '../../../assets/soon1.jpeg',
+      images: [
+        '../../../assets/gotico1_view1.jpeg',
+      ],
+      category: 'compresores',
+      sizes: ['S', 'M', 'L'],
+      inStock: true,
+      isNew: true,
+      discount: 25
+    },
+    {
+      id: '1',
+      name: 'Color negro con estampado Blanco',
+      description: `
+      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
+Ideales para entrenar con intensidad y estilo.
+🔥 Oscuros, cómodos y hechos para dominar.
+      `,
+      price: 59.90,
+      originalPrice: 89.00,
+      image: '../../../assets/gotico2.jpeg',
+      images: [
+        '../../../assets/gotico2_view1.jpeg',
+      ],
+      category: 'compresores',
+      sizes: ['S', 'M', 'L'],
+      inStock: true,
+      isNew: true,
+      discount: 25
+    },
+    
+  ];
   private productsSubject = new BehaviorSubject<Product[]>(this.products);
+  private productsSoonSubject = new BehaviorSubject<Product[]>(this.productsSoon);
+
 
   getProducts(): Observable<Product[]> {
     return this.productsSubject.asObservable();
   }
-
+  getProductsSoon(): Observable<Product[]> {
+    return this.productsSoonSubject.asObservable();
+  }
   getProduct(id: string): Product | undefined {
     return this.products.find(product => product.id === id);
+  }
+    getProductSoon(id: string): Product | undefined {
+    return this.productsSoon.find(product => product.id === id);
   }
 }
