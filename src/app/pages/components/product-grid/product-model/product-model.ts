@@ -43,13 +43,27 @@ import { CartService } from '../../../services/cart';
 
         <div class="grid grid-cols-1 lg:grid-cols-2 h-full">
           <!-- Product Image -->
-          <div class="relative h-[250px] md:h-full bg-gray-100">
+          <div class="relative group h-[250px] md:h-full bg-gray-100 overflow-hidden" 
+              (mousemove)="onMouseMove($event)" 
+    (mouseleave)="onMouseLeave()"
+          >
             <img 
+                #productImage
               [src]="selectedImage" 
               [alt]="product?.name"
               class="w-full h-full object-cover"
             >
-            
+               <!-- Lupa con glassmorphism -->
+    <div
+      *ngIf="isZooming"
+      class="absolute w-24 h-24 border border-white/60 rounded-full pointer-events-none backdrop-blur-md bg-white/10 shadow-[0_0_10px_rgba(0,0,0,0.1)] transition-transform duration-75 ease-out"
+      [style.left.px]="lensX"
+      [style.top.px]="lensY"
+      [style.backgroundImage]="'url(' + selectedImage + ')'"
+      [style.backgroundSize]="backgroundSize"
+      [style.backgroundPosition]="backgroundPosition"
+      style="transform: translate(-50%, -50%);"
+    ></div>
             <!-- Image Thumbnails -->
             <div 
               *ngIf="product?.images"
@@ -222,7 +236,36 @@ export class ProductModalComponent implements OnInit {
       this.onClose();
     }
   }
+// --- ZOOM EFECTO LUPA INTENSO ---
+isZooming = false;
+lensX = 0;
+lensY = 0;
+backgroundSize = '500%'; // 🔥 zoom aumentado (antes era 250%)
+backgroundPosition = 'center';
 
+onMouseMove(event: MouseEvent) {
+  const target = event.target as HTMLElement;
+  const rect = target.getBoundingClientRect();
+
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  const lensRadius = 100; // 🔥 lupa más grande (antes era 60)
+  const clampedX = Math.max(lensRadius, Math.min(x, rect.width - lensRadius));
+  const clampedY = Math.max(lensRadius, Math.min(y, rect.height - lensRadius));
+
+  this.lensX = clampedX;
+  this.lensY = clampedY;
+  this.isZooming = true;
+
+  const posX = (x / rect.width) * 100;
+  const posY = (y / rect.height) * 100;
+  this.backgroundPosition = `${posX}% ${posY}%`;
+}
+
+onMouseLeave() {
+  this.isZooming = false;
+}
   buyNow() {
     this.addToCart();
     // Here you would typically redirect to checkout

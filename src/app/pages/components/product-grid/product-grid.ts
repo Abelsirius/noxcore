@@ -41,7 +41,12 @@ import { MatDialog } from '@angular/material/dialog';
                 [alt]="product.name"
                 class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300"
               >
-              
+                                <div 
+      *ngIf="!product.inStock"
+      class="absolute inset-0 bg-black/70 flex items-center justify-center text-white text-lg font-semibold"
+    >
+      AGOTADO
+    </div>
               <!-- Badges -->
               <div class="absolute top-4 left-4 space-y-2">
                 <span 
@@ -59,7 +64,7 @@ import { MatDialog } from '@angular/material/dialog';
               </div>
 
               <!-- Quick Actions -->
-              <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"  *ngIf="product.inStock">
                 <button class="btn-primary">
                   Ver Detalles
                 </button>
@@ -136,11 +141,11 @@ import { MatDialog } from '@angular/material/dialog';
             <!-- Product Image -->
             <div class="relative group overflow-hidden">
               <img 
+              
                 [src]="product.image" 
                 [alt]="product.name"
                 class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300"
               >
-              
               <!-- Badges -->
               <!-- <div class="absolute top-4 left-4 space-y-2">
                 <span 
@@ -205,6 +210,9 @@ import { MatDialog } from '@angular/material/dialog';
                 </div>
               </div> -->
           </div>
+          }@empty 
+          {
+             <p>No se encontraron productos.</p>
           }
         </div>
       </div>
@@ -243,8 +251,10 @@ export class ProductGridComponent implements OnInit {
   }
 
   openProductModal(product: Product) {
-    this.selectedProduct = product;
+     if(product.inStock){
+         this.selectedProduct = product;
     this.isModalOpen = true;
+     }
   }
   openProductModalSoon(product: Product) {
     this.selectedProduct = product;

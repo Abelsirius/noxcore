@@ -16,7 +16,7 @@ export class ProductService {
 Ideales para entrenar con intensidad y estilo.
 🔥 Oscuros, cómodos y hechos para dominar.
       `,
-      price: 59.90,
+      price: 49.90,
       originalPrice: 89.00,
       image: '../../../assets/gotico1.jpeg',
       images: [
@@ -39,7 +39,7 @@ Ideales para entrenar con intensidad y estilo.
 Ideales para entrenar con intensidad y estilo.
 🔥 Oscuros, cómodos y hechos para dominar.
       `,
-      price: 59.90,
+      price: 49.90,
       originalPrice: 89.90,
       image: '../../../assets/white.jpeg',
       images: [
@@ -48,7 +48,7 @@ Ideales para entrenar con intensidad y estilo.
       ],
       category: 'Camisetas',
       sizes: ['S', 'M', 'L'],
-      inStock: true,
+      inStock: false,
       discount: 25
     },
     {
@@ -59,7 +59,7 @@ Ideales para entrenar con intensidad y estilo.
 Ideales para entrenar con intensidad y estilo.
 🔥 Oscuros, cómodos y hechos para dominar.
       `,
-      price: 59.90,
+      price: 49.90,
       originalPrice: 89.00,
       image: '../../../assets/style2.jpeg',
       images: [
@@ -72,12 +72,9 @@ Ideales para entrenar con intensidad y estilo.
       isNew: true,
       discount: 24
     },
-    
-  ];
-  private productsSoon: Product[] = [
-    {
-      id: '1',
-      name: 'Color negro con estampado Blanco',
+        {
+      id: '4',
+      name: 'Color negro con estampado Rojo',
       description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
@@ -85,9 +82,12 @@ Ideales para entrenar con intensidad y estilo.
       `,
       price: 59.90,
       originalPrice: 89.00,
-      image: '../../../assets/soon1.jpeg',
+      image: '../../../assets/soon1_view.jpeg',
       images: [
-        '../../../assets/gotico1_view1.jpeg',
+        '../../../assets/soon1_view.jpeg',
+        '../../../assets/soon1_view_stock.jpeg',
+        '../../../assets/soon1_view2_stock.jpeg',
+
       ],
       category: 'compresores',
       sizes: ['S', 'M', 'L'],
@@ -95,9 +95,9 @@ Ideales para entrenar con intensidad y estilo.
       isNew: true,
       discount: 25
     },
-    {
-      id: '1',
-      name: 'Color negro con estampado Blanco',
+        {
+      id: '5',
+      name: 'Color negro con estampado Blanco y Rojo',
       description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
@@ -107,7 +107,32 @@ Ideales para entrenar con intensidad y estilo.
       originalPrice: 89.00,
       image: '../../../assets/gotico2.jpeg',
       images: [
-        '../../../assets/gotico2_view1.jpeg',
+        '../../../assets/gotico2.jpeg',
+        '../../../assets/soon2_view_stock.jpeg',
+        '../../../assets/soon2_view2_stock.jpeg',
+
+      ],
+      category: 'compresores',
+      sizes: ['S', 'M', 'L'],
+      inStock: true,
+      isNew: false,
+      discount: 25
+    },
+  ];
+  private productsSoon: Product[] = [
+    {
+      id: '1',
+      name: 'Compresores',
+      description: `
+      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
+Ideales para entrenar con intensidad y estilo.
+🔥 Oscuros, cómodos y hechos para dominar.
+      `,
+      price: 59.90,
+      originalPrice: 89.00,
+      image: '../../../assets/soon3.jpeg',
+      images: [
+        '../../../assets/soon3.jpeg',
       ],
       category: 'compresores',
       sizes: ['S', 'M', 'L'],
@@ -115,6 +140,26 @@ Ideales para entrenar con intensidad y estilo.
       isNew: true,
       discount: 25
     },
+//     {
+//       id: '1',
+//       name: 'Color negro con estampado Blanco',
+//       description: `
+//       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
+// Ideales para entrenar con intensidad y estilo.
+// 🔥 Oscuros, cómodos y hechos para dominar.
+//       `,
+//       price: 59.90,
+//       originalPrice: 89.00,
+//       image: '../../../assets/gotico2.jpeg',
+//       images: [
+//         '../../../assets/gotico2_view1.jpeg',
+//       ],
+//       category: 'compresores',
+//       sizes: ['S', 'M', 'L'],
+//       inStock: true,
+//       isNew: false,
+//       discount: 25
+//     },
     
   ];
   private productsSubject = new BehaviorSubject<Product[]>(this.products);

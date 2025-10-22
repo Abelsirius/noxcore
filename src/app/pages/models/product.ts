@@ -9,6 +9,7 @@ export interface Product {
   category: string;
   sizes: string[];
   inStock: boolean;
+  stock?:number,
   isNew?: boolean;
   discount?: number;
 }
