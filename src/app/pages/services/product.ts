@@ -17,7 +17,7 @@ Ideales para entrenar con intensidad y estilo.
 🔥 Oscuros, cómodos y hechos para dominar.
       `,
       price: 49.90,
-      originalPrice: 89.00,
+      originalPrice: 79.00,
       image: '../../../assets/gotico1.jpeg',
       images: [
         '../../../assets/gotico1_view1.jpeg',
@@ -40,7 +40,7 @@ Ideales para entrenar con intensidad y estilo.
 🔥 Oscuros, cómodos y hechos para dominar.
       `,
       price: 49.90,
-      originalPrice: 89.90,
+      originalPrice: 79.90,
       image: '../../../assets/white.jpeg',
       images: [
         '../../../assets/white.jpeg',
@@ -60,7 +60,7 @@ Ideales para entrenar con intensidad y estilo.
 🔥 Oscuros, cómodos y hechos para dominar.
       `,
       price: 49.90,
-      originalPrice: 89.00,
+      originalPrice: 79.00,
       image: '../../../assets/style2.jpeg',
       images: [
         '../../../assets/style2.jpeg',
@@ -70,9 +70,9 @@ Ideales para entrenar con intensidad y estilo.
       sizes: ['S', 'M', 'L'],
       inStock: true,
       isNew: true,
-      discount: 24
+      discount: 25
     },
-        {
+    {
       id: '4',
       name: 'Color negro con estampado Rojo',
       description: `
@@ -95,7 +95,7 @@ Ideales para entrenar con intensidad y estilo.
       isNew: true,
       discount: 25
     },
-        {
+    {
       id: '5',
       name: 'Color negro con estampado Blanco y Rojo',
       description: `
