@@ -16,7 +16,7 @@ import { VotoModalComponent } from '../components/voto-modal-component/voto-moda
 })
 export class Home  implements OnInit{
    ngOnInit(): void {
- this.openVotoModal(); 
+//  this.openVotoModal(); 
    }
 
      openVotoModal() {
