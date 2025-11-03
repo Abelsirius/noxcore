@@ -7,16 +7,16 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/materia
   standalone: true,
   imports: [CommonModule, MatDialogModule],
   template: `
-  <div class="bg-gray-950 p-6  shadow shadow-red-900/10 text-white " id="encuesta">
+  <div class="bg-black p-6  shadow shadow-red-900/10 text-white " id="encuesta">
       
       <!-- Título Minimalista: Letras más finas y acento sutil -->
-      <h2 class="text-2xl font-light text-red-500 mb-2 pb-2 tracking-widest uppercase">
+      <h2 class="text-2xl font-light text-white mb-2 pb-2 tracking-widest uppercase">
         NOXCORE 
       </h2>
       
       <!-- Mensaje Profesional -->
       <p class="text-md font-normal mb-6 text-gray-400">
-        Bienvenido. Su participación para el lanzamiento  de la **próxima Drop**. Vote a continuación.
+        Bienvenido. Participe para el lanzamiento  del **próxima Drop**. Vote a continuación.
       </p>
 
       <div mat-dialog-actions class="flex justify-end pt-4 border-t border-gray-800">
@@ -24,15 +24,15 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/materia
          <div class="flex items-center justify-center gap-3">
                   <button 
           (click)="scrollToCollection()"
-          class="bg-red-600 hover:bg-red-500 text-white font-semibold py-2 px-3 rounded-md 
+          class="bg-white hover:bg-white text-black  font-semibold py-2 px-3 rounded-md 
                  transition-colors duration-200 shadow-md shadow-red-900/30
                  uppercase tracking-wide text-sm w-full"
         >
-          Acceder a la Votación
+          Votar
         </button>
                 <button 
           (click)="dialogRef.close()"
-          class="bg-white text-black font-semibold py-2 px-5 rounded-md 
+          class="bg-transaparent  text-white font-semibold py-2 px-5 rounded-md 
                  transition-colors duration-200 shadow-md shadow-red-900/30
                  uppercase tracking-wide text-sm w-fit"
         >
