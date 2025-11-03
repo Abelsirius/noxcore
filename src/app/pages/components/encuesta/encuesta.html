@@ -1,0 +1,78 @@
+<div class="grid md:grid-cols-3 gap-6 px-5 container mx-auto max-w-6xl">
+  <div
+    *ngFor="let e of encuestas"
+    class="bg-black text-white rounded-xl p-5 shadow-2xl border border-red-700 relative overflow-hidden group"
+  >
+    
+ 
+
+
+
+
+    <img
+      [src]="e.imagen || 'https://via.placeholder.com/300x200?text=Encuesta'"
+      class="w-full h-56 object-cover rounded-lg mb-3 border border-red-700 transition-opacity duration-300 group-hover:opacity-80"
+    />
+
+    <h3 class="text-xl font-bold">{{ e.nombre }}</h3>
+
+    <p class="text-gray-400 text-sm mb-1">
+      Likes: {{ e.likedUsers?.length || 0 }}
+    </p>
+
+
+<button
+    class="flex  mt-2 items-center space-x-1 px-3 py-1 rounded border border-gray-700 
+           text-gray-400 hover:text-red-600 hover:border-red-600 
+           transition-all duration-300 bg-gray-900 hover:bg-gray-800"
+    (click)="like(e)"
+>
+    <span class="text-[20px]">
+        <svg *ngIf="e.likedUsers?.includes(userId)" 
+             xmlns="http://www.w3.org/2000/svg" 
+             class="icon icon-tabler icon-tabler-heart-filled fill-current" 
+             width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="none" fill="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19.5 12.572l-7.5 7.428l-7.5-7.428a5 5 0 1 1 7.5-6.566a5 5 0 1 1 7.5 6.573z" />
+        </svg>
+
+        <svg *ngIf="!e.likedUsers?.includes(userId)"
+             xmlns="http://www.w3.org/2000/svg" 
+             class="icon icon-tabler icon-tabler-heart stroke-current" 
+             width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19.5 13.572l-7.5 7.428l-7.5-7.428a5 5 0 1 1 7.5-6.566a5 5 0 1 1 7.5 6.573" />
+        </svg>
+    </span>
+    
+    <span class="text-sm font-medium">
+        {{ e.likedUsers?.includes(userId) ? 'Me gusta' : 'Like' }}
+    </span>
+</button>
+
+    <form [formGroup]="form" (ngSubmit)="comentar(e)" class="mt-4">
+      <textarea
+        formControlName="comentario"
+        class="w-full bg-transparent text-gray-200 bg-red-950 rounded-lg p-2 text-sm outline-none resize-none focus:ring-1 focus:ring-red-600"
+        placeholder="Deja un comentario anónimo..."
+        rows="2"
+      ></textarea>
+      
+      <button
+        type="submit"
+        class="mt-2 bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded w-full transition-all font-semibold"
+      >
+        💬 Comentar
+      </button>
+    </form>
+
+    <div *ngIf="e.comentarios?.length" class="mt-4 border-t border-red-700 pt-2">
+      <h4 class="text-sm text-gray-400 mb-1">Comentarios recientes:</h4>
+      <p
+        *ngFor="let c of e.comentarios"
+        class="text-xs text-gray-300 border-b border-red-800 py-1"
+      >
+        {{ c.texto }}
+        <span class="text-red-500 pl-1">({{ c.fecha | date:'short' }})</span>
+      </p>
+    </div>
+  </div>
+</div>

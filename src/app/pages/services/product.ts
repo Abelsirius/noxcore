@@ -118,6 +118,27 @@ Ideales para entrenar con intensidad y estilo.
       isNew: false,
       discount: 25
     },
+        {
+      id: '6',
+      name: 'Color negro con estampado  Rojo',
+      description: `
+      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
+Ideales para entrenar con intensidad y estilo.
+🔥 Oscuros, cómodos y hechos para dominar.
+      `,
+      price: 59.90,
+      originalPrice: 89.00,
+      image: '../../../assets/view5.jpeg',
+      images: [
+         '../../../assets/view5.jpeg',
+        '../../../assets/producto5.jpeg',
+      ],
+      category: 'compresores',
+      sizes: ['S', 'M', 'L'],
+      inStock: true,
+      isNew: false,
+      discount: 25
+    },
   ];
   private productsSoon: Product[] = [
     {
