@@ -1,6 +1,6 @@
 
 <div class="mt-[6rem] container mx-auto max-w-6xl px-5 flex-col" id="encuesta">
-    <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-wider">CÓDIGO ROJO: VOTA POR EL SIGUIENTE DROP DE NOXCORE</h1>
+    <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-wider text-center">VOTA POR EL SIGUIENTE <br/>DROP DE NOXCORE</h1>
   <div class="grid md:grid-cols-3 gap-6  ">
 
   <div
@@ -30,6 +30,10 @@
            text-gray-400 hover:text-red-600 hover:border-red-600 
            transition-all duration-300 bg-gray-900 hover:bg-gray-800"
     (click)="like(e)"
+    [ngClass]="{
+      'text-red-600': e.likedUsers?.includes(userId),
+      'border-red-600 ':e.likedUsers?.includes(userId)
+    }"
 >
     <span class="text-[20px]">
         <svg *ngIf="e.likedUsers?.includes(userId)" 
