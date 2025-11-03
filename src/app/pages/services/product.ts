@@ -132,6 +132,8 @@ Ideales para entrenar con intensidad y estilo.
       images: [
          '../../../assets/view5.jpeg',
         '../../../assets/producto5.jpeg',
+        '../../../assets/producto5_2.jpeg',
+
       ],
       category: 'compresores',
       sizes: ['S', 'M', 'L'],
