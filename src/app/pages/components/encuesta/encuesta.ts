@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { EncuestaDbService } from '../../../../core/encuesta-db';
@@ -29,7 +29,7 @@ export class EncuestasComponent {
   userId!: string;
  public loadingService = inject(LoadingService);
   constructor(private encuestaDb: EncuestaDbService, private fb: FormBuilder) {}
-
+loading: WritableSignal<boolean> = signal(true);
   async ngOnInit() {
     this.userId = this.getUserId();
     this.form = this.fb.group({ comentario: [''] });
@@ -81,6 +81,8 @@ export class EncuestasComponent {
 
     console.log('Encuestas cargadas desde Firebase:', this.encuestas);
   this.loadingService.hide(); 
+
+ this.loading.set(false);
   }
 
   /** Genera o recupera un ID único por dispositivo */

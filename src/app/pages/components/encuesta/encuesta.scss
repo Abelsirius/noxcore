@@ -1,0 +1,91 @@
+.skeleton-card {
+  background-color: #1a1a1a; /* Fondo oscuro similar al de la tarjeta */
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid #dc2626; /* Borde rojo similar al real */
+  overflow: hidden; /* Para la animación de brillo */
+  position: relative;
+  height: 480px; /* Ajusta la altura para que coincida con tus tarjetas reales */
+}
+
+/* Elementos de imagen */
+.skeleton-image {
+  background-color: #333; /* Un gris más claro */
+  height: 192px; /* w-full h-48 object-cover (48 * 4px = 192px) */
+  border-radius: 6px; /* rounded-md */
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+/* Líneas de texto */
+.skeleton-text-lg {
+  background-color: #333;
+  height: 28px; /* Texto de título */
+  width: 80%;
+  border-radius: 4px;
+  margin-bottom: 0.5rem; /* mb-2 */
+}
+
+.skeleton-text-sm {
+  background-color: #333;
+  height: 18px; /* Texto de Likes */
+  width: 30%;
+  border-radius: 4px;
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+/* Botón */
+.skeleton-button {
+  background-color: #dc2626; /* Color del botón real */
+  height: 40px; /* px-4 py-2 */
+  width: 100%;
+  border-radius: 6px; /* rounded-md */
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+/* Divisor de comentarios */
+.skeleton-line-divider {
+  border-top: 1px solid #444; /* Borde gris oscuro */
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+/* Input de comentario (simulado) */
+.skeleton-comment-input {
+  background-color: #333;
+  height: 40px;
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+/* Comentarios recientes (simulados) */
+.skeleton-recent-comments {
+  margin-top: 0.5rem; /* space-y-1 */
+}
+
+.skeleton-comment-line {
+  background-color: #333;
+  height: 16px;
+  width: 70%;
+  border-radius: 4px;
+  margin-bottom: 5px; /* Pequeño espacio entre líneas */
+}
+
+/* Animación de "onda" o brillo */
+.skeleton-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  transform: translateX(-100%);
+  animation: shine 1.5s infinite;
+}
+
+@keyframes shine {
+  to {
+    transform: translateX(100%);
+  }
+}

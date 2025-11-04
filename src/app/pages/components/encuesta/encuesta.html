@@ -1,5 +1,6 @@
 
-<div class="mt-[8rem] container mx-auto max-w-6xl px-5 flex-col" id="encuesta">
+@if(!loading()){
+  <div class="mt-[8rem] container mx-auto max-w-6xl px-5 flex-col" id="encuesta">
     <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-wider text-center pb-4">VOTA POR EL SIGUIENTE <br/>DROP DE NOXCORE</h1>
   <div class="grid md:grid-cols-3 gap-6  ">
 
@@ -85,4 +86,45 @@
   </div>
 </div>
 </div>
+}@else {
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 container mx-auto max-w-6xl">
+    <div class="skeleton-card">
+      <div class="skeleton-image"></div>
+      <div class="skeleton-text-lg"></div>
+      <div class="skeleton-text-sm"></div>
+      <div class="skeleton-button"></div>
+      <div class="skeleton-line-divider"></div>
+      <div class="skeleton-comment-input"></div>
+      <div class="skeleton-recent-comments">
+        <div class="skeleton-comment-line"></div>
+        <div class="skeleton-comment-line"></div>
+      </div>
+    </div>
+    <div class="skeleton-card">
+      <div class="skeleton-image"></div>
+      <div class="skeleton-text-lg"></div>
+      <div class="skeleton-text-sm"></div>
+      <div class="skeleton-button"></div>
+      <div class="skeleton-line-divider"></div>
+      <div class="skeleton-comment-input"></div>
+      <div class="skeleton-recent-comments">
+        <div class="skeleton-comment-line"></div>
+        <div class="skeleton-comment-line"></div>
+      </div>
+    </div>
+    <div class="skeleton-card">
+      <div class="skeleton-image"></div>
+      <div class="skeleton-text-lg"></div>
+      <div class="skeleton-text-sm"></div>
+      <div class="skeleton-button"></div>
+      <div class="skeleton-line-divider"></div>
+      <div class="skeleton-comment-input"></div>
+      <div class="skeleton-recent-comments">
+        <div class="skeleton-comment-line"></div>
+        <div class="skeleton-comment-line"></div>
+      </div>
+    </div>
+  </div>
+}
+
 

@@ -6,12 +6,50 @@
         <!-- <app-reel></app-reel> -->
         <app-testimonials></app-testimonials>
         <app-product-grid></app-product-grid>
-        @defer (on viewport) {
-          <app-encuestas class="mb-4"/>
-        }@placeholder {
-          <p>Cargando....</p>
-        }
+@defer (on viewport) {
+  <app-encuestas class="mb-4"/>
+} @placeholder {
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 container mx-auto max-w-6xl">
+    <div class="skeleton-card">
+      <div class="skeleton-image"></div>
+      <div class="skeleton-text-lg"></div>
+      <div class="skeleton-text-sm"></div>
+      <div class="skeleton-button"></div>
+      <div class="skeleton-line-divider"></div>
+      <div class="skeleton-comment-input"></div>
+      <div class="skeleton-recent-comments">
+        <div class="skeleton-comment-line"></div>
+        <div class="skeleton-comment-line"></div>
+      </div>
+    </div>
+    <div class="skeleton-card">
+      <div class="skeleton-image"></div>
+      <div class="skeleton-text-lg"></div>
+      <div class="skeleton-text-sm"></div>
+      <div class="skeleton-button"></div>
+      <div class="skeleton-line-divider"></div>
+      <div class="skeleton-comment-input"></div>
+      <div class="skeleton-recent-comments">
+        <div class="skeleton-comment-line"></div>
+        <div class="skeleton-comment-line"></div>
+      </div>
+    </div>
+    <div class="skeleton-card">
+      <div class="skeleton-image"></div>
+      <div class="skeleton-text-lg"></div>
+      <div class="skeleton-text-sm"></div>
+      <div class="skeleton-button"></div>
+      <div class="skeleton-line-divider"></div>
+      <div class="skeleton-comment-input"></div>
+      <div class="skeleton-recent-comments">
+        <div class="skeleton-comment-line"></div>
+        <div class="skeleton-comment-line"></div>
+      </div>
+    </div>
+  </div>
+}
      </main>
+
 
       <!-- Footer -->
       <footer class="bg-black border-t border-gray-800 py-12">
