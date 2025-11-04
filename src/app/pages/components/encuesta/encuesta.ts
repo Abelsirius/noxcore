@@ -35,7 +35,6 @@ loading: WritableSignal<boolean> = signal(true);
     this.form = this.fb.group({ comentario: [''] });
 
     // 🔥 Carga encuestas desde Firebase
-  this.loadingService.show(); 
     this.encuestas = await this.encuestaDb.obtenerEncuestas();
     // Si no hay encuestas, crea 3 de ejemplo
     if (!this.encuestas.length) {
@@ -80,7 +79,6 @@ loading: WritableSignal<boolean> = signal(true);
     }
 
     console.log('Encuestas cargadas desde Firebase:', this.encuestas);
-  this.loadingService.hide(); 
 
  this.loading.set(false);
   }
