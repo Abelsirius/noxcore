@@ -113,23 +113,29 @@ import { CartService } from '../../../services/cart';
               <p class="text-gray-600 mb-6">{{product?.description}}</p>
 
               <!-- Size Selection -->
-              <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-3">Talla</label>
-                <div class="flex flex-wrap gap-2">
-                  <button
-                    *ngFor="let size of product?.sizes"
-                    class="px-4 py-2 border rounded-md font-medium transition-all"
-                    [class.border-gray-300]="selectedSize !== size"
-                    [class.text-gray-700]="selectedSize !== size"
-                    [class.border-red-500]="selectedSize === size"
-                    [class.bg-red-500]="selectedSize === size"
-                    [class.text-white]="selectedSize === size"
-                    (click)="selectSize(size)"
-                  >
-                    {{size}}
-                  </button>
-                </div>
-              </div>
+<div class="mb-6">
+  <label class="block text-sm font-medium text-gray-700 mb-3">Talla</label>
+  <div class="flex flex-wrap gap-2">
+    <button
+      *ngFor="let sizeItem of product?.sizes"
+      class="px-4 py-2 border rounded-md font-medium transition-all"
+      
+      [disabled]="!sizeItem.available"
+      
+      [ngClass]="{
+        'line-through text-gray-400 bg-gray-100 cursor-not-allowed border-gray-200': !sizeItem.available,
+        
+        'border-gray-300 text-gray-700 hover:border-red-500 hover:text-red-500': sizeItem.available && selectedSize !== sizeItem.size,
+        
+        'border-red-500 bg-red-500 text-white': selectedSize === sizeItem.size
+      }"
+
+      (click)="sizeItem.available ? selectSize(sizeItem.size) : null"
+    >
+      {{sizeItem.size}}
+    </button>
+  </div>
+</div>
 
               <!-- Quantity -->
               <div class="mb-8">
