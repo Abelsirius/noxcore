@@ -1,3 +1,8 @@
+
+export interface SizeAvailability {
+  size: string; // Ejemplo: 'S', 'M', 'L'
+  available: boolean; // true si está en stock, false si no lo está
+}
 export interface Product {
   id: string;
   name: string;
@@ -7,7 +12,7 @@ export interface Product {
   image: string;
   images: string[];
   category: string;
-  sizes: string[];
+  sizes: SizeAvailability[];
   inStock: boolean;
   stock?:number,
   isNew?: boolean;

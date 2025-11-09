@@ -89,7 +89,7 @@ import { MatDialog } from '@angular/material/dialog';
                   </span>
                 </div>
               </div>
-                <span class="text-sm">🎃 Edición Halloween.</span>
+                <!-- <span class="text-sm">🎃 Edición Halloween.</span> -->
               <div class="flex justify-between items-center">
                 <button 
                   class="bg-accent-500 text-white text-sm px-4 py-2 rounded hover:bg-accent-600 transition-colors"
@@ -97,20 +97,19 @@ import { MatDialog } from '@angular/material/dialog';
                 >
                   Oferta
                 </button>
-                <div class="flex space-x-1">
-                  <span 
-                    *ngFor="let size of product.sizes.slice(0, 3)" 
-                    class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded"
-                  >
-                    {{size}}
-                  </span>
-                  <span 
-                    *ngIf="product.sizes.length > 3" 
-                    class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded"
-                  >
-                    +{{product.sizes.length - 3}}
-                  </span>
-                </div>
+<div class="flex space-x-1">
+ @for(sizeItem of product.sizes.slice(0, 3); track sizeItem.size) {
+ <span 
+ [ngClass]="{
+'line-through opacity-50': !sizeItem.available, 
+ 'bg-gray-800 text-gray-300': true
+}"
+ class="text-xs px-2 py-1 rounded transition-opacity" >{{sizeItem.size}} </span>
+ } <span 
+ *ngIf="product.sizes.length > 3" 
+  class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded" >
+   +{{product.sizes.length - 3}} </span>
+</div>
               </div>
             </div>
           </div>

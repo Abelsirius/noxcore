@@ -10,7 +10,7 @@ export class ProductService {
   private products: Product[] = [
     {
       id: '1',
-      name: 'Color negro con estampado Blanco',
+      name: 'Void Tech™ Evangelion Compression Void Black',
       description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
@@ -26,14 +26,19 @@ Ideales para entrenar con intensidad y estilo.
         '../../../assets/gotico1_view4.jpeg',
       ],
       category: 'compresores',
-      sizes: ['S', 'M', 'L'],
+sizes: [
+    { size: 'S', available: false },
+     // No disponible -> Tachar
+    { size: 'M', available: false },  // Disponible
+    { size: 'L', available: true }  // No disponible -> Tachar
+  ],
       inStock: true,
       isNew: true,
       discount: 25
     },
     {
       id: '2',
-      name: 'Color blanco con estampado Negro',
+      name: 'Void Tech™ Evangelion Compression Divine White',
          description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
@@ -47,13 +52,17 @@ Ideales para entrenar con intensidad y estilo.
         '../../../assets/white-back.jpeg'
       ],
       category: 'Camisetas',
-      sizes: ['S', 'M', 'L'],
+   sizes: [
+    { size: 'S', available:  false }, // No disponible -> Tachar
+    { size: 'M', available: false },  // Disponible
+    { size: 'L', available: false }  // No disponible -> Tachar
+  ],
       inStock: false,
       discount: 25
     },
     {
       id: '3',
-      name: 'Color negro con estampado  Rojo',
+      name: 'Void Tech™ Evangelion Compression Crimson Red',
          description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
@@ -67,20 +76,24 @@ Ideales para entrenar con intensidad y estilo.
         '../../../assets/style2.2.jpeg'
       ],
       category: 'Hoodies',
-      sizes: ['S', 'M', 'L'],
+   sizes: [
+    { size: 'S', available: false }, // No disponible -> Tachar
+    { size: 'M', available: false },  // Disponible
+    { size: 'L', available: true }  // No disponible -> Tachar
+  ],
       inStock: true,
       isNew: true,
       discount: 25
     },
     {
       id: '4',
-      name: 'Color negro con estampado Rojo',
+      name: 'Void Tech™ Dark Matter Compression',
       description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
 🔥 Oscuros, cómodos y hechos para dominar.
       `,
-      price: 59.90,
+      price: 49.90,
       originalPrice: 89.00,
       image: '../../../assets/soon1_view.jpeg',
       images: [
@@ -90,20 +103,24 @@ Ideales para entrenar con intensidad y estilo.
 
       ],
       category: 'compresores',
-      sizes: ['S', 'M', 'L'],
+      sizes: [
+    { size: 'S', available: true }, // No disponible -> Tachar
+    { size: 'M', available: true },  // Disponible
+    { size: 'L', available: true }  // No disponible -> Tachar
+  ],
       inStock: true,
       isNew: true,
       discount: 25
     },
     {
       id: '5',
-      name: 'Color negro con estampado Blanco y Rojo',
+      name: 'Void Tech™ Nighfall Compression',
       description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
 🔥 Oscuros, cómodos y hechos para dominar.
       `,
-      price: 59.90,
+      price: 49.90,
       originalPrice: 89.00,
       image: '../../../assets/gotico2.jpeg',
       images: [
@@ -113,20 +130,24 @@ Ideales para entrenar con intensidad y estilo.
 
       ],
       category: 'compresores',
-      sizes: ['S', 'M', 'L'],
+     sizes: [
+    { size: 'S', available: true }, // No disponible -> Tachar
+    { size: 'M', available: true },  // Disponible
+    { size: 'L', available: true }  // No disponible -> Tachar
+  ],
       inStock: true,
       isNew: false,
       discount: 25
     },
         {
       id: '6',
-      name: 'Color negro con estampado  Rojo',
+      name: 'Dark Fantasy compression Heavenly Red',
       description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
 🔥 Oscuros, cómodos y hechos para dominar.
       `,
-      price: 59.90,
+      price: 49.90,
       originalPrice: 89.00,
       image: '../../../assets/view5.jpeg',
       images: [
@@ -136,7 +157,63 @@ Ideales para entrenar con intensidad y estilo.
 
       ],
       category: 'compresores',
-      sizes: ['S', 'M', 'L'],
+     sizes: [
+    { size: 'S', available: true }, // No disponible -> Tachar
+    { size: 'M', available: true },  // Disponible
+    { size: 'L', available: true }  // No disponible -> Tachar
+  ],
+      inStock: true,
+      isNew: false,
+      discount: 25
+    },
+            {
+      id: '7',
+      name: 'Void Tech™ Soul Decay Compression Void Black ',
+      description: `
+      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
+Ideales para entrenar con intensidad y estilo.
+🔥 Oscuros, cómodos y hechos para dominar.
+      `,
+      price: 59.90,
+      originalPrice: 89.00,
+      image: '../../../assets/gotico7.jpeg',
+      images: [
+         '../../../assets/gotico7_view1.jpeg',
+        '../../../assets/gotico7_view2.jpeg',
+
+      ],
+      category: 'compresores',
+  sizes: [
+    { size: 'S', available: true }, // No disponible -> Tachar
+    { size: 'M', available: true },  // Disponible
+    { size: 'L', available: true }  // No disponible -> Tachar
+  ],
+      inStock: true,
+      isNew: false,
+      discount: 25
+    },
+    {
+      id: '8',
+      name: 'Void Tech™ Soul Decay Compression  Abyssal Blue ',
+      description: `
+      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
+Ideales para entrenar con intensidad y estilo.
+🔥 Oscuros, cómodos y hechos para dominar.
+      `,
+      price: 59.90,
+      originalPrice: 89.00,
+      image: '../../../assets/gotico6.jpeg',
+      images: [
+         '../../../assets/gotico6_view1.jpeg',
+        '../../../assets/gotico6_view2.jpeg',
+
+      ],
+      category: 'compresores',
+   sizes: [
+    { size: 'S', available: true }, // No disponible -> Tachar
+    { size: 'M', available: true },  // Disponible
+    { size: 'L', available: true}  // No disponible -> Tachar
+  ],
       inStock: true,
       isNew: false,
       discount: 25
@@ -158,7 +235,11 @@ Ideales para entrenar con intensidad y estilo.
         '../../../assets/soon3.jpeg',
       ],
       category: 'compresores',
-      sizes: ['S', 'M', 'L'],
+     sizes: [
+    { size: 'S', available: true }, // No disponible -> Tachar
+    { size: 'M', available: true },  // Disponible
+    { size: 'L', available: true }  // No disponible -> Tachar
+  ],
       inStock: true,
       isNew: true,
       discount: 25
