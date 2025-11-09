@@ -222,14 +222,14 @@ Ideales para entrenar con intensidad y estilo.
   private productsSoon: Product[] = [
     {
       id: '1',
-      name: 'Compresores',
+      name: 'Eternal Wyvern Oversized Sweatpants”',
       description: `
-      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
+      Eternal Wyvern Oversized Sweatpants” , diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
 🔥 Oscuros, cómodos y hechos para dominar.
       `,
-      price: 59.90,
-      originalPrice: 89.00,
+      price: 99.90,
+      originalPrice: 119.00,
       image: '../../../assets/soon3.jpeg',
       images: [
         '../../../assets/soon3.jpeg',

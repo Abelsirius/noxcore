@@ -43,7 +43,7 @@ import { CartService } from '../../../services/cart';
 
         <div class="grid grid-cols-1 lg:grid-cols-2 h-full">
           <!-- Product Image -->
-          <div class="relative group h-[350px] md:h-full bg-gray-100 overflow-hidden" 
+          <div class="relative group h-[420px] lg:h-full bg-gray-100 overflow-hidden" 
               (mousemove)="onMouseMove($event)" 
     (mouseleave)="onMouseLeave()"
           >
@@ -82,7 +82,7 @@ import { CartService } from '../../../services/cart';
           </div>
 
           <!-- Product Details -->
-          <div class="p-8 flex flex-col justify-between max-h-[90vh] overflow-y-auto">
+          <div class="p-8 flex flex-col justify-between max-h-fit overflow-y-auto">
             <div>
               <!-- Brand -->
               <div class="text-sm text-gray-500 mb-2">NOXCORE</div>
