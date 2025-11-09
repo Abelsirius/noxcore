@@ -43,7 +43,7 @@ import { CartService } from '../../../services/cart';
 
         <div class="grid grid-cols-1 lg:grid-cols-2 h-full">
           <!-- Product Image -->
-          <div class="relative group h-[250px] md:h-full bg-gray-100 overflow-hidden" 
+          <div class="relative group h-[350px] md:h-full bg-gray-100 overflow-hidden" 
               (mousemove)="onMouseMove($event)" 
     (mouseleave)="onMouseLeave()"
           >
@@ -88,11 +88,11 @@ import { CartService } from '../../../services/cart';
               <div class="text-sm text-gray-500 mb-2">NOXCORE</div>
               
               <!-- Product Name -->
-              <h2 class="text-3xl font-bold text-gray-900 mb-4">{{product?.name}}</h2>
+              <h2 class="  text-[18px] md:text-3xl font-bold text-gray-900 mb-4">{{product?.name}}</h2>
 
               <!-- Price -->
               <div class="flex items-center space-x-4 mb-6">
-                <span class="text-3xl font-bold text-red-600">
+                <span class="text-base md:text-3xl font-bold text-red-600">
                   S/. {{product?.price?.toFixed(2)}}
                 </span>
                 <span 
@@ -110,7 +110,7 @@ import { CartService } from '../../../services/cart';
               </div>
 
               <!-- Description -->
-              <p class="text-gray-600 mb-6">{{product?.description}}</p>
+              <p class=" text-[14px] md:text-base text-gray-600 mb-6 ">{{product?.description}}</p>
 
               <!-- Size Selection -->
 <div class="mb-6">
