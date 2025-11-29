@@ -77,7 +77,7 @@ Ideales para entrenar con intensidad y estilo.
       ],
       category: 'Hoodies',
       sizes: [
-        { size: 'S', available: false }, // No disponible -> Tachar
+        { size: 'S', available: true }, // No disponible -> Tachar
         { size: 'M', available: false },  // Disponible
         { size: 'L', available: true }  // No disponible -> Tachar
       ],
