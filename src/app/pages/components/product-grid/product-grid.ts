@@ -73,7 +73,7 @@ import { MatDialog } from '@angular/material/dialog';
 
             <!-- Product Info -->
             <div class="p-6">
-              <p class="text-[11px] px-2 py-1 mb-1 font-semibold  bg-[#EF4444] rounded-lg  ">{{product.availabilityLabel || 'Disponible por tiempo limitado.'}}</p>
+              <p class="text-[11px] px-2 py-1 mb-1 font-semibold  bg-[#EF4444] rounded-lg text-center ">{{product.availabilityLabel || 'Disponible por tiempo limitado.'}}</p>
               <h3 class="text-lg font-semibold text-white mb-2">{{product.name}}</h3>
               
               <div class="flex items-center justify-between mb-2">
