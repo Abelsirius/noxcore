@@ -14,9 +14,10 @@ export interface Product {
   category: string;
   sizes: SizeAvailability[];
   inStock: boolean;
-  stock?:number,
+  stock?: number,
   isNew?: boolean;
   discount?: number;
+  availabilityLabel?: string;
 }
 
 export interface CartItem {

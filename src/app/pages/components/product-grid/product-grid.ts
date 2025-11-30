@@ -17,7 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
     MatButtonModule,
     MatChipsModule,
     ProductModalComponent
-],
+  ],
   template: `
     <section class="py-16 px-4 " id="collection-shadow">
       <div class="container mx-auto max-w-6xl">
@@ -73,7 +73,7 @@ import { MatDialog } from '@angular/material/dialog';
 
             <!-- Product Info -->
             <div class="p-6">
-              <p class="text-[11px] px-2 py-1 mb-1 font-semibold  bg-[#EF4444] rounded-lg  ">Disponible por tiempo limitado.</p>
+              <p class="text-[11px] px-2 py-1 mb-1 font-semibold  bg-[#EF4444] rounded-lg  ">{{product.availabilityLabel || 'Disponible por tiempo limitado.'}}</p>
               <h3 class="text-lg font-semibold text-white mb-2">{{product.name}}</h3>
               
               <div class="flex items-center justify-between mb-2">
@@ -235,25 +235,25 @@ export class ProductGridComponent implements OnInit {
   proximamente: Product[] = [];
   selectedProduct: Product | null = null;
   isModalOpen = false;
-   
+
   nameColeccion = 'BREATheDivinity';
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService) { }
 
   ngOnInit() {
     this.productService.getProducts().subscribe(
       products => this.products = products
     );
 
-        this.productService.getProductsSoon().subscribe(
+    this.productService.getProductsSoon().subscribe(
       products => this.proximamente = products
     );
   }
 
   openProductModal(product: Product) {
-     if(product.inStock){
-         this.selectedProduct = product;
-    this.isModalOpen = true;
-     }
+    if (product.inStock) {
+      this.selectedProduct = product;
+      this.isModalOpen = true;
+    }
   }
   openProductModalSoon(product: Product) {
     this.selectedProduct = product;

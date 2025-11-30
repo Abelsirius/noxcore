@@ -240,15 +240,16 @@ Ideales para entrenar con intensidad y estilo.
       ],
       inStock: true,
       isNew: true,
-      discount: 25
+      discount: 25,
+      availabilityLabel: 'preventa'
     }
   ];
   private productsSoon: Product[] = [
     {
       id: '1',
-      name: 'Eternal Wyvern Oversized Sweatpants”',
+      name: 'Eternal Wyvern Oversized Sweatpants"',
       description: `
-      Eternal Wyvern Oversized Sweatpants” , diseño infernal y ajuste perfecto.
+      Eternal Wyvern Oversized Sweatpants" , diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
 🔥 Oscuros, cómodos y hechos para dominar.
       `,
