@@ -242,7 +242,6 @@ Ideales para entrenar con intensidad y estilo.
       isNew: true,
       discount: 25,
       availabilityLabel: 'PREVENTA'
-    }
     },
     {
       id: '10',
@@ -267,6 +266,7 @@ Ideales para entrenar con intensidad y estilo.
       inStock: true,
       isNew: true,
       discount: 25
+    }
   ];
   private productsSoon: Product[] = [
     {
