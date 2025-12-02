@@ -243,6 +243,30 @@ Ideales para entrenar con intensidad y estilo.
       discount: 25,
       availabilityLabel: 'PREVENTA'
     }
+    },
+    {
+      id: '10',
+      name: 'Soul Decay Compression Void Black (manga corta)',
+      description: `
+      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
+Ideales para entrenar con intensidad y estilo.
+ Oscuros, cómodos y hechos para dominar.
+      `,
+      price: 49.90,
+      originalPrice: 79.00,
+      image: '../../../assets/soul_decay_short.jpeg',
+      images: [
+        '../../../assets/soul_decay_short.jpeg',
+      ],
+      category: 'compresores',
+      sizes: [
+        { size: 'S', available: true },
+        { size: 'M', available: true },
+        { size: 'L', available: true }
+      ],
+      inStock: true,
+      isNew: true,
+      discount: 25
   ];
   private productsSoon: Product[] = [
     {
