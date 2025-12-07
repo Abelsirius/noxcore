@@ -108,7 +108,7 @@ Ideales para entrenar con intensidad y estilo.
         { size: 'M', available: true },  // Disponible
         { size: 'L', available: true }  // No disponible -> Tachar
       ],
-      inStock: true,
+      inStock: false,
       isNew: true,
       discount: 25
     },
