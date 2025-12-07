@@ -1,46 +1,41 @@
-    <header class="fixed  top-0 left-0 right-0 z-50  backdrop-blur-sm " >
-      <div class="container mx-auto px-4 py-2">
-        <div class="flex items-center justify-between">
-          <!-- Social Links -->
-          <div class="flex items-center space-x-4 w-[100px]">
-                <a  target="_blank" href=" https://www.instagram.com/noxcore___/">
-            <button mat-icon-button class="text-gray-400 hover:text-white ti ti-brand-instagram" >
-            </button>
-                </a>
-                <a  target="_blank" href="https://www.tiktok.com/@noxcore_">
-            <button mat-icon-button class="text-gray-400 hover:text-white ti ti-brand-tiktok" >
-            </button>
-                </a>
+<header class="fixed  top-0 left-0 right-0 z-50  backdrop-blur-sm ">
+  <div class="container mx-auto px-4 py-2">
+    <div class="flex items-center justify-between">
+      <!-- Social Links -->
+      <div class="flex items-center space-x-4 w-[100px]">
+        <a target="_blank" href=" https://www.instagram.com/noxcore___/">
+          <button mat-icon-button class="text-gray-400 hover:text-white ti ti-brand-instagram">
+          </button>
+        </a>
+        <a target="_blank" href="https://www.tiktok.com/@noxcore_">
+          <button mat-icon-button class="text-gray-400 hover:text-white ti ti-brand-tiktok">
+          </button>
+        </a>
 
-          </div>
+      </div>
 
-          <!-- Logo -->
-        <div>
-           <h1 class="text-[20px] text-center font-extralight tracking-wider text-white">
-             NØXCORE
-            </h1>
-                    <div class="text-center mt-1 text-[12px]">
+      <!-- Logo -->
+      <div>
+        <h1 class="text-[20px] text-center font-extralight tracking-wider text-white">
+          NYXOR FIT
+        </h1>
+        <div class="text-center mt-1 text-[12px]">
           Envíos gratis en compras mayores a S/. 150
         </div>
-        </div>
-
-          <!-- Cart and User -->
-          <div class="flex items-center space-x-4">
-            <button mat-icon-button class="text-gray-400 hover:text-white ti ti-search">
-              
-            </button>
-            <button 
-              mat-icon-button 
-              class="text-gray-400 hover:text-white ti ti-shopping-cart"
-              [matBadge]="cartCount$ | async"
-              matBadgeColor="accent"
-              [matBadgeHidden]="(cartCount$ | async) === 0"
-              (click)="openCart()"
-            >
-            </button>
-          </div>
-        </div>
-
-        <!-- Top Banner -->
       </div>
-    </header>
+
+      <!-- Cart and User -->
+      <div class="flex items-center space-x-4">
+        <button mat-icon-button class="text-gray-400 hover:text-white ti ti-search">
+
+        </button>
+        <button mat-icon-button class="text-gray-400 hover:text-white ti ti-shopping-cart"
+          [matBadge]="cartCount$ | async" matBadgeColor="accent" [matBadgeHidden]="(cartCount$ | async) === 0"
+          (click)="openCart()">
+        </button>
+      </div>
+    </div>
+
+    <!-- Top Banner -->
+  </div>
+</header>

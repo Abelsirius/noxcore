@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Product } from '../models/product';
 
@@ -10,7 +10,7 @@ export class ProductService {
   private products: Product[] = [
     {
       id: '1',
-      name: 'Void Tech™ Evangelion Compression Void Black',
+      name: 'Evangelion Compression Void Black',
       description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
@@ -38,7 +38,7 @@ Ideales para entrenar con intensidad y estilo.
     },
     {
       id: '2',
-      name: 'Void Tech™ Evangelion Compression Divine White',
+      name: 'Evangelion Compression Divine White',
       description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
@@ -62,7 +62,7 @@ Ideales para entrenar con intensidad y estilo.
     },
     {
       id: '3',
-      name: 'Void Tech™ Evangelion Compression Crimson Red',
+      name: 'Evangelion Compression Crimson Red',
       description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
@@ -87,7 +87,7 @@ Ideales para entrenar con intensidad y estilo.
     },
     {
       id: '4',
-      name: 'Void Tech™ Dark Matter Compression',
+      name: 'Dark Matter Compression',
       description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
@@ -114,7 +114,7 @@ Ideales para entrenar con intensidad y estilo.
     },
     {
       id: '5',
-      name: 'Void Tech™ Nighfall Compression',
+      name: 'Nighfall Compression',
       description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
@@ -168,7 +168,7 @@ Ideales para entrenar con intensidad y estilo.
     },
     {
       id: '7',
-      name: 'Void Tech™ Soul Decay Compression Void Black ',
+      name: 'Soul Decay Compression Void Black ',
       description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
@@ -194,7 +194,7 @@ Ideales para entrenar con intensidad y estilo.
     },
     {
       id: '8',
-      name: 'Void Tech™ Soul Decay Compression  Abyssal Blue ',
+      name: 'Soul Decay Compression  Abyssal Blue ',
       description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
@@ -220,7 +220,7 @@ Ideales para entrenar con intensidad y estilo.
     },
     {
       id: '9',
-      name: 'Void Tech Vampire Hunter Zip-Up Compression',
+      name: 'Vampire Hunter Zip-Up Compression',
       description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
@@ -247,9 +247,9 @@ Ideales para entrenar con intensidad y estilo.
       id: '10',
       name: 'Soul Decay Compression Void Black (manga corta)',
       description: `
-      Compresores de alta elasticidad, dise�o infernal y ajuste perfecto.
+      Compresores de alta elasticidad, dise�o infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
- Oscuros, c�modos y hechos para dominar.
+ Oscuros, c�modos y hechos para dominar.
       `,
       price: 49.90,
       originalPrice: 79.00,
@@ -332,3 +332,5 @@ Ideales para entrenar con intensidad y estilo.
     return this.productsSoon.find(product => product.id === id);
   }
 }
+
+

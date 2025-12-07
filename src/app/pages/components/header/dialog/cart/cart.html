@@ -1,34 +1,26 @@
- <div 
-      class="fixed inset-0 z-50 flex items-center justify-center p-4 "
-    >
-      <!-- Backdrop -->
-      <div class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 ">
+  <!-- Backdrop -->
+  <div class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
 
-      <!-- Modal Content -->
-      <div 
-        class="relative bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden animate-slide-up overflow-y-auto min-h-[350px]"
-        (click)="$event.stopPropagation()"
-      >
-        <!-- Close Button -->
-        <button 
-          class=" ti ti-x absolute top-4 right-4 z-10 text-white md:text-black w-[25px] h-[25px] hover:bg-white rounded-full p-2 shadow-lg transition-all"
-          (click)="close()"
-        >
-        
-        </button>
+  <!-- Modal Content -->
+  <div
+    class="relative bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden animate-slide-up overflow-y-auto min-h-[350px]"
+    (click)="$event.stopPropagation()">
+    <!-- Close Button -->
+    <button
+      class=" ti ti-x absolute top-4 right-4 z-10 text-white md:text-black w-[25px] h-[25px] hover:bg-white rounded-full p-2 shadow-lg transition-all"
+      (click)="close()">
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 h-full">
-          <!-- Product Image -->
-          <div class="relative h-[250px] md:h-full bg-gray-100">
-            <img 
-              class="w-full h-full object-cover"
-            >
-            
-            <!-- Image Thumbnails -->
-            <div 
-              class="absolute bottom-4 left-4 flex space-x-2"
-            >
-              <!-- <button 
+    </button>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 h-full">
+      <!-- Product Image -->
+      <div class="relative h-[250px] md:h-full bg-gray-100">
+        <img class="w-full h-full object-cover">
+
+        <!-- Image Thumbnails -->
+        <div class="absolute bottom-4 left-4 flex space-x-2">
+          <!-- <button 
                 *ngFor="let img of product?.images; let i = index"
                 class="w-12 h-12 rounded border-2 overflow-hidden transition-all"
                 [class.border-blue-500]="selectedImage === img"
@@ -37,43 +29,39 @@
               >
                 <img [src]="img" [alt]="product?.name" class="w-full h-full object-cover">
               </button> -->
-            </div>
+        </div>
+      </div>
+
+      <!-- Product Details -->
+      <div class="p-8 flex flex-col justify-between max-h-[90vh] overflow-y-auto">
+        <div>
+          <!-- Brand -->
+          <div class="text-sm text-gray-500 mb-2">NYXOR FIT</div>
+
+          <!-- Product Name -->
+          <!-- <h2 class="text-3xl font-bold text-gray-900 mb-4">{{product?.name}}</h2> -->
+
+          <!-- Price -->
+          <div class="flex items-center space-x-4 mb-6">
+            <span class="text-3xl font-bold text-red-600">
+              S/.
+            </span>
+            <span class="text-xl text-gray-500 line-through">
+              S/.
+            </span>
+            <span class="bg-red-500 text-white text-sm px-2 py-1 rounded font-bold">
+              Oferta
+            </span>
           </div>
 
-          <!-- Product Details -->
-          <div class="p-8 flex flex-col justify-between max-h-[90vh] overflow-y-auto">
-            <div>
-              <!-- Brand -->
-              <div class="text-sm text-gray-500 mb-2">NOXCORE</div>
-              
-              <!-- Product Name -->
-              <!-- <h2 class="text-3xl font-bold text-gray-900 mb-4">{{product?.name}}</h2> -->
+          <!-- Description -->
+          <p class="text-gray-600 mb-6">awra</p>
 
-              <!-- Price -->
-              <div class="flex items-center space-x-4 mb-6">
-                <span class="text-3xl font-bold text-red-600">
-                  S/.
-                </span>
-                <span 
-                  class="text-xl text-gray-500 line-through"
-                >
-                  S/. 
-                </span>
-                <span 
-                  class="bg-red-500 text-white text-sm px-2 py-1 rounded font-bold"
-                >
-                  Oferta
-                </span>
-              </div>
-
-              <!-- Description -->
-              <p class="text-gray-600 mb-6">awra</p>
-
-              <!-- Size Selection -->
-              <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-3">Talla</label>
-                <div class="flex flex-wrap gap-2">
-                  <!-- <button
+          <!-- Size Selection -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-3">Talla</label>
+            <div class="flex flex-wrap gap-2">
+              <!-- <button
                     *ngFor="let size of product?.sizes"
                     class="px-4 py-2 border rounded-md font-medium transition-all"
                     [class.border-gray-300]="selectedSize !== size"
@@ -85,47 +73,38 @@
                   >
                     {{size}}
                   </button> -->
-                </div>
-              </div>
-
-              <!-- Quantity -->
-              <div class="mb-8">
-                <label class="block text-sm font-medium text-gray-700 mb-3">Cantidad</label>
-                <div class="flex items-center border border-gray-300 rounded-md w-32">
-                  <button 
-                    class="px-3 py-2 text-gray-600 hover:text-gray-800"
-                  >
-                    -
-                  </button>
-                  <input 
-                    type="number" 
-                    min="1"
-                    class="flex-1 px-3 py-2 text-center border-0 focus:ring-0 text-primary"
-                    readonly
-                  >
-                  <button 
-                    class="px-3 py-2 text-gray-600 hover:text-gray-800"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
             </div>
+          </div>
 
-            <!-- Action Buttons -->
-            <div class="space-y-4">
-              
-              <button 
-                class="w-full bg-black hover:bg-gray-800 text-white font-semibold py-4 px-6 rounded-md transition-all"
-              >
-                Comprar ahora
+          <!-- Quantity -->
+          <div class="mb-8">
+            <label class="block text-sm font-medium text-gray-700 mb-3">Cantidad</label>
+            <div class="flex items-center border border-gray-300 rounded-md w-32">
+              <button class="px-3 py-2 text-gray-600 hover:text-gray-800">
+                -
               </button>
-
-              <button class="w-full text-gray-600 hover:text-gray-800 py-2 text-sm font-medium">
-                Ver todos los detalles →
+              <input type="number" min="1" class="flex-1 px-3 py-2 text-center border-0 focus:ring-0 text-primary"
+                readonly>
+              <button class="px-3 py-2 text-gray-600 hover:text-gray-800">
+                +
               </button>
             </div>
           </div>
         </div>
+
+        <!-- Action Buttons -->
+        <div class="space-y-4">
+
+          <button
+            class="w-full bg-black hover:bg-gray-800 text-white font-semibold py-4 px-6 rounded-md transition-all">
+            Comprar ahora
+          </button>
+
+          <button class="w-full text-gray-600 hover:text-gray-800 py-2 text-sm font-medium">
+            Ver todos los detalles →
+          </button>
+        </div>
       </div>
     </div>
+  </div>
+</div>

@@ -11,7 +11,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/materia
       
       <!-- Título Minimalista: Letras más finas y acento sutil -->
       <h2 class="text-2xl font-light text-white mb-2 pb-2 tracking-widest uppercase">
-        NOXCORE 
+        NYXOR FIT 
       </h2>
       
       <!-- Mensaje Profesional -->
@@ -54,7 +54,7 @@ export class VotoModalComponent {
   // Inyectar MatDialogRef para poder cerrar el modal desde dentro del componente
   public dialogRef = inject(MatDialogRef<VotoModalComponent>);
 
-    scrollToCollection() {
+  scrollToCollection() {
     this.dialogRef.close(true)
   }
 }

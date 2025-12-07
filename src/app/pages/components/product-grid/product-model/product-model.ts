@@ -85,7 +85,7 @@ import { CartService } from '../../../services/cart';
           <div class="p-8 flex flex-col justify-between max-h-fit overflow-y-auto">
             <div>
               <!-- Brand -->
-              <div class="text-sm text-gray-500 mb-2">NOXCORE</div>
+              <div class="text-sm text-gray-500 mb-2">NYXOR FIT</div>
               
               <!-- Product Name -->
               <h2 class="  text-[18px] md:text-3xl font-bold text-gray-900 mb-4">{{product?.name}}</h2>
@@ -201,7 +201,7 @@ export class ProductModalComponent implements OnInit {
   selectedSize = '';
   quantity = 1;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService) { }
 
   ngOnInit() {
     if (this.product) {
@@ -242,41 +242,41 @@ export class ProductModalComponent implements OnInit {
       this.onClose();
     }
   }
-// --- ZOOM EFECTO LUPA INTENSO ---
-isZooming = false;
-lensX = 0;
-lensY = 0;
-backgroundSize = '500%'; // 🔥 zoom aumentado (antes era 250%)
-backgroundPosition = 'center';
+  // --- ZOOM EFECTO LUPA INTENSO ---
+  isZooming = false;
+  lensX = 0;
+  lensY = 0;
+  backgroundSize = '500%'; // 🔥 zoom aumentado (antes era 250%)
+  backgroundPosition = 'center';
 
-onMouseMove(event: MouseEvent) {
-  const target = event.target as HTMLElement;
-  const rect = target.getBoundingClientRect();
+  onMouseMove(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const rect = target.getBoundingClientRect();
 
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
 
-  const lensRadius = 100; // 🔥 lupa más grande (antes era 60)
-  const clampedX = Math.max(lensRadius, Math.min(x, rect.width - lensRadius));
-  const clampedY = Math.max(lensRadius, Math.min(y, rect.height - lensRadius));
+    const lensRadius = 100; // 🔥 lupa más grande (antes era 60)
+    const clampedX = Math.max(lensRadius, Math.min(x, rect.width - lensRadius));
+    const clampedY = Math.max(lensRadius, Math.min(y, rect.height - lensRadius));
 
-  this.lensX = clampedX;
-  this.lensY = clampedY;
-  this.isZooming = true;
+    this.lensX = clampedX;
+    this.lensY = clampedY;
+    this.isZooming = true;
 
-  const posX = (x / rect.width) * 100;
-  const posY = (y / rect.height) * 100;
-  this.backgroundPosition = `${posX}% ${posY}%`;
-}
+    const posX = (x / rect.width) * 100;
+    const posY = (y / rect.height) * 100;
+    this.backgroundPosition = `${posX}% ${posY}%`;
+  }
 
-onMouseLeave() {
-  this.isZooming = false;
-}
+  onMouseLeave() {
+    this.isZooming = false;
+  }
   buyNow() {
     this.addToCart();
     // Here you would typically redirect to checkout
-   const phone = "51942301601"; // Tu número en formato internacional (ejemplo Perú: 51 + número)
-const message = `
+    const phone = "51942301601"; // Tu número en formato internacional (ejemplo Perú: 51 + número)
+    const message = `
 🔥 *Hola*, estoy interesado en el siguiente producto:  
 
 🖤 *Producto:* ${this.product?.name}  
@@ -287,7 +287,7 @@ const message = `
 ¿Podrías darme más información, por favor?
 `;
 
-  const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-  window.open(url, "_blank");
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
   }
 }
