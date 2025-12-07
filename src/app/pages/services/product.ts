@@ -219,6 +219,32 @@ Ideales para entrenar con intensidad y estilo.
       discount: 25
     },
     {
+      id: '10',
+      name: 'Soul Decay Compression Void Black',
+      description: `
+      Compresores de alta elasticidad, diseo infernal y ajuste perfecto.
+Ideales para entrenar con intensidad y estilo.
+ Oscuros, cmodos y hechos para dominar.
+      `,
+      price: 49.90,
+      originalPrice: 79.00,
+      image: '../../../assets/soul_decay_short.jpeg',
+      images: [
+        '../../../assets/soul_decay_short.jpeg',
+        '../../../assets/soul_decay_void_black_extra1.png',
+        '../../../assets/soul_decay_void_black_extra2.png'
+      ],
+      category: 'compresores',
+      sizes: [
+        { size: 'S', available: true },
+        { size: 'M', available: true },
+        { size: 'L', available: true }
+      ],
+      inStock: true,
+      isNew: true,
+      discount: 25
+    },
+    {
       id: '9',
       name: 'Vampire Hunter Zip-Up Compression',
       description: `
@@ -242,30 +268,6 @@ Ideales para entrenar con intensidad y estilo.
       isNew: true,
       discount: 25,
       availabilityLabel: 'PREVENTA'
-    },
-    {
-      id: '10',
-      name: 'Soul Decay Compression Void Black (manga corta)',
-      description: `
-      Compresores de alta elasticidad, dise�o infernal y ajuste perfecto.
-Ideales para entrenar con intensidad y estilo.
- Oscuros, c�modos y hechos para dominar.
-      `,
-      price: 49.90,
-      originalPrice: 79.00,
-      image: '../../../assets/soul_decay_short.jpeg',
-      images: [
-        '../../../assets/soul_decay_short.jpeg',
-      ],
-      category: 'compresores',
-      sizes: [
-        { size: 'S', available: true },
-        { size: 'M', available: true },
-        { size: 'L', available: true }
-      ],
-      inStock: true,
-      isNew: true,
-      discount: 25
     }
   ];
   private productsSoon: Product[] = [
@@ -332,5 +334,3 @@ Ideales para entrenar con intensidad y estilo.
     return this.productsSoon.find(product => product.id === id);
   }
 }
-
-
