@@ -40,7 +40,11 @@ export class EncuestasComponent {
     // 🛑 HACK: Forzar imagen correcta para el producto Vampire Hunter
     this.encuestas = this.encuestas.map(e => {
       if (e.nombre.toLowerCase().includes('vampire hunter')) {
-        return { ...e, imagen: '../../../../assets/vampire_hunter_final.png' };
+        return {
+          ...e,
+          nombre: 'Essential Mock neck compression',
+          imagen: '../../../../assets/essential_mock_neck.png'
+        };
       }
       return e;
     });
