@@ -43,7 +43,7 @@ export class EncuestasComponent {
         return {
           ...e,
           nombre: 'Essential Mock neck compression',
-          imagen: '../../../../assets/essential_mock_neck.png'
+          imagen: 'assets/essential_mock_neck.png'
         };
       }
       return e;
