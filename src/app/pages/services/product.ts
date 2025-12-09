@@ -244,6 +244,34 @@ Ideales para entrenar con intensidad y estilo.
       isNew: true,
       discount: 25
     },
+
+  ];
+  private productsSoon: Product[] = [
+    {
+      id: '2',
+      name: 'Heavenly Red - Blood Wyvern Pants',
+      description: `
+      Heavenly Red - Blood Wyvern Pants.
+Diseño infernal y ajuste perfecto.
+🔥 Oscuros, cómodos y hechos para dominar.
+      `,
+      price: 79.90,
+      originalPrice: 99.90,
+      image: '../../../assets/heavenly_red_wyvern.png',
+      images: [
+        '../../../assets/heavenly_red_wyvern.png',
+      ],
+      category: 'Pants',
+      sizes: [
+        { size: 'S', available: true },
+        { size: 'M', available: true },
+        { size: 'L', available: true }
+      ],
+      inStock: true,
+      isNew: true,
+      discount: 0,
+      availabilityLabel: 'PREVENTA'
+    },
     {
       id: '9',
       name: 'Vampire Hunter Zip-Up Compression',
@@ -270,77 +298,28 @@ Ideales para entrenar con intensidad y estilo.
       availabilityLabel: 'PREVENTA'
     }
   ];
-  private productsSoon: Product[] = [
-    {
-      id: '1',
-      name: 'Eternal Wyvern Oversized Sweatpants"',
-      description: `
-      Eternal Wyvern Oversized Sweatpants" , diseño infernal y ajuste perfecto.
-Ideales para entrenar con intensidad y estilo.
-🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 99.90,
-      originalPrice: 119.00,
-      image: '../../../assets/soon3.jpeg',
-      images: [
-        '../../../assets/soon3.jpeg',
-      ],
-      category: 'compresores',
-      sizes: [
-        { size: 'S', available: true }, // No disponible -> Tachar
-        { size: 'M', available: true },  // Disponible
-        { size: 'L', available: true }  // No disponible -> Tachar
-      ],
-      inStock: true,
-      isNew: true,
-      discount: 25
-    },
-    {
-      id: '2',
-      name: 'Heavenly Red - Blood Wyvern Pants',
-      description: `
-      Heavenly Red - Blood Wyvern Pants.
-Diseño infernal y ajuste perfecto.
-🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 79.90,
-      originalPrice: 99.90,
-      image: '../../../assets/heavenly_red_wyvern.png',
-      images: [
-        '../../../assets/heavenly_red_wyvern.png',
-      ],
-      category: 'Pants',
-      sizes: [
-        { size: 'S', available: true },
-        { size: 'M', available: true },
-        { size: 'L', available: true }
-      ],
-      inStock: true,
-      isNew: true,
-      discount: 0
-    },
-    //     {
-    //       id: '1',
-    //       name: 'Color negro con estampado Blanco',
-    //       description: `
-    //       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
-    // Ideales para entrenar con intensidad y estilo.
-    // 🔥 Oscuros, cómodos y hechos para dominar.
-    //       `,
-    //       price: 59.90,
-    //       originalPrice: 89.00,
-    //       image: '../../../assets/gotico2.jpeg',
-    //       images: [
-    //         '../../../assets/gotico2_view1.jpeg',
-    //       ],
-    //       category: 'compresores',
-    //       sizes: ['S', 'M', 'L'],
-    //       inStock: true,
-    //       isNew: false,
-    //       discount: 25
-    //     },
+  //     {
+  //       id: '1',
+  //       name: 'Color negro con estampado Blanco',
+  //       description: `
+  //       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
+  // Ideales para entrenar con intensidad y estilo.
+  // 🔥 Oscuros, cómodos y hechos para dominar.
+  //       `,
+  //       price: 59.90,
+  //       originalPrice: 89.00,
+  //       image: '../../../assets/gotico2.jpeg',
+  //       images: [
+  //         '../../../assets/gotico2_view1.jpeg',
+  //       ],
+  //       category: 'compresores',
+  //       sizes: ['S', 'M', 'L'],
+  //       inStock: true,
+  //       isNew: false,
+  //       discount: 25
+  //     },
 
-  ];
+
   private productsSubject = new BehaviorSubject<Product[]>(this.products);
   private productsSoonSubject = new BehaviorSubject<Product[]>(this.productsSoon);
 

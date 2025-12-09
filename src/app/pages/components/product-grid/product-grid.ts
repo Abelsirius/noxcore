@@ -164,7 +164,7 @@ import { MatDialog } from '@angular/material/dialog';
               <!-- Quick Actions -->
               <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                 <button class="btn-primary">
-                  Reservar 
+                  Preventa 
                 </button>
               </div>
             </div>
