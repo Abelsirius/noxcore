@@ -1,7 +1,8 @@
 @if(!loading()){
 <div class="mt-[8rem] container mx-auto max-w-6xl px-5 flex-col" id="encuesta">
   <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-wider text-center pb-4">VOTA POR EL SIGUIENTE
-    <br />DROP DE NYXOR FIT</h1>
+    <br />DROP DE NYXOR FIT
+  </h1>
   <div class="grid md:grid-cols-3 gap-6  ">
 
     <div *ngFor="let e of encuestas"
@@ -13,7 +14,7 @@
 
 
       <img [src]="e.imagen || 'https://via.placeholder.com/300x200?text=Encuesta'"
-        class="w-full h-[300px] object-cover object-top rounded-lg mb-3 border border-red-700 transition-opacity duration-300 group-hover:opacity-80" />
+        class="w-full h-[300px] object-contain bg-gray-900 object-top rounded-lg mb-3 border border-red-700 transition-opacity duration-300 group-hover:opacity-80" />
 
       <h3 class="text-xl font-bold">{{ e.nombre }}</h3>
 
