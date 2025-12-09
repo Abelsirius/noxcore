@@ -296,6 +296,31 @@ Ideales para entrenar con intensidad y estilo.
       isNew: true,
       discount: 25,
       availabilityLabel: 'PREVENTA'
+    },
+    {
+      id: '3',
+      name: 'Deathblade Oversized Pullover Hoodie',
+      description: `
+      Deathblade Oversized Pullover Hoodie.
+      Diseño infernal y ajuste perfecto.
+      🔥 Oscuros, cómodos y hechos para dominar.
+      `,
+      price: 99.90,
+      originalPrice: 119.90,
+      image: '../../../assets/deathblade_hoodie.png',
+      images: [
+        '../../../assets/deathblade_hoodie.png',
+      ],
+      category: 'Hoodies',
+      sizes: [
+        { size: 'S', available: true },
+        { size: 'M', available: true },
+        { size: 'L', available: true }
+      ],
+      inStock: true,
+      isNew: true,
+      discount: 0,
+      availabilityLabel: 'PREVENTA'
     }
   ];
   //     {
