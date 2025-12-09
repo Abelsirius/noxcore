@@ -20,22 +20,31 @@ interface Producto {
 @Component({
   selector: 'app-encuestas',
   templateUrl: './encuesta.html',
-  imports: [FormsModule,CommonModule,MatIcon,ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, MatIcon, ReactiveFormsModule],
   styleUrls: ['./encuesta.scss'],
 })
 export class EncuestasComponent {
-     encuestas: Encuesta[] = [];
+  encuestas: Encuesta[] = [];
   form!: FormGroup;
   userId!: string;
- public loadingService = inject(LoadingService);
-  constructor(private encuestaDb: EncuestaDbService, private fb: FormBuilder) {}
-loading: WritableSignal<boolean> = signal(true);
+  public loadingService = inject(LoadingService);
+  constructor(private encuestaDb: EncuestaDbService, private fb: FormBuilder) { }
+  loading: WritableSignal<boolean> = signal(true);
   async ngOnInit() {
     this.userId = this.getUserId();
     this.form = this.fb.group({ comentario: [''] });
 
     // 🔥 Carga encuestas desde Firebase
     this.encuestas = await this.encuestaDb.obtenerEncuestas();
+
+    // 🛑 HACK: Forzar imagen correcta para el producto Vampire Hunter
+    this.encuestas = this.encuestas.map(e => {
+      if (e.nombre.toLowerCase().includes('vampire hunter')) {
+        return { ...e, imagen: '../../../../assets/vampire_hunter_final.png' };
+      }
+      return e;
+    });
+
     // Si no hay encuestas, crea 3 de ejemplo
     if (!this.encuestas.length) {
       const base: Omit<Encuesta, 'id'>[] = [
@@ -80,7 +89,7 @@ loading: WritableSignal<boolean> = signal(true);
 
     console.log('Encuestas cargadas desde Firebase:', this.encuestas);
 
- this.loading.set(false);
+    this.loading.set(false);
   }
 
   /** Genera o recupera un ID único por dispositivo */
@@ -94,66 +103,66 @@ loading: WritableSignal<boolean> = signal(true);
   }
 
   /** 🔥 Dar like (solo uno por usuario/dispositivo) */
-async like(encuesta: Encuesta) {
+  async like(encuesta: Encuesta) {
     // 1. **Optimista: Aplicar el cambio de UI inmediatamente (Antes de la llamada a Firebase)**
     this.loadingService.show()
     // 1.1. Buscar la encuesta específica en tu arreglo local 'this.encuestas'
     const index = this.encuestas.findIndex(item => item.id === encuesta.id);
-    
-    if (index !== -1) {
-        // 1.2. Obtener una referencia a la encuesta (para mutarla)
-        const encuestaLocal = this.encuestas[index];
-        
-        // 1.3. Determinar si el usuario ya le dio like
-        const yaTieneLike = encuestaLocal.likedUsers?.includes(this.userId);
-        
-        // 1.4. Aplicar el cambio localmente
-        if (yaTieneLike) {
-            // Si ya tenía like, lo quitamos
-            encuestaLocal.likedUsers = encuestaLocal.likedUsers.filter(id => id !== this.userId);
-        } else {
-            // Si no tenía like, lo agregamos
-            if (!encuestaLocal.likedUsers) {
-                encuestaLocal.likedUsers = [];
-            }
-            encuestaLocal.likedUsers.push(this.userId);
-        }
 
-        // El componente detectará el cambio y el botón cambiará inmediatamente a '💙 Me gusta' o '🤍 Like'.
+    if (index !== -1) {
+      // 1.2. Obtener una referencia a la encuesta (para mutarla)
+      const encuestaLocal = this.encuestas[index];
+
+      // 1.3. Determinar si el usuario ya le dio like
+      const yaTieneLike = encuestaLocal.likedUsers?.includes(this.userId);
+
+      // 1.4. Aplicar el cambio localmente
+      if (yaTieneLike) {
+        // Si ya tenía like, lo quitamos
+        encuestaLocal.likedUsers = encuestaLocal.likedUsers.filter(id => id !== this.userId);
+      } else {
+        // Si no tenía like, lo agregamos
+        if (!encuestaLocal.likedUsers) {
+          encuestaLocal.likedUsers = [];
+        }
+        encuestaLocal.likedUsers.push(this.userId);
+      }
+
+      // El componente detectará el cambio y el botón cambiará inmediatamente a '💙 Me gusta' o '🤍 Like'.
     }
 
 
     // 2. **Llamar al servicio de base de datos (Operación Asíncrona)**
     try {
-        await this.encuestaDb.toggleLike(encuesta.id!, this.userId);
-         this.loadingService.hide(); 
-        // Opcional, solo si quieres sincronizar otros datos:
-        // this.encuestas = await this.encuestaDb.obtenerEncuestas();
-        
+      await this.encuestaDb.toggleLike(encuesta.id!, this.userId);
+      this.loadingService.hide();
+      // Opcional, solo si quieres sincronizar otros datos:
+      // this.encuestas = await this.encuestaDb.obtenerEncuestas();
+
     } catch (error) {
-        // 3. **Manejo de Errores: Revertir la UI si la llamada a Firebase falla**
-        console.error("Error al actualizar el like en Firebase:", error);
-        
-        // Para una reversión real, deberías implementar una lógica para deshacer el cambio local
-        // que hiciste en el paso 1, o simplemente recargar la lista de encuestas.
-        this.encuestas = await this.encuestaDb.obtenerEncuestas(); 
+      // 3. **Manejo de Errores: Revertir la UI si la llamada a Firebase falla**
+      console.error("Error al actualizar el like en Firebase:", error);
+
+      // Para una reversión real, deberías implementar una lógica para deshacer el cambio local
+      // que hiciste en el paso 1, o simplemente recargar la lista de encuestas.
+      this.encuestas = await this.encuestaDb.obtenerEncuestas();
     }
-    
+
     // **Importante:** Elimina esta línea si no necesitas recargar toda la lista:
     // this.encuestas = await this.encuestaDb.obtenerEncuestas();
-}
+  }
 
   /** 💬 Agregar comentario */
   async comentar(encuesta: Encuesta) {
     const texto = this.form.value.comentario?.trim();
     if (!texto) return;
-        this.loadingService.show(); // MOSTRAR LOADING
+    this.loadingService.show(); // MOSTRAR LOADING
 
     await this.encuestaDb.agregarComentario(encuesta.id!, texto);
     this.form.reset();
     this.encuestas = await this.encuestaDb.obtenerEncuestas();
 
 
-        this.loadingService.hide();
+    this.loadingService.hide();
   }
 }
