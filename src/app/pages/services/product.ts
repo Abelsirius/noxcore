@@ -295,6 +295,30 @@ Ideales para entrenar con intensidad y estilo.
       isNew: true,
       discount: 25
     },
+    {
+      id: '2',
+      name: 'Heavenly Red - Blood Wyvern Pants',
+      description: `
+      Heavenly Red - Blood Wyvern Pants.
+Diseño infernal y ajuste perfecto.
+🔥 Oscuros, cómodos y hechos para dominar.
+      `,
+      price: 79.90,
+      originalPrice: 99.90,
+      image: '../../../assets/heavenly_red_wyvern.png',
+      images: [
+        '../../../assets/heavenly_red_wyvern.png',
+      ],
+      category: 'Pants',
+      sizes: [
+        { size: 'S', available: true },
+        { size: 'M', available: true },
+        { size: 'L', available: true }
+      ],
+      inStock: true,
+      isNew: true,
+      discount: 0
+    },
     //     {
     //       id: '1',
     //       name: 'Color negro con estampado Blanco',
