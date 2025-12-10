@@ -321,6 +321,31 @@ Ideales para entrenar con intensidad y estilo.
       isNew: true,
       discount: 0,
       availabilityLabel: 'PREVENTA'
+    },
+    {
+      id: '11',
+      name: 'Immortal compression',
+      description: `
+      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
+Ideales para entrenar con intensidad y estilo.
+🔥 Oscuros, cómodos y hechos para dominar.
+      `,
+      price: 59.90,
+      originalPrice: 79.90,
+      image: '../../../assets/immortal_compression.png',
+      images: [
+        '../../../assets/immortal_compression.png',
+      ],
+      category: 'compresores',
+      sizes: [
+        { size: 'S', available: true },
+        { size: 'M', available: true },
+        { size: 'L', available: true }
+      ],
+      inStock: true,
+      isNew: true,
+      discount: 0,
+      availabilityLabel: 'PREVENTA'
     }
   ];
   //     {
