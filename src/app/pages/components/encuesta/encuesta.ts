@@ -39,21 +39,23 @@ export class EncuestasComponent {
 
     // 🛑 HACK: Forzar imagen correcta para el producto Vampire Hunter
     this.encuestas = this.encuestas.map(e => {
-      if (e.nombre.toLowerCase().includes('vampire hunter')) {
+      const base = { ...e, comentarios: [] };
+
+      if (base.nombre.toLowerCase().includes('vampire hunter')) {
         return {
-          ...e,
+          ...base,
           nombre: 'Essential Mock neck compression',
           imagen: 'assets/essential_mock_neck.png'
         };
       }
-      if (e.nombre.toLowerCase().includes('deathblade oversized pullover hoodie')) {
+      if (base.nombre.toLowerCase().includes('deathblade oversized pullover hoodie')) {
         return {
-          ...e,
+          ...base,
           nombre: 'Archangel Quarter-Zip',
           imagen: 'assets/archangel_quarter_zip.png'
         };
       }
-      return e;
+      return base;
     });
 
     // Si no hay encuestas, crea 3 de ejemplo
