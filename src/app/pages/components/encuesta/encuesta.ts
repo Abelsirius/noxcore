@@ -46,6 +46,13 @@ export class EncuestasComponent {
           imagen: 'assets/essential_mock_neck.png'
         };
       }
+      if (e.nombre.toLowerCase().includes('deathblade oversized pullover hoodie')) {
+        return {
+          ...e,
+          nombre: 'Archangel Quarter-Zip',
+          imagen: 'assets/archangel_quarter_zip.png'
+        };
+      }
       return e;
     });
 
