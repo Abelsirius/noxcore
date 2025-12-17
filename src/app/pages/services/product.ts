@@ -269,8 +269,8 @@ Diseño infernal y ajuste perfecto.
       ],
       inStock: true,
       isNew: true,
-      discount: 0,
-      availabilityLabel: 'PREVENTA'
+      discount: 25,
+      availabilityLabel: 'DISPONIBLE'
     },
     {
       id: '9',
@@ -319,8 +319,8 @@ Ideales para entrenar con intensidad y estilo.
       ],
       inStock: true,
       isNew: true,
-      discount: 0,
-      availabilityLabel: 'PREVENTA'
+      discount: 25,
+      availabilityLabel: 'DISPONIBLE'
     },
     {
       id: '11',
@@ -344,8 +344,8 @@ Ideales para entrenar con intensidad y estilo.
       ],
       inStock: true,
       isNew: true,
-      discount: 0,
-      availabilityLabel: 'PREVENTA'
+      discount: 25,
+      availabilityLabel: 'DISPONIBLE'
     }
   ];
   //     {
