@@ -146,7 +146,7 @@ import { MatDialog } from '@angular/material/dialog';
                 class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300"
               >
               <!-- Badges -->
-              <!-- <div class="absolute top-4 left-4 space-y-2">
+              <div class="absolute top-4 left-4 space-y-2">
                 <span 
                   *ngIf="product.isNew" 
                   class="inline-block bg-accent-500 text-white text-xs font-medium  px-3 py-1 rounded"
@@ -159,19 +159,20 @@ import { MatDialog } from '@angular/material/dialog';
                 >
                   -{{product.discount}}%
                 </span>
-              </div> -->
+              </div>
 
               <!-- Quick Actions -->
               <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                 <button class="btn-primary">
-                  Reservar ahora
+                  Ver Detalles
                 </button>
               </div>
             </div>
             <!-- Product Info -->
-              <!-- <p class="text-[11px] px-2 py-1 mb-1 font-semibold  bg-[#EF4444] rounded-lg  ">Disponible por tiempo limitado.</p> -->
-              <!-- <h3 class="text-lg font-semibold text-white mb-2">{{product.name}}</h3> -->
-<!--               
+            <div class="p-6">
+              <p class="text-[11px] px-2 py-1 mb-1 font-semibold  bg-[#EF4444] rounded-lg text-center ">{{product.availabilityLabel || 'Disponible por tiempo limitado.'}}</p>
+              <h3 class="text-lg font-semibold text-white mb-2">{{product.name}}</h3>
+              
               <div class="flex items-center justify-between mb-2">
                 <div class="flex items-center space-x-2">
                   <span class="text-2xl font-bold text-accent-500">
@@ -184,30 +185,30 @@ import { MatDialog } from '@angular/material/dialog';
                     S/. {{product.originalPrice.toFixed(2)}}
                   </span>
                 </div>
-              </div> -->
-               <!-- <span class="text-sm">Unidades limitadas — ¡puedes apartar la tuya desde ya!.</span> -->
-              <!-- <div class="flex justify-between items-center">
+              </div>
+                <!-- <span class="text-sm">🎃 Edición Halloween.</span> -->
+              <div class="flex justify-between items-center">
                 <button 
                   class="bg-accent-500 text-white text-sm px-4 py-2 rounded hover:bg-accent-600 transition-colors"
                   (click)="openProductModal(product); $event.stopPropagation()"
                 >
                   Oferta
                 </button>
-                <div class="flex space-x-1">
-                  <span 
-                    *ngFor="let size of product.sizes.slice(0, 3)" 
-                    class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded"
-                  >
-                    {{size}}
-                  </span>
-                  <span 
-                    *ngIf="product.sizes.length > 3" 
-                    class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded"
-                  >
-                    +{{product.sizes.length - 3}}
-                  </span>
-                </div>
-              </div> -->
+<div class="flex space-x-1">
+ @for(sizeItem of product.sizes.slice(0, 3); track sizeItem.size) {
+ <span 
+ [ngClass]="{
+'line-through opacity-50': !sizeItem.available, 
+ 'bg-gray-800 text-gray-300': true
+}"
+ class="text-xs px-2 py-1 rounded transition-opacity" >{{sizeItem.size}} </span>
+ } <span 
+ *ngIf="product.sizes.length > 3" 
+  class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded" >
+   +{{product.sizes.length - 3}} </span>
+</div>
+              </div>
+            </div>
           </div>
           }@empty 
           {
