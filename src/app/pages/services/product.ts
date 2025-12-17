@@ -305,7 +305,7 @@ Ideales para entrenar con intensidad y estilo.
       Diseño infernal y ajuste perfecto.
       🔥 Oscuros, cómodos y hechos para dominar.
       `,
-      price: 99.90,
+      price: 79.90,
       originalPrice: 119.90,
       image: '../../../assets/deathblade_hoodie.png',
       images: [
