@@ -263,9 +263,9 @@ Diseño infernal y ajuste perfecto.
       ],
       category: 'Pants',
       sizes: [
-        { size: 'S', available: true },
         { size: 'M', available: true },
-        { size: 'L', available: true }
+        { size: 'L', available: true },
+        { size: 'XL', available: true }
       ],
       inStock: true,
       isNew: true,
