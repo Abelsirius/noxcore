@@ -139,6 +139,30 @@ Ideales para entrenar con intensidad y estilo.
       discount: 25
     },
     {
+      id: '12',
+      name: 'Nighfall Compression Frost',
+      description: `
+      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
+Ideales para entrenar con intensidad y estilo.
+🔥 Oscuros, cómodos y hechos para dominar.
+      `,
+      price: 49.90,
+      originalPrice: 89.00,
+      image: '../../../assets/nighfall_frost.png',
+      images: [
+        '../../../assets/nighfall_frost.png',
+      ],
+      category: 'compresores',
+      sizes: [
+        { size: 'S', available: true },
+        { size: 'M', available: true },
+        { size: 'L', available: true }
+      ],
+      inStock: true,
+      isNew: true,
+      discount: 25
+    },
+    {
       id: '6',
       name: 'Dark Fantasy compression Heavenly Red',
       description: `
