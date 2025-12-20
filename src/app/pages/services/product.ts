@@ -303,7 +303,7 @@ Diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
 🔥 Oscuros, cómodos y hechos para dominar.
       `,
-      price: 69.00,
+      price: 59.90,
       originalPrice: 79.00,
       image: '../../../assets/new_product_1.jpg',
       images: [
