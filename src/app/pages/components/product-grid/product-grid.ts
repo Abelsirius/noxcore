@@ -57,7 +57,7 @@ import { MatDialog } from '@angular/material/dialog';
                 </span>
                 <span 
                   *ngIf="product.discount" 
-                  class="inline-block bg-primary text-white text-base font-bold px-4 py-2 rounded shadow-lg"
+                  class="inline-block bg-primary text-white text-xs font-bold px-3 py-1 rounded"
                 >
                   -{{product.discount}}%
                 </span>
