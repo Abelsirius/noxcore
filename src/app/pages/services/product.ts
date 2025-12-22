@@ -342,7 +342,7 @@ Ideales para entrenar con intensidad y estilo.
       ],
       inStock: true,
       isNew: true,
-      discount: 25,
+      discount: 50,
       availabilityLabel: 'DISPONIBLE'
     },
     {
