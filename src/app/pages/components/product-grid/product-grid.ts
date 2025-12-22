@@ -73,7 +73,7 @@ import { MatDialog } from '@angular/material/dialog';
 
             <!-- Product Info -->
             <div class="p-6">
-              <p *ngIf="product.inStock" class="text-[11px] px-2 py-1 mb-1 font-semibold  bg-[#EF4444] rounded-lg text-center ">{{product.availabilityLabel || 'Disponible por tiempo limitado.'}}</p>
+              <p *ngIf="product.inStock" class="text-[11px] px-2 py-1 mb-1 font-semibold  bg-[#EF4444] rounded-lg text-center ">{{getAvailabilityText(product)}}</p>
               <h3 class="text-lg font-semibold text-white mb-2">{{product.name}}</h3>
               
               <div class="flex items-center justify-between mb-2">
@@ -170,7 +170,7 @@ import { MatDialog } from '@angular/material/dialog';
             </div>
             <!-- Product Info -->
             <div class="p-6">
-              <p *ngIf="product.inStock" class="text-[11px] px-2 py-1 mb-1 font-semibold  bg-[#EF4444] rounded-lg text-center ">{{product.availabilityLabel || 'Disponible por tiempo limitado.'}}</p>
+              <p *ngIf="product.inStock" class="text-[11px] px-2 py-1 mb-1 font-semibold  bg-[#EF4444] rounded-lg text-center ">{{getAvailabilityText(product)}}</p>
               <h3 class="text-lg font-semibold text-white mb-2">{{product.name}}</h3>
               
               <div class="flex items-center justify-between mb-2">
@@ -263,5 +263,16 @@ export class ProductGridComponent implements OnInit {
   closeProductModal() {
     this.isModalOpen = false;
     this.selectedProduct = null;
+  }
+
+  getAvailabilityText(product: Product): string {
+    if (product.availabilityLabel) {
+      return product.availabilityLabel;
+    }
+    const availableSizesCount = product.sizes.filter(s => s.available).length;
+    if (availableSizesCount === 1) {
+      return 'CASI AGOTADO';
+    }
+    return 'Disponible por tiempo limitado.';
   }
 }
