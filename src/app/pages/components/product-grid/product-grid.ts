@@ -22,12 +22,12 @@ import { MatDialog } from '@angular/material/dialog';
     <section class="py-16 px-4 " id="collection-shadow">
       <div class="container mx-auto max-w-6xl">
         <!-- Section Title -->
-        <div class="text-center mb-12 relative">
-          <div class="absolute inset-0 flex justify-center items-center opacity-30 pointer-events-none" style="z-index: 0;">
-             <img src="../../../assets/breathedivinity_logo.png" class="w-96 object-contain" alt="Background Logo">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold text-white mb-4">STYLE COLLECTION  {{nameColeccion.toUpperCase()}} </h2>
+          <div class="w-24 h-1 bg-accent-500 mx-auto mb-6"></div>
+          <div class="flex justify-center">
+             <img src="../../../assets/breathedivinity_logo.png" class="w-96 object-contain" alt="Breathedivinity Logo">
           </div>
-          <h2 class="text-4xl font-bold text-white mb-4 relative z-10">STYLE COLLECTION  {{nameColeccion.toUpperCase()}} </h2>
-          <div class="w-24 h-1 bg-accent-500 mx-auto relative z-10"></div>
         </div>
 
         <!-- Products Grid -->
