@@ -280,9 +280,10 @@ Diseño infernal y ajuste perfecto.
       `,
       price: 79.90,
       originalPrice: 99.90,
-      image: '../../../assets/heavenly_red_wyvern.png',
+      image: '../../../assets/heavenly_red_wyvern_1.jpg',
       images: [
-        '../../../assets/heavenly_red_wyvern.png',
+        '../../../assets/heavenly_red_wyvern_1.jpg',
+        '../../../assets/heavenly_red_wyvern_2.png',
       ],
       category: 'Pants',
       sizes: [
