@@ -312,7 +312,7 @@ Ideales para entrenar con intensidad y estilo.
       category: 'compresores',
       sizes: [
         { size: 'S', available: false },
-        { size: 'M', available: true },
+        { size: 'M', available: false },
         { size: 'L', available: true }
       ],
       inStock: true,
@@ -353,7 +353,7 @@ Ideales para entrenar con intensidad y estilo.
 Ideales para entrenar con intensidad y estilo.
 🔥 Oscuros, cómodos y hechos para dominar.
       `,
-      price: 59.90,
+      price: 49.90,
       originalPrice: 79.90,
       image: '../../../assets/immortal_compression.png',
       images: [
@@ -361,7 +361,7 @@ Ideales para entrenar con intensidad y estilo.
       ],
       category: 'compresores',
       sizes: [
-        { size: 'S', available: true },
+        { size: 'S', available: false },
         { size: 'M', available: true },
         { size: 'L', available: true }
       ],
