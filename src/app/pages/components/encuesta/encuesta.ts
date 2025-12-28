@@ -20,73 +20,23 @@ export class EncuestasComponent {
   async ngOnInit() {
     this.userId = this.getUserId();
 
-    // 🔥 Carga encuestas desde Firebase
-    this.encuestas = await this.encuestaDb.obtenerEncuestas();
+    // 🔥 Carga encuestas desde Firebase (DESACTIVADO POR EL MOMENTO)
+    // this.encuestas = await this.encuestaDb.obtenerEncuestas();
 
-    // 🛑 HACK: Forzar imagen correcta para el producto Vampire Hunter
-    this.encuestas = this.encuestas.map(e => {
-      const base = { ...e, comentarios: [] };
+    // 🛑 HARDCODED: Solo mostrar Nighfall Compression Longsleeve
+    this.encuestas = [{
+      productoId: 999, // ID temporal
+      nombre: 'Nighfall Compression Longsleeve',
+      voto: 0,
+      edad: 0,
+      opinion: '',
+      userId: this.userId,
+      imagen: 'assets/nighfall_compression_longsleeve.png',
+      comentarios: [],
+      likedUsers: [],
+    }];
 
-      if (base.nombre.toLowerCase().includes('vampire hunter')) {
-        return {
-          ...base,
-          nombre: 'Essential Mock neck compression',
-          imagen: 'assets/essential_mock_neck.png'
-        };
-      }
-      if (base.nombre.toLowerCase().includes('deathblade oversized pullover hoodie')) {
-        return {
-          ...base,
-          nombre: 'Archangel Quarter-Zip',
-          imagen: 'assets/archangel_quarter_zip.png'
-        };
-      }
-      return base;
-    });
-
-    // Si no hay encuestas, crea 3 de ejemplo
-    if (!this.encuestas.length) {
-      const base: Omit<Encuesta, 'id'>[] = [
-        {
-          productoId: 1,
-          nombre: 'Compresora A',
-          voto: 10,
-          edad: 22,
-          opinion: '🔥🔥🔥',
-          userId: this.userId,
-          imagen: '../../../../assets/encuestas/encuesta1.jpeg',
-          comentarios: [],
-          likedUsers: [],
-        },
-        {
-          productoId: 2,
-          nombre: 'Compresora B',
-          voto: 7,
-          edad: 19,
-          opinion: 'Buena calidad 👕',
-          userId: this.userId,
-          imagen: '../../../../assets/encuestas/encuesta1.jpeg',
-          comentarios: [],
-          likedUsers: [],
-        },
-        {
-          productoId: 3,
-          nombre: 'Compresora C',
-          voto: 4,
-          edad: 25,
-          opinion: 'Fresca 😎',
-          userId: this.userId,
-          imagen: '../../../../assets/encuestas/encuesta1.jpeg',
-          comentarios: [],
-          likedUsers: [],
-        },
-      ];
-
-      for (const e of base) await this.encuestaDb.guardarEncuesta(e);
-      this.encuestas = await this.encuestaDb.obtenerEncuestas();
-    }
-
-    console.log('Encuestas cargadas desde Firebase:', this.encuestas);
+    console.log('Encuesta hardcoded cargada:', this.encuestas);
 
     this.loading.set(false);
   }
