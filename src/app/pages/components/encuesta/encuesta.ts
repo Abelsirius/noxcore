@@ -1,38 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal, WritableSignal } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatIcon } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
 import { EncuestaDbService } from '../../../../core/encuesta-db';
 import { Encuesta } from '../../../../core/interfaces/encuesta.model';
 import { LoadingService } from '../../../../core/loading';
 
-interface Producto {
-  id: number;
-  name: string;
-  descripcion: string;
-  image: string;
-  likes: number;
-  liked?: boolean;
-  comentario?: string;
-  showComment?: boolean;
-}
-
 @Component({
   selector: 'app-encuestas',
   templateUrl: './encuesta.html',
-  imports: [FormsModule, CommonModule, MatIcon, ReactiveFormsModule],
+  imports: [CommonModule],
   styleUrls: ['./encuesta.scss'],
 })
 export class EncuestasComponent {
   encuestas: Encuesta[] = [];
-  form!: FormGroup;
   userId!: string;
   public loadingService = inject(LoadingService);
-  constructor(private encuestaDb: EncuestaDbService, private fb: FormBuilder) { }
+  constructor(private encuestaDb: EncuestaDbService) { }
   loading: WritableSignal<boolean> = signal(true);
   async ngOnInit() {
     this.userId = this.getUserId();
-    this.form = this.fb.group({ comentario: [''] });
 
     // 🔥 Carga encuestas desde Firebase
     this.encuestas = await this.encuestaDb.obtenerEncuestas();
@@ -113,69 +99,5 @@ export class EncuestasComponent {
       localStorage.setItem('userId', userId);
     }
     return userId;
-  }
-
-  /** 🔥 Dar like (solo uno por usuario/dispositivo) */
-  async like(encuesta: Encuesta) {
-    // 1. **Optimista: Aplicar el cambio de UI inmediatamente (Antes de la llamada a Firebase)**
-    this.loadingService.show()
-    // 1.1. Buscar la encuesta específica en tu arreglo local 'this.encuestas'
-    const index = this.encuestas.findIndex(item => item.id === encuesta.id);
-
-    if (index !== -1) {
-      // 1.2. Obtener una referencia a la encuesta (para mutarla)
-      const encuestaLocal = this.encuestas[index];
-
-      // 1.3. Determinar si el usuario ya le dio like
-      const yaTieneLike = encuestaLocal.likedUsers?.includes(this.userId);
-
-      // 1.4. Aplicar el cambio localmente
-      if (yaTieneLike) {
-        // Si ya tenía like, lo quitamos
-        encuestaLocal.likedUsers = encuestaLocal.likedUsers.filter(id => id !== this.userId);
-      } else {
-        // Si no tenía like, lo agregamos
-        if (!encuestaLocal.likedUsers) {
-          encuestaLocal.likedUsers = [];
-        }
-        encuestaLocal.likedUsers.push(this.userId);
-      }
-
-      // El componente detectará el cambio y el botón cambiará inmediatamente a '💙 Me gusta' o '🤍 Like'.
-    }
-
-
-    // 2. **Llamar al servicio de base de datos (Operación Asíncrona)**
-    try {
-      await this.encuestaDb.toggleLike(encuesta.id!, this.userId);
-      this.loadingService.hide();
-      // Opcional, solo si quieres sincronizar otros datos:
-      // this.encuestas = await this.encuestaDb.obtenerEncuestas();
-
-    } catch (error) {
-      // 3. **Manejo de Errores: Revertir la UI si la llamada a Firebase falla**
-      console.error("Error al actualizar el like en Firebase:", error);
-
-      // Para una reversión real, deberías implementar una lógica para deshacer el cambio local
-      // que hiciste en el paso 1, o simplemente recargar la lista de encuestas.
-      this.encuestas = await this.encuestaDb.obtenerEncuestas();
-    }
-
-    // **Importante:** Elimina esta línea si no necesitas recargar toda la lista:
-    // this.encuestas = await this.encuestaDb.obtenerEncuestas();
-  }
-
-  /** 💬 Agregar comentario */
-  async comentar(encuesta: Encuesta) {
-    const texto = this.form.value.comentario?.trim();
-    if (!texto) return;
-    this.loadingService.show(); // MOSTRAR LOADING
-
-    await this.encuestaDb.agregarComentario(encuesta.id!, texto);
-    this.form.reset();
-    this.encuestas = await this.encuestaDb.obtenerEncuestas();
-
-
-    this.loadingService.hide();
   }
 }
