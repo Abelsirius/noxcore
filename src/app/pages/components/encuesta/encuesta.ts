@@ -15,12 +15,25 @@ export class EncuestasComponent {
   encuestas: Encuesta[] = [];
   userId!: string;
   public loadingService = inject(LoadingService);
-  constructor(private encuestaDb: EncuestaDbService) { }
   loading: WritableSignal<boolean> = signal(true);
+
+  // Countdown properties
+  targetDate: Date = new Date('2026-01-15T00:00:00');
+  days: number = 0;
+  hours: number = 0;
+  minutes: number = 0;
+  seconds: number = 0;
+  private timerInterval: any;
+
+  constructor(private encuestaDb: EncuestaDbService) { }
+
   async ngOnInit() {
     this.userId = this.getUserId();
 
-    // 🔥 Carga encuestas desde Firebase (DESACTIVADO POR EL MOMENTO)
+    // Start countdown
+    this.startCountdown();
+
+    // 🔥 Carga encuestas desde Firebase (DESACTIVADO POR EL MOMENTO) (DESACTIVADO POR EL MOMENTO)
     // this.encuestas = await this.encuestaDb.obtenerEncuestas();
 
     // 🛑 HARDCODED: Solo mostrar Nighfall Compression Longsleeve
@@ -49,5 +62,36 @@ export class EncuestasComponent {
       localStorage.setItem('userId', userId);
     }
     return userId;
+  }
+
+  private startCountdown() {
+    this.updateTime();
+    this.timerInterval = setInterval(() => {
+      this.updateTime();
+    }, 1000);
+  }
+
+  private updateTime() {
+    const now = new Date().getTime();
+    const distance = this.targetDate.getTime() - now;
+
+    if (distance < 0) {
+      this.days = 0;
+      this.hours = 0;
+      this.minutes = 0;
+      this.seconds = 0;
+      clearInterval(this.timerInterval);
+    } else {
+      this.days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      this.hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      this.minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      this.seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
   }
 }
