@@ -68,7 +68,7 @@ export class EncuestasComponent {
     this.updateTime();
     this.timerInterval = setInterval(() => {
       this.updateTime();
-    }, 1000);
+    }, 100);
   }
 
   private updateTime() {

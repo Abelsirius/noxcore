@@ -23,15 +23,15 @@
     </div>
   </div>
 
-  <div class="grid md:grid-cols-3 gap-6">
-
+  <div class="flex justify-center w-full">
     <div *ngFor="let e of encuestas"
-      class="bg-black text-white rounded-xl p-5 shadow-2xl border border-red-700 relative overflow-hidden group hover:border-red-500 transition-all duration-300">
+      class="relative group transition-all duration-300 max-w-4xl w-full flex flex-col items-center">
 
       <img [src]="e.imagen || 'https://via.placeholder.com/300x200?text=Encuesta'"
-        class="w-full h-[300px] object-contain bg-gray-900 object-top rounded-lg mb-3 border border-red-700 transition-transform duration-300 group-hover:scale-105" />
+        class="w-full h-auto max-h-[70vh] object-contain transition-transform duration-500 group-hover:scale-105 filter drop-shadow-[0_0_20px_rgba(220,38,38,0.3)]" />
 
-      <h3 class="text-xl font-bold text-center mt-4">{{ e.nombre }}</h3>
+      <h3 class="text-3xl md:text-5xl font-black text-center mt-8 uppercase tracking-widest text-white drop-shadow-lg">
+        {{ e.nombre }}</h3>
     </div>
   </div>
 </div>
