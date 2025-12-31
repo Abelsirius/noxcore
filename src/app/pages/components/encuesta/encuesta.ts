@@ -25,6 +25,11 @@ export class EncuestasComponent {
   seconds: WritableSignal<number> = signal(0);
   private timerInterval: any;
 
+  // Long press state management
+  private longPressTimer: any;
+  private isLongPressActive = false;
+  private readonly LONG_PRESS_DURATION = 200; // milliseconds
+
   constructor(private encuestaDb: EncuestaDbService) {
 
   }
@@ -105,6 +110,48 @@ export class EncuestasComponent {
         video.currentTime = 0;
       }
     }
+  }
+
+  onTouchStart(event: TouchEvent, containerElement: HTMLElement) {
+    this.isLongPressActive = false;
+
+    this.longPressTimer = setTimeout(() => {
+      this.isLongPressActive = true;
+      const video = containerElement.querySelector('video.product-video') as HTMLVideoElement;
+
+      if (video) {
+        video.muted = true;
+        video.play().catch(error => console.log('Video play failed:', error));
+      }
+    }, this.LONG_PRESS_DURATION);
+  }
+
+  onTouchEnd(event: TouchEvent, containerElement: HTMLElement) {
+    if (this.longPressTimer) {
+      clearTimeout(this.longPressTimer);
+    }
+
+    const video = containerElement.querySelector('video.product-video') as HTMLVideoElement;
+    if (video && this.isLongPressActive) {
+      video.pause();
+      video.currentTime = 0;
+    }
+
+    this.isLongPressActive = false;
+  }
+
+  onTouchCancel(event: TouchEvent, containerElement: HTMLElement) {
+    if (this.longPressTimer) {
+      clearTimeout(this.longPressTimer);
+    }
+
+    const video = containerElement.querySelector('video.product-video') as HTMLVideoElement;
+    if (video && this.isLongPressActive) {
+      video.pause();
+      video.currentTime = 0;
+    }
+
+    this.isLongPressActive = false;
   }
 
   ngOnDestroy() {

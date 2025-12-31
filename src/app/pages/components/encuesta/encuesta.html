@@ -27,10 +27,11 @@
   </div>
 
   <div class="flex justify-center w-full">
-    <div *ngFor="let e of encuestas"
+    <div *ngFor="let e of encuestas" #productCard
       class="relative group transition-all duration-300 max-w-4xl w-full flex flex-col items-center"
       (mouseenter)="onProductHover($event, true)" (mouseleave)="onProductHover($event, false)"
-      (touchstart)="onProductHover($event, true)" (touchend)="onProductHover($event, false)">
+      (touchstart)="onTouchStart($event, productCard)" (touchend)="onTouchEnd($event, productCard)"
+      (touchcancel)="onTouchCancel($event, productCard)">
 
       <div class="relative w-full">
         <img [src]="e.imagen || 'https://via.placeholder.com/300x200?text=Encuesta'"

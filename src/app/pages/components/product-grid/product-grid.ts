@@ -34,12 +34,14 @@ import { MatDialog } from '@angular/material/dialog';
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           @for(product of products;track product.id){
           <div 
+            #productCard
             class="product-card bg-black rounded-lg overflow-hidden cursor-pointer animate-slide-up"
             (click)="openProductModal(product)"
             (mouseenter)="onProductHover($event, true)"
             (mouseleave)="onProductHover($event, false)"
-            (touchstart)="onProductHover($event, true)"
-            (touchend)="onProductHover($event, false)"
+            (touchstart)="onTouchStart($event, productCard)"
+            (touchend)="onTouchEnd($event, productCard)"
+            (touchcancel)="onTouchCancel($event, productCard)"
           >
             <!-- Product Image -->
             <div class="relative group overflow-hidden">
@@ -155,12 +157,14 @@ import { MatDialog } from '@angular/material/dialog';
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           @for(product of proximamente;track product.id){
           <div 
+            #productCardSoon
             class="product-card bg-black rounded-lg overflow-hidden cursor-pointer animate-slide-up"
             (click)="openProductModal(product)"
             (mouseenter)="onProductHover($event, true)"
             (mouseleave)="onProductHover($event, false)"
-            (touchstart)="onProductHover($event, true)"
-            (touchend)="onProductHover($event, false)"
+            (touchstart)="onTouchStart($event, productCardSoon)"
+            (touchend)="onTouchEnd($event, productCardSoon)"
+            (touchcancel)="onTouchCancel($event, productCardSoon)"
           >
             <!-- Product Image -->
             <div class="relative group overflow-hidden">
@@ -276,6 +280,11 @@ export class ProductGridComponent implements OnInit {
   selectedProduct: Product | null = null;
   isModalOpen = false;
 
+  // Long press state management
+  private longPressTimer: any;
+  private isLongPressActive = false;
+  private readonly LONG_PRESS_DURATION = 200; // milliseconds
+
   nameColeccion = 'BREATheDivinity';
   constructor(private productService: ProductService) { }
 
@@ -317,6 +326,52 @@ export class ProductGridComponent implements OnInit {
         video.currentTime = 0;
       }
     }
+  }
+
+  onTouchStart(event: TouchEvent, containerElement: HTMLElement) {
+    // Start long press timer
+    this.isLongPressActive = false;
+
+    this.longPressTimer = setTimeout(() => {
+      this.isLongPressActive = true;
+      const video = containerElement.querySelector('video.product-video') as HTMLVideoElement;
+
+      if (video) {
+        video.muted = true;
+        video.play().catch(error => console.log('Video play failed:', error));
+      }
+    }, this.LONG_PRESS_DURATION);
+  }
+
+  onTouchEnd(event: TouchEvent, containerElement: HTMLElement) {
+    // Clear the timer if touch ends before long press duration
+    if (this.longPressTimer) {
+      clearTimeout(this.longPressTimer);
+    }
+
+    // Stop video if it was playing
+    const video = containerElement.querySelector('video.product-video') as HTMLVideoElement;
+    if (video && this.isLongPressActive) {
+      video.pause();
+      video.currentTime = 0;
+    }
+
+    this.isLongPressActive = false;
+  }
+
+  onTouchCancel(event: TouchEvent, containerElement: HTMLElement) {
+    // Handle touch cancel (e.g., when scrolling starts)
+    if (this.longPressTimer) {
+      clearTimeout(this.longPressTimer);
+    }
+
+    const video = containerElement.querySelector('video.product-video') as HTMLVideoElement;
+    if (video && this.isLongPressActive) {
+      video.pause();
+      video.currentTime = 0;
+    }
+
+    this.isLongPressActive = false;
   }
 
   getAvailabilityText(product: Product): string {
