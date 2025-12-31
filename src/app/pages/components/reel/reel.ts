@@ -406,6 +406,8 @@ export class Reel implements AfterViewInit {
   private videoElements: HTMLVideoElement[] = [];
   
   // Audio and Comments State
+  // Intentamos iniciar con sonido (isMuted = false)
+  // Nota: Los navegadores pueden bloquear esto si no hay interacción previa.
   isMuted = false;
   activeCommentsReelId: string | null = null;
   newComment = '';

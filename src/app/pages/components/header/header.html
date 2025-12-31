@@ -1,37 +1,65 @@
-<header class="fixed  top-0 left-0 right-0 z-50  backdrop-blur-sm ">
-  <div class="container mx-auto px-4 py-2">
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" [class.scrolled]="isScrolled">
+  <div class="container mx-auto px-4 py-3">
     <div class="flex items-center justify-between">
-      <!-- Social Links -->
-      <div class="flex items-center space-x-4 w-[100px]">
-        <a target="_blank" href="https://www.tiktok.com/@noxcore_">
-          <button mat-icon-button class="text-gray-400 hover:text-white ti ti-brand-tiktok">
-          </button>
+      
+      <!-- Left: Logo & Social (Mobile Only) -->
+      <div class="flex items-center gap-4">
+        <!-- Logo -->
+        <a routerLink="/">
+          <h1 class="text-[20px] md:text-[24px] font-extralight tracking-[0.2em] text-white hover:text-accent-500 transition-colors uppercase">
+            Nyxor Fit
+          </h1>
         </a>
 
+        <!-- TikTok (Visible on desktop too maybe?) -->
+        <a target="_blank" href="https://www.tiktok.com/@noxcore_" class="hidden md:block">
+          <button mat-icon-button class="text-gray-400 hover:text-white transform hover:scale-110 transition-transform">
+            <i class="ti ti-brand-tiktok text-xl"></i>
+          </button>
+        </a>
       </div>
 
-      <!-- Logo -->
-      <div>
-        <h1 class="text-[20px] text-center font-extralight tracking-wider text-white">
-          NYXOR FIT
-        </h1>
-        <div class="text-center mt-1 text-[12px]">
-          Envíos gratis en compras mayores a S/. 150
+      <!-- Center: Navigation (Desktop Only) -->
+      <nav class="hidden md:flex items-center space-x-8">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" 
+           class="nav-link text-sm font-medium tracking-widest text-gray-300 hover:text-white transition-colors relative py-2">
+           INICIO
+        </a>
+        <a routerLink="/reels" routerLinkActive="active" 
+           class="nav-link text-sm font-medium tracking-widest text-gray-300 hover:text-white transition-colors relative py-2">
+           REELS
+        </a>
+        <a routerLink="/shop" routerLinkActive="active" 
+           class="nav-link text-sm font-medium tracking-widest text-gray-300 hover:text-white transition-colors relative py-2">
+           TIENDA
+        </a>
+      </nav>
+
+      <!-- Right: Actions -->
+      <div class="flex items-center space-x-2 md:space-x-6">
+        <!-- Free Shipping (Desktop) -->
+        <div class="hidden lg:block text-[11px] text-gray-400 tracking-wide text-right">
+          ENVÍO GRATIS > S/. 150
         </div>
-      </div>
 
-      <!-- Cart and User -->
-      <div class="flex items-center space-x-4">
-        <button mat-icon-button class="text-gray-400 hover:text-white ti ti-search">
+        <div class="h-4 w-[1px] bg-gray-700 hidden lg:block"></div>
 
-        </button>
-        <button mat-icon-button class="text-gray-400 hover:text-white ti ti-shopping-cart"
-          [matBadge]="cartCount$ | async" matBadgeColor="accent" [matBadgeHidden]="(cartCount$ | async) === 0"
+        <!-- Search -->
+        <!-- <button mat-icon-button class="text-gray-400 hover:text-white transition-colors flex items-center justify-center">
+          <i class="ti ti-search text-xl w-fit h-fit"></i>
+        </button> -->
+
+        <!-- Cart -->
+        <!-- <button mat-icon-button class="text-gray-400 hover:text-white transition-colors relative"
           (click)="openCart()">
-        </button>
+          <i class="ti ti-shopping-cart text-xl"></i>
+          <span *ngIf="(cartCount$ | async) as count" 
+                class="absolute -top-1 -right-1 bg-accent-500 text-[10px] font-bold text-white w-4 h-4 flex items-center justify-center rounded-full animate-bounce">
+            {{count}}
+          </span>
+        </button> -->
       </div>
-    </div>
 
-    <!-- Top Banner -->
+    </div>
   </div>
 </header>

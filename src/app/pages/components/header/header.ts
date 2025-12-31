@@ -1,4 +1,5 @@
 import { Component, HostListener, inject } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,7 +13,7 @@ import { Cart } from './dialog/cart/cart';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule, MatBadgeModule],
+  imports: [CommonModule, RouterModule, MatIconModule, MatButtonModule, MatBadgeModule],
   templateUrl: './header.html',
   styleUrls: ['./header.scss']
 })
@@ -27,12 +28,9 @@ export class HeaderComponent {
     })
    }
 
+  isScrolled = false;
+
   @HostListener('window:scroll', [])  onWindowScroll() {
-    const header = document.querySelector('header');
-    if (window.scrollY > 50) {
-      header?.classList.add('scrolled');
-      }
-    else {
-      header?.classList.remove('scrolled');   }
-    }
+    this.isScrolled = window.scrollY > 50;
+  }
 }

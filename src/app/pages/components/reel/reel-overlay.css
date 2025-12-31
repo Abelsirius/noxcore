@@ -1,7 +1,7 @@
 /* Mute Button */
 .mute-btn {
     position: absolute;
-    top: 16px;
+    top: 80px;
     right: 16px;
     z-index: 15;
     background: rgba(0, 0, 0, 0.4);
