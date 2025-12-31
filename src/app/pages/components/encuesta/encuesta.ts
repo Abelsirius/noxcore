@@ -19,13 +19,15 @@ export class EncuestasComponent {
 
   // Countdown properties
   targetDate: Date = new Date('2026-01-15T00:00:00');
-  days: number = 0;
-  hours: number = 0;
-  minutes: number = 0;
-  seconds: number = 0;
+  days: WritableSignal<number> = signal(0);
+  hours: WritableSignal<number> = signal(0);
+  minutes: WritableSignal<number> = signal(0);
+  seconds: WritableSignal<number> = signal(0);
   private timerInterval: any;
 
-  constructor(private encuestaDb: EncuestaDbService) { }
+  constructor(private encuestaDb: EncuestaDbService) {
+
+  }
 
   async ngOnInit() {
     this.userId = this.getUserId();
@@ -76,16 +78,16 @@ export class EncuestasComponent {
     const distance = this.targetDate.getTime() - now;
 
     if (distance < 0) {
-      this.days = 0;
-      this.hours = 0;
-      this.minutes = 0;
-      this.seconds = 0;
+      this.days.set(0);
+      this.hours.set(0);
+      this.minutes.set(0);
+      this.seconds.set(0);
       clearInterval(this.timerInterval);
     } else {
-      this.days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      this.hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      this.minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      this.seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      this.days.set(Math.floor(distance / (1000 * 60 * 60 * 24)));
+      this.hours.set(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+      this.minutes.set(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+      this.seconds.set(Math.floor((distance % (1000 * 60)) / 1000));
     }
   }
 

@@ -9,19 +9,19 @@
   <!-- Countdown Timer -->
   <div class="flex flex-wrap justify-center gap-4 mb-12">
     <div class="countdown-item">
-      <span class="countdown-number">{{ days | number: '2.0-0' }}</span>
+      <span class="countdown-number">{{ days() | number: '2.0-0' }}</span>
       <span class="countdown-label">Días</span>
     </div>
     <div class="countdown-item">
-      <span class="countdown-number">{{ hours | number: '2.0-0' }}</span>
+      <span class="countdown-number">{{ hours() | number: '2.0-0' }}</span>
       <span class="countdown-label">Horas</span>
     </div>
     <div class="countdown-item">
-      <span class="countdown-number">{{ minutes | number: '2.0-0' }}</span>
+      <span class="countdown-number">{{ minutes() | number: '2.0-0' }}</span>
       <span class="countdown-label">Min</span>
     </div>
     <div class="countdown-item">
-      <span class="countdown-number">{{ seconds | number: '2.0-0' }}</span>
+      <span class="countdown-number">{{ seconds() | number: '2.0-0' }}</span>
       <span class="countdown-label">Seg</span>
     </div>
   </div>
