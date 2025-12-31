@@ -3,6 +3,27 @@
 
   <main>
     <app-hero></app-hero>
+        @defer (on viewport) {
+    <app-reel></app-reel>
+    } @placeholder {
+      <div class="skeleton-reel-container">
+        <div class="skeleton-reel-item">
+          <!-- Botones de acción derecha -->
+          <div class="skeleton-reel-actions">
+            <div class="skeleton-action-btn"></div>
+            <div class="skeleton-action-btn"></div>
+            <div class="skeleton-action-btn"></div>
+          </div>
+          
+          <!-- Información inferior -->
+          <div class="skeleton-reel-info">
+            <div class="skeleton-user-line"></div>
+            <div class="skeleton-desc-line"></div>
+            <div class="skeleton-desc-line short"></div>
+          </div>
+        </div>
+      </div>
+    }
     <!-- <app-reel></app-reel> -->
     <app-product-grid></app-product-grid>
     @defer (on viewport) {
