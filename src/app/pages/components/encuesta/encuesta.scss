@@ -1,51 +1,67 @@
-
 .skeleton-card {
-  background-color: #1a1a1a; /* Fondo oscuro similar al de la tarjeta */
+  background-color: #1a1a1a;
+  /* Fondo oscuro similar al de la tarjeta */
   border-radius: 8px;
   padding: 1rem;
-  border: 1px solid #dc2626; /* Borde rojo similar al real */
-  overflow: hidden; /* Para la animación de brillo */
+  border: 1px solid #dc2626;
+  /* Borde rojo similar al real */
+  overflow: hidden;
+  /* Para la animación de brillo */
   position: relative;
-  height: 480px; /* Ajusta la altura para que coincida con tus tarjetas reales */
+  height: 480px;
+  /* Ajusta la altura para que coincida con tus tarjetas reales */
 }
 
 /* Elementos de imagen */
 .skeleton-image {
-  background-color: #333; /* Un gris más claro */
-  height: 192px; /* w-full h-48 object-cover (48 * 4px = 192px) */
-  border-radius: 6px; /* rounded-md */
-  margin-bottom: 1rem; /* mb-4 */
+  background-color: #333;
+  /* Un gris más claro */
+  height: 192px;
+  /* w-full h-48 object-cover (48 * 4px = 192px) */
+  border-radius: 6px;
+  /* rounded-md */
+  margin-bottom: 1rem;
+  /* mb-4 */
 }
 
 /* Líneas de texto */
 .skeleton-text-lg {
   background-color: #333;
-  height: 28px; /* Texto de título */
+  height: 28px;
+  /* Texto de título */
   width: 80%;
   border-radius: 4px;
-  margin-bottom: 0.5rem; /* mb-2 */
+  margin-bottom: 0.5rem;
+  /* mb-2 */
 }
 
 .skeleton-text-sm {
   background-color: #333;
-  height: 18px; /* Texto de Likes */
+  height: 18px;
+  /* Texto de Likes */
   width: 30%;
   border-radius: 4px;
-  margin-bottom: 1rem; /* mb-4 */
+  margin-bottom: 1rem;
+  /* mb-4 */
 }
 
 /* Botón */
 .skeleton-button {
-  background-color: #dc2626; /* Color del botón real */
-  height: 40px; /* px-4 py-2 */
+  background-color: #dc2626;
+  /* Color del botón real */
+  height: 40px;
+  /* px-4 py-2 */
   width: 100%;
-  border-radius: 6px; /* rounded-md */
-  margin-bottom: 1rem; /* mb-4 */
+  border-radius: 6px;
+  /* rounded-md */
+  margin-bottom: 1rem;
+  /* mb-4 */
 }
 
 /* Divisor de comentarios */
 .skeleton-line-divider {
-  border-top: 1px solid #444; /* Borde gris oscuro */
+  border-top: 1px solid #444;
+  /* Borde gris oscuro */
   padding-top: 1rem;
   margin-top: 1rem;
 }
@@ -56,12 +72,14 @@
   height: 40px;
   width: 100%;
   border-radius: 4px;
-  margin-bottom: 1rem; /* mb-4 */
+  margin-bottom: 1rem;
+  /* mb-4 */
 }
 
 /* Comentarios recientes (simulados) */
 .skeleton-recent-comments {
-  margin-top: 0.5rem; /* space-y-1 */
+  margin-top: 0.5rem;
+  /* space-y-1 */
 }
 
 .skeleton-comment-line {
@@ -69,7 +87,8 @@
   height: 16px;
   width: 70%;
   border-radius: 4px;
-  margin-bottom: 5px; /* Pequeño espacio entre líneas */
+  margin-bottom: 5px;
+  /* Pequeño espacio entre líneas */
 }
 
 /* Animación de "onda" o brillo */
@@ -97,36 +116,68 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.8);
-  border: 1px solid #dc2626; /* Red border */
-  border-radius: 8px;
-  padding: 1rem;
-  min-width: 80px;
-  box-shadow: 0 0 10px rgba(220, 38, 38, 0.3); /* Red glow */
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-radius: 12px;
+  padding: 1.25rem;
+  min-width: 90px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    border-color: rgba(220, 38, 38, 0.8);
+  }
 }
 
 .countdown-number {
   font-size: 2.5rem;
-  font-weight: 800;
+  font-weight: 900;
   color: white;
   line-height: 1;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 0 15px rgba(220, 38, 38, 0.5);
+  font-family: 'Inter', sans-serif;
 }
 
 .countdown-label {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #ef4444; /* Lighter red for label */
-  margin-top: 0.25rem;
+  letter-spacing: 2px;
+  color: #ef4444;
+  margin-top: 0.5rem;
+  font-weight: 700;
 }
 
 @media (min-width: 768px) {
   .countdown-item {
-    min-width: 100px;
-    padding: 1.5rem;
+    min-width: 120px;
+    padding: 2rem;
   }
+
   .countdown-number {
-    font-size: 3.5rem;
+    font-size: 4rem;
+  }
+
+  .countdown-label {
+    font-size: 0.875rem;
+  }
+}
+
+/* Animations */
+.animate-fade-in {
+  animation: fadeIn 1.2s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

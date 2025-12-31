@@ -40,6 +40,16 @@ import { RouterModule, RouterLink, RouterLinkActive } from '@angular/router';
           </svg>
           <span>Tienda</span>
         </a>
+
+        <!-- Drops/Coming Soon Link -->
+         <a routerLink="/drops" routerLinkActive="active" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2a9 9 0 0 1 9 9c0 4.97-4.03 9-9 9a9 9 0 0 1-9-9c1.65 0 3 .9 3 2 0-3.3 2.7-6 6-6 1.65 0 3 .9 3 2 0-3.3-2.7-6-6-6z"/>
+            <path d="M12 22v-6"/>
+            <path d="M12 16a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+          </svg>
+          <span style="font-size: 9px;">Drops</span>
+        </a>
       </div>
     </nav>
   `,

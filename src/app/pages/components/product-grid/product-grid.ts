@@ -28,8 +28,12 @@ import { MatDialog } from '@angular/material/dialog';
           <div class="flex justify-center">
              <img src="../../../assets/breathedivinity_logo.png" class="w-96 object-contain" alt="Breathedivinity Logo">
           </div>
+          <div class=" bottom-8 left-1/2  flex items-center justify-center z-10  block md:hidden"  >
+    <div class="w-6 h-10 border-2  border-white/50 rounded-full flex justify-center  ">
+      <div class="w-1 h-3 bg-white/50 rounded-full mt-2 animate-pulse"></div>
+    </div>
+  </div>  
         </div>
-
         <!-- Products Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           @for(product of products;track product.id){

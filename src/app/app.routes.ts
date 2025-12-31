@@ -13,5 +13,9 @@ export const routes: Routes = [
     {
         path: 'shop',
         loadComponent: () => import('./pages/components/product-grid/product-grid').then(m => m.ProductGridComponent)
+    },
+    {
+        path: 'drops',
+        loadComponent: () => import('./pages/components/encuesta/encuesta').then(m => m.EncuestasComponent)
     }
 ];

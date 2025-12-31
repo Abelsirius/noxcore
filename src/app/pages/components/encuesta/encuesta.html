@@ -1,57 +1,57 @@
-@if(!loading()){
-<div class="mt-[8rem] mb-24 container mx-auto max-w-6xl px-5 flex-col" id="encuesta">
-  <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-wider text-center pb-2">¡PRÓXIMAMENTE!</h1>
-  <h2 class="text-xl md:text-2xl text-gray-400 font-semibold text-center pb-2 uppercase tracking-widest">Lanzamiento
-    oficial</h2>
-  <h2 class="text-4xl md:text-6xl text-red-600 font-extrabold text-center pb-8 tracking-widest drop-shadow-md">
-    15.01.2026</h2>
-
-  <!-- Countdown Timer -->
-  <div class="flex flex-wrap justify-center gap-4 mb-12">
-    <div class="countdown-item">
-      <span class="countdown-number">{{ days() | number: '2.0-0' }}</span>
-      <span class="countdown-label">Días</span>
-    </div>
-    <div class="countdown-item">
-      <span class="countdown-number">{{ hours() | number: '2.0-0' }}</span>
-      <span class="countdown-label">Horas</span>
-    </div>
-    <div class="countdown-item">
-      <span class="countdown-number">{{ minutes() | number: '2.0-0' }}</span>
-      <span class="countdown-label">Min</span>
-    </div>
-    <div class="countdown-item">
-      <span class="countdown-number">{{ seconds() | number: '2.0-0' }}</span>
-      <span class="countdown-label">Seg</span>
-    </div>
+@if(!loading() && encuestas.length > 0){
+<!-- Full Screen Video Background Container -->
+<div class="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center text-center">
+  
+  <!-- Background Video -->
+  <div class="absolute inset-0 z-0">
+    <video 
+      [src]="encuestas[0].videoPreview" 
+      autoplay 
+      muted 
+      loop 
+      playsinline 
+      webkit-playsinline
+      class="w-full h-full object-cover opacity-60"
+    ></video>
+    <div class="absolute inset-0 bg-black/50"></div>
   </div>
 
-  <div class="flex justify-center w-full">
-    <div *ngFor="let e of encuestas" #productCard
-      class="relative group transition-all duration-300 max-w-4xl w-full flex flex-col items-center"
-      (mouseenter)="onProductHover($event, true)" (mouseleave)="onProductHover($event, false)"
-      (touchstart)="onTouchStart($event, productCard)" (touchend)="onTouchEnd($event, productCard)"
-      (touchcancel)="onTouchCancel($event, productCard)">
+  <!-- Content Overlay -->
+  <div class="relative z-10 container mx-auto px-4 flex flex-col items-center animate-fade-in pt-16">
+    <h1 class="text-3xl md:text-5xl font-extrabold text-white tracking-wider pb-2 drop-shadow-lg">¡PRÓXIMAMENTE!</h1>
+    
+    <h2 class="text-sm md:text-xl text-gray-200 font-semibold uppercase tracking-[0.2em] pb-4">Lanzamiento oficial</h2>
+    
+    <h2 class="text-4xl md:text-7xl text-red-600 font-black tracking-widest drop-shadow-[0_0_15px_rgba(220,38,38,0.5)] pb-10">
+      15.01.2026
+    </h2>
 
-      <div class="relative w-full">
-        <img [src]="e.imagen || 'https://via.placeholder.com/300x200?text=Encuesta'"
-          class="w-full h-auto max-h-[70vh] object-contain transition-transform duration-500 group-hover:scale-105 filter drop-shadow-[0_0_20px_rgba(220,38,38,0.3)]" />
-
-        <!-- Black background for video (shown on hover) -->
-        <div *ngIf="e.videoPreview"
-          class="absolute inset-0 bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        <!-- Video Preview -->
-        <video *ngIf="e.videoPreview" [src]="e.videoPreview"
-          class="product-video absolute inset-0 w-full h-full object-contain opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10"
-          muted loop playsinline></video>
+    <!-- Countdown Timer -->
+    <div class="flex flex-wrap justify-center gap-4 md:gap-8 mb-12">
+      <div class="countdown-item bg-black/40 backdrop-blur-sm p-4 rounded-lg border border-white/10 min-w-[80px]">
+        <span class="countdown-number text-3xl md:text-5xl block font-bold text-white">{{ days() | number: '2.0-0' }}</span>
+        <span class="countdown-label text-xs md:text-sm text-gray-400 uppercase tracking-widest">Días</span>
       </div>
-
-      <h3 class="text-3xl md:text-5xl font-black text-center mt-8 uppercase tracking-widest text-white drop-shadow-lg">
-        {{ e.nombre }}</h3>
+      <div class="countdown-item bg-black/40 backdrop-blur-sm p-4 rounded-lg border border-white/10 min-w-[80px]">
+        <span class="countdown-number text-3xl md:text-5xl block font-bold text-white">{{ hours() | number: '2.0-0' }}</span>
+        <span class="countdown-label text-xs md:text-sm text-gray-400 uppercase tracking-widest">Horas</span>
+      </div>
+      <div class="countdown-item bg-black/40 backdrop-blur-sm p-4 rounded-lg border border-white/10 min-w-[80px]">
+        <span class="countdown-number text-3xl md:text-5xl block font-bold text-white">{{ minutes() | number: '2.0-0' }}</span>
+        <span class="countdown-label text-xs md:text-sm text-gray-400 uppercase tracking-widest">Min</span>
+      </div>
+      <div class="countdown-item bg-black/40 backdrop-blur-sm p-4 rounded-lg border border-white/10 min-w-[80px]">
+        <span class="countdown-number text-3xl md:text-5xl block font-bold text-white">{{ seconds() | number: '2.0-0' }}</span>
+        <span class="countdown-label text-xs md:text-sm text-gray-400 uppercase tracking-widest">Seg</span>
+      </div>
     </div>
+
+    <!-- Product Name -->
+    <h3 class="text-2xl md:text-4xl font-bold uppercase tracking-widest text-white drop-shadow-lg max-w-3xl">
+      {{ encuestas[0].nombre }}
+    </h3>
   </div>
 </div>
-
 }@else {
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 container mx-auto max-w-6xl px-5">
   <div class="skeleton-card">
