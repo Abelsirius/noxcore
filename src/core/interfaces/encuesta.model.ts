@@ -7,6 +7,7 @@ export interface Encuesta {
   opinion: string;
   userId: string;
   imagen: string;
+  videoPreview?: string;
   comentarios: { texto: string; fecha: string }[];
   likedUsers: string[];
 }

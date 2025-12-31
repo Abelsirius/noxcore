@@ -36,6 +36,10 @@ import { MatDialog } from '@angular/material/dialog';
           <div 
             class="product-card bg-black rounded-lg overflow-hidden cursor-pointer animate-slide-up"
             (click)="openProductModal(product)"
+            (mouseenter)="onProductHover($event, true)"
+            (mouseleave)="onProductHover($event, false)"
+            (touchstart)="onProductHover($event, true)"
+            (touchend)="onProductHover($event, false)"
           >
             <!-- Product Image -->
             <div class="relative group overflow-hidden">
@@ -44,6 +48,20 @@ import { MatDialog } from '@angular/material/dialog';
                 [alt]="product.name"
                 class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300"
               >
+              <!-- Black background for video (shown on hover) -->
+              <div 
+                *ngIf="product.videoPreview"
+                class="absolute inset-0 bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              ></div>
+              <!-- Video Preview (Hidden by default, shown on hover) -->
+              <video 
+                *ngIf="product.videoPreview"
+                [src]="product.videoPreview"
+                class="product-video absolute inset-0 w-full h-full object-contain opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10"
+                muted
+                loop
+                playsinline
+              ></video>
                                 <div 
       *ngIf="!product.inStock"
       class="absolute inset-0 bg-black/70 flex items-center justify-center text-white text-lg font-semibold"
@@ -139,6 +157,10 @@ import { MatDialog } from '@angular/material/dialog';
           <div 
             class="product-card bg-black rounded-lg overflow-hidden cursor-pointer animate-slide-up"
             (click)="openProductModal(product)"
+            (mouseenter)="onProductHover($event, true)"
+            (mouseleave)="onProductHover($event, false)"
+            (touchstart)="onProductHover($event, true)"
+            (touchend)="onProductHover($event, false)"
           >
             <!-- Product Image -->
             <div class="relative group overflow-hidden">
@@ -148,6 +170,20 @@ import { MatDialog } from '@angular/material/dialog';
                 [alt]="product.name"
                 class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300"
               >
+               <!-- Black background for video (shown on hover) -->
+               <div 
+                 *ngIf="product.videoPreview"
+                 class="absolute inset-0 bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+               ></div>
+               <!-- Video Preview for Soon Section -->
+               <video 
+               *ngIf="product.videoPreview"
+               [src]="product.videoPreview"
+               class="product-video absolute inset-0 w-full h-full object-contain opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10"
+               muted
+               loop
+               playsinline
+             ></video>
               <!-- Badges -->
               <div class="absolute top-4 left-4 space-y-2">
                 <span 
@@ -266,6 +302,21 @@ export class ProductGridComponent implements OnInit {
   closeProductModal() {
     this.isModalOpen = false;
     this.selectedProduct = null;
+  }
+
+  onProductHover(event: Event, shouldPlay: boolean) {
+    const target = event.currentTarget as HTMLElement;
+    const video = target.querySelector('video.product-video') as HTMLVideoElement;
+
+    if (video) {
+      if (shouldPlay) {
+        video.muted = true;
+        video.play().catch(error => console.log('Video play failed:', error));
+      } else {
+        video.pause();
+        video.currentTime = 0;
+      }
+    }
   }
 
   getAvailabilityText(product: Product): string {

@@ -28,10 +28,22 @@
 
   <div class="flex justify-center w-full">
     <div *ngFor="let e of encuestas"
-      class="relative group transition-all duration-300 max-w-4xl w-full flex flex-col items-center">
+      class="relative group transition-all duration-300 max-w-4xl w-full flex flex-col items-center"
+      (mouseenter)="onProductHover($event, true)" (mouseleave)="onProductHover($event, false)"
+      (touchstart)="onProductHover($event, true)" (touchend)="onProductHover($event, false)">
 
-      <img [src]="e.imagen || 'https://via.placeholder.com/300x200?text=Encuesta'"
-        class="w-full h-auto max-h-[70vh] object-contain transition-transform duration-500 group-hover:scale-105 filter drop-shadow-[0_0_20px_rgba(220,38,38,0.3)]" />
+      <div class="relative w-full">
+        <img [src]="e.imagen || 'https://via.placeholder.com/300x200?text=Encuesta'"
+          class="w-full h-auto max-h-[70vh] object-contain transition-transform duration-500 group-hover:scale-105 filter drop-shadow-[0_0_20px_rgba(220,38,38,0.3)]" />
+
+        <!-- Black background for video (shown on hover) -->
+        <div *ngIf="e.videoPreview"
+          class="absolute inset-0 bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <!-- Video Preview -->
+        <video *ngIf="e.videoPreview" [src]="e.videoPreview"
+          class="product-video absolute inset-0 w-full h-full object-contain opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10"
+          muted loop playsinline></video>
+      </div>
 
       <h3 class="text-3xl md:text-5xl font-black text-center mt-8 uppercase tracking-widest text-white drop-shadow-lg">
         {{ e.nombre }}</h3>

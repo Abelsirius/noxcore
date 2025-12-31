@@ -47,6 +47,7 @@ export class EncuestasComponent {
       opinion: '',
       userId: this.userId,
       imagen: 'assets/nighfall_compression_longsleeve.png',
+      videoPreview: 'assets/videos_preview/WhatsApp Video 2025-12-30 at 10.09.37 PM.mp4',
       comentarios: [],
       likedUsers: [],
     }];
@@ -88,6 +89,21 @@ export class EncuestasComponent {
       this.hours.set(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
       this.minutes.set(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
       this.seconds.set(Math.floor((distance % (1000 * 60)) / 1000));
+    }
+  }
+
+  onProductHover(event: Event, shouldPlay: boolean) {
+    const target = event.currentTarget as HTMLElement;
+    const video = target.querySelector('video.product-video') as HTMLVideoElement;
+
+    if (video) {
+      if (shouldPlay) {
+        video.muted = true;
+        video.play().catch(error => console.log('Video play failed:', error));
+      } else {
+        video.pause();
+        video.currentTime = 0;
+      }
     }
   }
 

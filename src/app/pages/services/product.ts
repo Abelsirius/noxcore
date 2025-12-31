@@ -319,7 +319,8 @@ Ideales para entrenar con intensidad y estilo.
       inStock: true,
       isNew: true,
       discount: 25,
-      availabilityLabel: 'DISPONIBLE'
+      availabilityLabel: 'DISPONIBLE',
+      videoPreview: '../../../assets/videos_preview/WhatsApp Video 2025-12-30 at 9.39.35 PM.mp4'
     },
     {
       id: '3',

@@ -18,6 +18,7 @@ export interface Product {
   isNew?: boolean;
   discount?: number;
   availabilityLabel?: string;
+  videoPreview?: string;
 }
 
 export interface CartItem {
