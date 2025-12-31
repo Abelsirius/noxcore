@@ -372,7 +372,7 @@ interface ReelItem {
     @media (max-width: 768px) {
       .reel-actions {
         right: 8px;
-        bottom: 90px;
+        bottom: 150px; /* Moved up to avoid intersection with bottom nav + padding */
         gap: 16px;
       }
 
@@ -392,7 +392,7 @@ interface ReelItem {
       }
 
       .reel-info {
-        bottom: 20px;
+        bottom: 80px; /* Moved up above the 60px bottom nav */
         left: 12px;
         right: 70px;
       }
