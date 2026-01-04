@@ -1,14 +1,39 @@
 <section class="relative h-screen flex items-center justify-center overflow-hidden pt-1">
-  <!-- Background Image -->
-  <div class="absolute inset-0 z-0 ">
-    <img src="../../../assets/zyzz.jpeg" alt="Noxcore Hero" class="w-full h-full object-cover  opacity-40">
+  <!-- Background Image (Desktop) -->
+  <div class="absolute inset-0 z-0 hidden md:block">
+    <img src="../../../assets/zyzz.jpeg" alt="Noxcore Hero" class="w-full h-full object-cover opacity-40">
     <div class="absolute inset-0 bg-black/60"></div>
   </div>
 
+  <!-- Background Video (Mobile) -->
+  <div class="absolute inset-0 z-0 block md:hidden">
+    <video 
+      #heroVideo
+      src="../../../assets/nuevo_banner.mp4" 
+      autoplay 
+      muted 
+      playsinline 
+      webkit-playsinline
+      preload="auto"
+      class="w-full h-full object-cover opacity-80"
+      (ended)="onVideoEnded()"
+    ></video>
+    <div class="absolute inset-0 bg-black/30"></div>
+    
+    <!-- Glitch Text Overlay (Mobile Only) -->
+    <div class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none block md:hidden" *ngIf="showGlitchText">
+       <div class="mobile-glitch-container mega-scale-in">
+          <h1 class="glitch-text text-6xl font-black text-white tracking-tighter" data-text="NYXOR FIT">
+            NYXOR FIT
+          </h1>
+       </div>
+    </div>
+  </div>
+
   <!-- Hero Content -->
-  <div class="relative z-10 text-center max-w-4xl mx-auto px-4 animate-fade-in">
-    <!-- Brand Name -->
-    <div class="mb-8">
+  <div class="relative z-10 text-center max-w-4xl mx-auto px-4 animate-fade-in flex flex-col items-center justify-end h-full pb-32 md:pb-0 md:justify-center md:flex">
+    <!-- Brand Name (Hidden on Mobile as requested) -->
+    <div class="mb-8 hidden md:block">
       <h1 class="text-[45px] md:text-[70px] font-bold tracking-wider text-gradient mb-2">
         NYXOR FIT
       </h1>
@@ -17,8 +42,8 @@
       </div>
     </div>
 
-    <!-- Main Message -->
-    <div class="mb-8">
+    <!-- Main Message (Hidden on Mobile as requested) -->
+    <div class="mb-8 hidden md:block">
       <h2 class="text-[25px] md:text-[32px] font-bold text-white mb-5">
         COLECCIÓN BREATHEDIVINITY — 25% DSCTO
       </h2>
@@ -28,12 +53,13 @@
       </p>
     </div>
 
-    <!-- CTA Button -->
-    <div class="space-y-4">
-      <button class="btn-primary text-lg px-12 py-4 hover-scale" (click)="scrollToCollection()">
+    <!-- CTA Button (Hidden on Mobile) -->
+    <div class="space-y-4 hidden md:block">
+      <button class="btn-primary text-lg px-12 py-4 hover-scale shadow-lg shadow-accent-500/20" (click)="scrollToCollection()">
         Descubre la Colección
       </button>
-      <div class="text-sm text-gray-400">
+      <!-- Shipping Text (Hidden on Mobile) -->
+      <div class="text-sm text-gray-400 hidden md:block">
         Envío gratis en compras mayores a S/. 150, <br>
         Si eres de Trujillo, paga al recibir tu pedido (contraentrega)
       </div>
@@ -41,7 +67,7 @@
   </div>
 
   <!-- Scroll Indicator -->
-  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 hidden md:block"  >
     <div class="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
       <div class="w-1 h-3 bg-white/50 rounded-full mt-2 animate-pulse"></div>
     </div>

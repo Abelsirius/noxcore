@@ -1,57 +1,53 @@
 <div class="min-h-screen bg-black">
-  <app-header></app-header>
 
   <main>
     <app-hero></app-hero>
-    <!-- <app-reel></app-reel> -->
-    <app-product-grid></app-product-grid>
-    @defer (on viewport) {
-    <app-encuestas class="mb-4" />
+        <!-- @defer (on viewport) {
+    <app-reel></app-reel>
     } @placeholder {
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 container mx-auto max-w-6xl px-5">
-      <div class="skeleton-card">
-        <div class="skeleton-image"></div>
-        <div class="skeleton-text-lg"></div>
-        <div class="skeleton-text-sm"></div>
-        <div class="skeleton-button"></div>
-        <div class="skeleton-line-divider"></div>
-        <div class="skeleton-comment-input"></div>
-        <div class="skeleton-recent-comments">
-          <div class="skeleton-comment-line"></div>
-          <div class="skeleton-comment-line"></div>
+      <div class="skeleton-reel-container">
+        <div class="skeleton-reel-item">
+          <div class="skeleton-reel-actions">
+            <div class="skeleton-action-btn"></div>
+            <div class="skeleton-action-btn"></div>
+            <div class="skeleton-action-btn"></div>
+          </div>
+          
+          <div class="skeleton-reel-info">
+            <div class="skeleton-user-line"></div>
+            <div class="skeleton-desc-line"></div>
+            <div class="skeleton-desc-line short"></div>
+          </div>
         </div>
       </div>
-      <div class="skeleton-card">
-        <div class="skeleton-image"></div>
-        <div class="skeleton-text-lg"></div>
-        <div class="skeleton-text-sm"></div>
-        <div class="skeleton-button"></div>
-        <div class="skeleton-line-divider"></div>
-        <div class="skeleton-comment-input"></div>
-        <div class="skeleton-recent-comments">
-          <div class="skeleton-comment-line"></div>
-          <div class="skeleton-comment-line"></div>
+    } -->
+    <!-- Hidden on mobile, visible on desktop -->
+    <div class="hidden md:block">
+      <app-product-grid></app-product-grid>
+      @defer (on viewport) {
+      <app-encuestas class="mb-4" />
+      } @placeholder {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 container mx-auto max-w-6xl px-5">
+        <div class="skeleton-card">
+          <div class="skeleton-image"></div>
+          <div class="skeleton-text-lg"></div>
+          <div class="skeleton-text-sm"></div>
+          <div class="skeleton-button"></div>
+          <div class="skeleton-line-divider"></div>
+          <div class="skeleton-comment-input"></div>
+          <div class="skeleton-recent-comments">
+            <div class="skeleton-comment-line"></div>
+            <div class="skeleton-comment-line"></div>
+          </div>
         </div>
       </div>
-      <div class="skeleton-card">
-        <div class="skeleton-image"></div>
-        <div class="skeleton-text-lg"></div>
-        <div class="skeleton-text-sm"></div>
-        <div class="skeleton-button"></div>
-        <div class="skeleton-line-divider"></div>
-        <div class="skeleton-comment-input"></div>
-        <div class="skeleton-recent-comments">
-          <div class="skeleton-comment-line"></div>
-          <div class="skeleton-comment-line"></div>
-        </div>
-      </div>
+      }
     </div>
-    }
   </main>
 
 
   <!-- Footer -->
-  <footer class="bg-black border-t border-gray-800 py-12">
+  <footer class="bg-black border-t border-gray-800 py-12 hidden md:block">
     <div class="container mx-auto max-w-6xl px-4">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <!-- Brand -->

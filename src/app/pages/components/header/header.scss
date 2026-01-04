@@ -1,14 +1,44 @@
-    .container {
-      max-width: 1200px;
-    }
-    header
-    {
-    background: rgba(0, 0, 0, 0.7);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      opacity: 1;
-      transition:0.3s ease;
-    }
-    .scrolled {
-        transform: translateY(-20px);
-      opacity: 0;
-    }   
+// Header Container
+header {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+  transition: all 0.3s ease;
+
+  &.scrolled {
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+}
+
+// Navigation Links
+.nav-link {
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: #ef4444; // Accent color
+    transition: width 0.3s ease;
+    box-shadow: 0 0 8px #ef4444;
+  }
+
+  &:hover::after,
+  &.active::after {
+    width: 100%;
+  }
+
+  &.active {
+    color: white;
+    text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+  }
+}
+
+// Mobile specific adjustments if needed
+@media (max-width: 768px) {
+  // On mobile, header can be simpler or different since we have bottom nav
+}
