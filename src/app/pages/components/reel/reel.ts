@@ -435,7 +435,7 @@ export class Reel implements AfterViewInit {
       cliente: 'Dark Fantasy compression Heavenly Red',
       videoUrl: '../../../../assets/reels/reel_!.mp4',
       descripcion: 'Compresores de alta elasticidad, diseño infernal y ajuste perfecto. Ideales para entrenar con intensidad y estilo. 🔥 Oscuros, cómodos y hechos para dominar. 🔥',
-      likes: 0,
+      likes: 34,
       isLiked: false
     },
     {
@@ -443,7 +443,7 @@ export class Reel implements AfterViewInit {
       cliente: 'Evangelion Compression Void Black',
       videoUrl: '../../../../assets/reels/reel_2.mp4',
       descripcion: 'Compresores de alta elasticidad, diseño infernal y ajuste perfecto. Ideales para entrenar con intensidad y estilo. 🔥 Oscuros, cómodos y hechos para dominar. 🔥',
-      likes: 0,
+      likes: 45,
       isLiked: false
     },
     {
@@ -451,7 +451,7 @@ export class Reel implements AfterViewInit {
       cliente: 'Nighfall Compression',
       videoUrl: '../../../../assets/reels/reel_3.mp4',
       descripcion: 'Compresores de alta elasticidad, diseño infernal y ajuste perfecto. Ideales para entrenar con intensidad y estilo. 🔥 Oscuros, cómodos y hechos para dominar. 🔥',
-      likes: 0,
+      likes: 72,
       isLiked: false
     }
   ];
