@@ -4,12 +4,22 @@
       <!-- Left: Logo & Social (Mobile Only) -->
       <div class="flex items-center  gap-4 ">
         <!-- Logo -->
-        <a routerLink="/">
-          <h1
-            class="text-[20px] md:text-[24px] font-extralight tracking-[0.2em] text-white hover:text-accent-500 transition-colors uppercase">
-            Nyxor Fit
-          </h1>
-        </a>
+        <div class="flex flex-col items-center">
+          <a routerLink="/">
+            <h1
+              class="text-[20px] md:text-[24px] font-extralight tracking-[0.2em] text-white hover:text-accent-500 transition-colors uppercase">
+              Nyxor Fit
+            </h1>
+          </a>
+
+          @if (isReelsRoute) {
+          <a target="_blank" href="https://www.tiktok.com/@nyxorfit" class="mt-1 animate-fade-in">
+            <button mat-icon-button
+              class="text-gray-400 hover:text-white ti ti-brand-tiktok scale-75 h-8 w-8 !min-h-[auto] !min-w-[auto] leading-none flex items-center justify-center">
+            </button>
+          </a>
+          }
+        </div>
 
       </div>
 

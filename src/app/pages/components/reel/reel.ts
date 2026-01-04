@@ -89,13 +89,7 @@ interface ReelItem {
                 <span class="action-label">Shop</span>
               </button>
 
-              <!-- TikTok Button -->
-              <a class="action-btn" href="https://www.tiktok.com/@nyxorfit" target="_blank" aria-label="TikTok">
-                <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
-                </svg>
-                <span class="action-label">TikTok</span>
-              </a>
+
             </div>
 
             <!-- Bottom Info -->

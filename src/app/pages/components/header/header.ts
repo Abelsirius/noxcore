@@ -1,5 +1,5 @@
 import { Component, HostListener, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,19 +18,24 @@ import { Cart } from './dialog/cart/cart';
   styleUrls: ['./header.scss']
 })
 export class HeaderComponent {
+  private _router = inject(Router);
+
+  get isReelsRoute(): boolean {
+    return this._router.url.includes('/reels');
+  }
   public _cartService = inject(CartService);
   cartCount$ = this._cartService.getCartCount();
-   public _dialog = inject(MatDialog)
-   openCart(){
-    this._dialog.open(Cart,{
-       width:'800px',
-       data:{cartItems:this._cartService.getCartItems()}
+  public _dialog = inject(MatDialog)
+  openCart() {
+    this._dialog.open(Cart, {
+      width: '800px',
+      data: { cartItems: this._cartService.getCartItems() }
     })
-   }
+  }
 
   isScrolled = false;
 
-  @HostListener('window:scroll', [])  onWindowScroll() {
+  @HostListener('window:scroll', []) onWindowScroll() {
     this.isScrolled = window.scrollY > 50;
   }
 }
