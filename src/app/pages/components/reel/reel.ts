@@ -88,6 +88,14 @@ interface ReelItem {
                 </svg>
                 <span class="action-label">Shop</span>
               </button>
+
+              <!-- TikTok Button -->
+              <a class="action-btn" href="https://www.tiktok.com/@nyxorfit" target="_blank" aria-label="TikTok">
+                <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                </svg>
+                <span class="action-label">TikTok</span>
+              </a>
             </div>
 
             <!-- Bottom Info -->
@@ -401,10 +409,10 @@ interface ReelItem {
 })
 export class Reel implements AfterViewInit {
   @ViewChild('reelWrapper') reelWrapper!: ElementRef<HTMLDivElement>;
-  
+
   currentReelIndex = 0;
   private videoElements: HTMLVideoElement[] = [];
-  
+
   // Audio and Comments State
   // Intentamos iniciar con sonido (isMuted = false)
   // Nota: Los navegadores pueden bloquear esto si no hay interacción previa.
@@ -412,17 +420,17 @@ export class Reel implements AfterViewInit {
   activeCommentsReelId: string | null = null;
   newComment = '';
   private intersectionObserver: IntersectionObserver | null = null;
-  
+
   // Product Logic
   allProducts: Product[] = [];
   selectedProduct: Product | null = null;
   isModalOpen = false;
 
   constructor(
-    private cdr: ChangeDetectorRef, 
+    private cdr: ChangeDetectorRef,
     private elementRef: ElementRef,
     private productService: ProductService
-  ) {}
+  ) { }
 
   // 🎬 AQUÍ PUEDES AGREGAR TUS VIDEOS
   // Solo agrega la ruta del video en assets/reels/
@@ -458,7 +466,7 @@ export class Reel implements AfterViewInit {
     this.setupVideoElements();
     this.setupScrollListener();
     this.setupVisibilityObserver();
-    
+
     // Cargar productos
     this.loadProducts();
   }
@@ -468,7 +476,7 @@ export class Reel implements AfterViewInit {
     this.productService.getProducts().subscribe(products => {
       this.allProducts = [...this.allProducts, ...products];
     });
-    
+
     this.productService.getProductsSoon().subscribe(productsSoon => {
       this.allProducts = [...this.allProducts, ...productsSoon];
     });
@@ -505,12 +513,12 @@ export class Reel implements AfterViewInit {
 
   private setupScrollListener() {
     const wrapper = this.reelWrapper.nativeElement;
-    
+
     wrapper.addEventListener('scroll', () => {
       const scrollTop = wrapper.scrollTop;
       const itemHeight = wrapper.clientHeight;
       const newIndex = Math.round(scrollTop / itemHeight);
-      
+
       if (newIndex !== this.currentReelIndex) {
         this.pauseAllVideos();
         this.currentReelIndex = newIndex;
@@ -524,7 +532,7 @@ export class Reel implements AfterViewInit {
     const currentVideo = this.videoElements[this.currentReelIndex];
     if (currentVideo) {
       const playPromise = currentVideo.play();
-      
+
       if (playPromise !== undefined) {
         playPromise.catch(error => {
           console.log('Autoplay prevented by browser policy:', error);
@@ -581,16 +589,16 @@ export class Reel implements AfterViewInit {
 
   addComment(reel: ReelItem) {
     if (!this.newComment.trim()) return;
-    
+
     // TODO: Enviar comentario al backend
     console.log('Nuevo comentario:', this.newComment, 'para:', reel.cliente);
-    
+
     // Incrementar contador de comentarios
     if (!reel.comments) {
       reel.comments = 0;
     }
     reel.comments++;
-    
+
     // Limpiar input
     this.newComment = '';
   }
@@ -605,55 +613,55 @@ export class Reel implements AfterViewInit {
 
   goToProduct(reel: ReelItem) {
     if (!reel.cliente) {
-        console.warn('Reel has no client name', reel);
-        return;
+      console.warn('Reel has no client name', reel);
+      return;
     }
-    
+
     console.log('🔍 Searching product for:', reel.cliente);
     console.log('📦 Total products available:', this.allProducts.length);
 
     // Buscar coincidencia exacta por nombre
     const product = this.allProducts.find(p => p.name === reel.cliente);
-    
+
     if (product) {
-        console.log('✅ Exact match found:', product.name);
-        this.selectedProduct = product;
-        this.isModalOpen = true;
-        
-        // Pausar video actual
-        const currentVideo = this.videoElements[this.currentReelIndex];
-        if (currentVideo) {
+      console.log('✅ Exact match found:', product.name);
+      this.selectedProduct = product;
+      this.isModalOpen = true;
+
+      // Pausar video actual
+      const currentVideo = this.videoElements[this.currentReelIndex];
+      if (currentVideo) {
         currentVideo.pause();
-        }
+      }
     } else {
-        console.warn('❌ Direct match failed for:', reel.cliente);
-        // Fallback: Si no encuentra por nombre exacto, intentar búsqueda parcial
-        // Normalizamos strings para comparar mejor
-        const reelName = reel.cliente.toLowerCase();
-        
-        const partialMatch = this.allProducts.find(p => {
+      console.warn('❌ Direct match failed for:', reel.cliente);
+      // Fallback: Si no encuentra por nombre exacto, intentar búsqueda parcial
+      // Normalizamos strings para comparar mejor
+      const reelName = reel.cliente.toLowerCase();
+
+      const partialMatch = this.allProducts.find(p => {
         const prodName = p.name.toLowerCase();
         return prodName.includes(reelName) || reelName.includes(prodName);
-        });
-        
-        if (partialMatch) {
-            console.log('✅ Partial match found:', partialMatch.name);
-            this.selectedProduct = partialMatch;
-            this.isModalOpen = true;
-            const currentVideo = this.videoElements[this.currentReelIndex];
-            if (currentVideo) {
-                currentVideo.pause();
-            }
-        } else {
-            console.error('🚫 No product found (exact or partial) for:', reel.cliente);
+      });
+
+      if (partialMatch) {
+        console.log('✅ Partial match found:', partialMatch.name);
+        this.selectedProduct = partialMatch;
+        this.isModalOpen = true;
+        const currentVideo = this.videoElements[this.currentReelIndex];
+        if (currentVideo) {
+          currentVideo.pause();
         }
+      } else {
+        console.error('🚫 No product found (exact or partial) for:', reel.cliente);
+      }
     }
   }
 
   closeProductModal() {
     this.isModalOpen = false;
     this.selectedProduct = null;
-    
+
     // Reanudar video
     const currentVideo = this.videoElements[this.currentReelIndex];
     if (currentVideo) {
