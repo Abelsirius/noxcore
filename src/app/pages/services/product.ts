@@ -342,10 +342,10 @@ Ideales para entrenar con intensidad y estilo.
         { size: 'M', available: true },
         { size: 'L', available: false }
       ],
-      inStock: true,
+      inStock: false,
       isNew: true,
       discount: 50,
-      availabilityLabel: 'CASI AGOTADO'
+      availabilityLabel: 'AGOTADO'
     },
     {
       id: '11',
