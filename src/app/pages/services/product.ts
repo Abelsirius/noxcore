@@ -234,7 +234,7 @@ Ideales para entrenar con intensidad y estilo.
       category: 'compresores',
       sizes: [
         { size: 'S', available: false }, // No disponible -> Tachar
-        { size: 'M', available: true },  // Disponible
+        { size: 'M', available: false },  // Disponible
         { size: 'L', available: true }  // No disponible -> Tachar
       ],
       inStock: true,
