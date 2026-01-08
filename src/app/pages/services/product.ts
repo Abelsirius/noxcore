@@ -339,7 +339,7 @@ Ideales para entrenar con intensidad y estilo.
       category: 'Hoodies',
       sizes: [
         { size: 'S', available: false },
-        { size: 'M', available: true },
+        { size: 'M', available: false },
         { size: 'L', available: false }
       ],
       inStock: false,
