@@ -1,6 +1,6 @@
 @if(!loading() && encuestas.length > 0){
 <!-- Full Screen Video Background Container -->
-<div class="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center text-center">
+<div class="relative min-h-screen w-full flex flex-col items-center justify-center text-center">
 
   <!-- Background Video -->
   <div class="absolute inset-0 z-0">
@@ -10,11 +10,10 @@
   </div>
 
   <!-- Content Overlay -->
-  <div
-    class="relative z-10 container mx-auto px-4 flex flex-col items-center animate-fade-in h-full justify-between py-16">
+  <div class="relative z-10 container mx-auto px-4 flex flex-col items-center animate-fade-in py-16">
 
     <!-- Top Section: Title and Messaging -->
-    <div class="flex flex-col items-center pt-8 md:pt-16">
+    <div class="flex flex-col items-center pt-8 md:pt-16 mb-20">
       <!-- Main Title -->
       <h1 class="text-4xl md:text-7xl lg:text-8xl font-black text-white tracking-wider drop-shadow-2xl mb-4 uppercase">
         NIGHTFALL COMPRESSION<br>LONGSLEEVE
@@ -42,7 +41,7 @@
     </div>
 
     <!-- Bottom Section: Product Showcase Grid -->
-    <div class="w-full max-w-7xl grid grid-cols-3 gap-2 md:gap-4 pb-24 md:pb-8">
+    <div class="w-full max-w-7xl grid grid-cols-3 gap-2 md:gap-4">
 
       <!-- Left Column: Photos 2 & 3 -->
       <div class="flex flex-col gap-2 md:gap-4">
@@ -72,6 +71,9 @@
       </div>
 
     </div>
+
+    <!-- MÁS ESPACIO NEGRO ABAJO (Spacer mobile) -->
+    <div class="h-64 md:h-32 w-full"></div>
   </div>
 </div>
 }@else {
