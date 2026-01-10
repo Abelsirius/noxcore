@@ -17,14 +17,6 @@ export class EncuestasComponent {
   public loadingService = inject(LoadingService);
   loading: WritableSignal<boolean> = signal(true);
 
-  // Countdown properties
-  targetDate: Date = new Date('2026-01-15T00:00:00');
-  days: WritableSignal<number> = signal(0);
-  hours: WritableSignal<number> = signal(0);
-  minutes: WritableSignal<number> = signal(0);
-  seconds: WritableSignal<number> = signal(0);
-  private timerInterval: any;
-
   // Long press state management
   private longPressTimer: any;
   private isLongPressActive = false;
@@ -37,16 +29,13 @@ export class EncuestasComponent {
   async ngOnInit() {
     this.userId = this.getUserId();
 
-    // Start countdown
-    this.startCountdown();
-
-    // 🔥 Carga encuestas desde Firebase (DESACTIVADO POR EL MOMENTO) (DESACTIVADO POR EL MOMENTO)
+    // 🔥 Carga encuestas desde Firebase (DESACTIVADO POR EL MOMENTO)
     // this.encuestas = await this.encuestaDb.obtenerEncuestas();
 
-    // 🛑 HARDCODED: Solo mostrar Nighfall Compression Longsleeve
+    // 🛑 HARDCODED: Solo mostrar Nightfall Compression Longsleeve
     this.encuestas = [{
       productoId: 999, // ID temporal
-      nombre: 'Nighfall Compression Longsleeve',
+      nombre: 'Nightfall Compression Longsleeve',
       voto: 0,
       edad: 0,
       opinion: '',
@@ -72,30 +61,6 @@ export class EncuestasComponent {
     return userId;
   }
 
-  private startCountdown() {
-    this.updateTime();
-    this.timerInterval = setInterval(() => {
-      this.updateTime();
-    }, 100);
-  }
-
-  private updateTime() {
-    const now = new Date().getTime();
-    const distance = this.targetDate.getTime() - now;
-
-    if (distance < 0) {
-      this.days.set(0);
-      this.hours.set(0);
-      this.minutes.set(0);
-      this.seconds.set(0);
-      clearInterval(this.timerInterval);
-    } else {
-      this.days.set(Math.floor(distance / (1000 * 60 * 60 * 24)));
-      this.hours.set(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-      this.minutes.set(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
-      this.seconds.set(Math.floor((distance % (1000 * 60)) / 1000));
-    }
-  }
 
   onProductHover(event: Event, shouldPlay: boolean) {
     const target = event.currentTarget as HTMLElement;
@@ -152,11 +117,5 @@ export class EncuestasComponent {
     }
 
     this.isLongPressActive = false;
-  }
-
-  ngOnDestroy() {
-    if (this.timerInterval) {
-      clearInterval(this.timerInterval);
-    }
   }
 }

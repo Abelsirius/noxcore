@@ -1,55 +1,69 @@
 @if(!loading() && encuestas.length > 0){
 <!-- Full Screen Video Background Container -->
 <div class="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center text-center">
-  
+
   <!-- Background Video -->
   <div class="absolute inset-0 z-0">
-    <video 
-      [src]="encuestas[0].videoPreview" 
-      autoplay 
-      muted 
-      loop 
-      playsinline 
-      webkit-playsinline
-      class="w-full h-full object-cover opacity-60"
-    ></video>
-    <div class="absolute inset-0 bg-black/50"></div>
+    <video [src]="encuestas[0].videoPreview" autoplay muted loop playsinline webkit-playsinline preload="auto"
+      class="w-full h-full object-cover opacity-50"></video>
+    <div class="absolute inset-0 bg-black/70"></div>
   </div>
 
   <!-- Content Overlay -->
-  <div class="relative z-10 container mx-auto px-4 flex flex-col items-center animate-fade-in pt-16">
-    <h1 class="text-3xl md:text-5xl font-extrabold text-white tracking-wider pb-2 drop-shadow-lg">¡PRÓXIMAMENTE!</h1>
-    
-    <h2 class="text-sm md:text-xl text-gray-200 font-semibold uppercase tracking-[0.2em] pb-4">Lanzamiento oficial</h2>
-    
-    <h2 class="text-4xl md:text-7xl text-red-600 font-black tracking-widest drop-shadow-[0_0_15px_rgba(220,38,38,0.5)] pb-10">
-      15.01.2026
-    </h2>
+  <div
+    class="relative z-10 container mx-auto px-4 flex flex-col items-center animate-fade-in h-full justify-between py-16">
 
-    <!-- Countdown Timer -->
-    <div class="flex flex-wrap justify-center gap-4 md:gap-8 mb-12">
-      <div class="countdown-item bg-black/40 backdrop-blur-sm p-4 rounded-lg border border-white/10 min-w-[80px]">
-        <span class="countdown-number text-3xl md:text-5xl block font-bold text-white">{{ days() | number: '2.0-0' }}</span>
-        <span class="countdown-label text-xs md:text-sm text-gray-400 uppercase tracking-widest">Días</span>
-      </div>
-      <div class="countdown-item bg-black/40 backdrop-blur-sm p-4 rounded-lg border border-white/10 min-w-[80px]">
-        <span class="countdown-number text-3xl md:text-5xl block font-bold text-white">{{ hours() | number: '2.0-0' }}</span>
-        <span class="countdown-label text-xs md:text-sm text-gray-400 uppercase tracking-widest">Horas</span>
-      </div>
-      <div class="countdown-item bg-black/40 backdrop-blur-sm p-4 rounded-lg border border-white/10 min-w-[80px]">
-        <span class="countdown-number text-3xl md:text-5xl block font-bold text-white">{{ minutes() | number: '2.0-0' }}</span>
-        <span class="countdown-label text-xs md:text-sm text-gray-400 uppercase tracking-widest">Min</span>
-      </div>
-      <div class="countdown-item bg-black/40 backdrop-blur-sm p-4 rounded-lg border border-white/10 min-w-[80px]">
-        <span class="countdown-number text-3xl md:text-5xl block font-bold text-white">{{ seconds() | number: '2.0-0' }}</span>
-        <span class="countdown-label text-xs md:text-sm text-gray-400 uppercase tracking-widest">Seg</span>
-      </div>
+    <!-- Top Section: Title and Messaging -->
+    <div class="flex flex-col items-center pt-8 md:pt-16">
+      <!-- Main Title -->
+      <h1 class="text-4xl md:text-7xl lg:text-8xl font-black text-white tracking-wider drop-shadow-2xl mb-4 uppercase">
+        NIGHTFALL COMPRESSION<br>LONGSLEEVE
+      </h1>
+
+      <!-- Black Friday Subtitle -->
+      <h2
+        class="text-lg md:text-2xl text-red-600 font-bold uppercase tracking-[0.3em] drop-shadow-[0_0_20px_rgba(220,38,38,0.7)] mb-6">
+        BLACK FRIDAY COLLECTION
+      </h2>
+
+      <!-- Stock Availability Message -->
+      <p
+        class="text-base md:text-xl text-gray-200 font-semibold uppercase tracking-widest border-t border-b border-white/20 py-3 px-8">
+        STOCK DISPONIBLE • COMPRA AHORA
+      </p>
     </div>
 
-    <!-- Product Name -->
-    <h3 class="text-2xl md:text-4xl font-bold uppercase tracking-widest text-white drop-shadow-lg max-w-3xl">
-      {{ encuestas[0].nombre }}
-    </h3>
+    <!-- Bottom Section: Product Showcase Grid -->
+    <div class="w-full max-w-7xl grid grid-cols-3 gap-2 md:gap-4 pb-8">
+
+      <!-- Left Column: Photos 2 & 3 -->
+      <div class="flex flex-col gap-2 md:gap-4">
+        <div class="showcase-image-wrapper">
+          <img src="../../../assets/nightfall_model_2.png" alt="Nightfall Model 2" class="showcase-image">
+        </div>
+        <div class="showcase-image-wrapper">
+          <img src="../../../assets/nightfall_model_3.png" alt="Nightfall Model 3" class="showcase-image">
+        </div>
+      </div>
+
+      <!-- Center Column: Photo 1 (Featured) -->
+      <div class="flex items-center">
+        <div class="showcase-image-wrapper featured">
+          <img src="../../../assets/nightfall_model_1.png" alt="Nightfall Model Featured" class="showcase-image">
+        </div>
+      </div>
+
+      <!-- Right Column: Photos 4 & 5 -->
+      <div class="flex flex-col gap-2 md:gap-4">
+        <div class="showcase-image-wrapper">
+          <img src="../../../assets/nightfall_model_4.png" alt="Nightfall Model 4" class="showcase-image">
+        </div>
+        <div class="showcase-image-wrapper">
+          <img src="../../../assets/nightfall_model_5.png" alt="Nightfall Model 5" class="showcase-image">
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 }@else {
