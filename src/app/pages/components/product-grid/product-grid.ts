@@ -154,7 +154,7 @@ import { MatDialog } from '@angular/material/dialog';
     <section class="py-8 px-4 " id="collection-soon">
       <div class="container mx-auto max-w-6xl">
         <div class="text-center mb-12">
-          <h2 class="text-4xl font-bold text-white ">Drop pasado – Últimas unidades</h2>
+          <h2 class="text-4xl font-bold text-white ">DROP PASADO – ÚLTIMAS UNIDADES</h2>
           <div class="w-24 h-1 bg-accent-500 mx-auto"></div>
         </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
