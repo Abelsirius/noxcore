@@ -184,14 +184,13 @@ import { MatDialog } from '@angular/material/dialog';
                  class="absolute inset-0 bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                ></div>
                <!-- Video Preview for Soon Section -->
-               <video 
-               *ngIf="product.videoPreview"
-               [src]="product.videoPreview"
-               class="product-video absolute inset-0 w-full h-full object-contain opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10"
-               muted
-               loop
-               playsinline
              ></video>
+                                <div 
+      *ngIf="!product.inStock"
+      class="absolute inset-0 bg-black/70 flex items-center justify-center text-white text-lg font-semibold"
+    >
+      AGOTADO
+    </div>
               <!-- Badges -->
               <div class="absolute top-4 left-4 space-y-2">
                 <span 
@@ -209,7 +208,7 @@ import { MatDialog } from '@angular/material/dialog';
               </div>
 
               <!-- Quick Actions -->
-              <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center" *ngIf="product.inStock">
                 <button class="btn-primary">
                   Ver Detalles
                 </button>
