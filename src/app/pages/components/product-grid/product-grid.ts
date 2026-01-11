@@ -184,6 +184,13 @@ import { MatDialog } from '@angular/material/dialog';
                  class="absolute inset-0 bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                ></div>
                <!-- Video Preview for Soon Section -->
+               <video 
+               *ngIf="product.videoPreview"
+               [src]="product.videoPreview"
+               class="product-video absolute inset-0 w-full h-full object-contain opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10"
+               muted
+               loop
+               playsinline
              ></video>
                                 <div 
       *ngIf="!product.inStock"
