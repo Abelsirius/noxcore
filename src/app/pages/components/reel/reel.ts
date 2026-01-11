@@ -448,7 +448,7 @@ export class Reel implements AfterViewInit {
     },
     {
       id: '3',
-      cliente: 'Nighfall Compression',
+      cliente: 'Nightfall Compression Longsleeve',
       videoUrl: '../../../../assets/reels/reel_3.mp4',
       descripcion: 'Compresores de alta elasticidad, diseño infernal y ajuste perfecto. Ideales para entrenar con intensidad y estilo. 🔥 Oscuros, cómodos y hechos para dominar. 🔥',
       likes: 72,

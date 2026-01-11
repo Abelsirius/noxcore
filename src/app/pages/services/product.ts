@@ -113,7 +113,7 @@ Ideales para entrenar con intensidad y estilo.
     },
     {
       id: '5',
-      name: 'Nighfall Compression',
+      name: 'Nightfall Compression Longsleeve',
       description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
@@ -126,6 +126,8 @@ Ideales para entrenar con intensidad y estilo.
         '../../../assets/gotico2.jpeg',
         '../../../assets/soon2_view_stock.jpeg',
         '../../../assets/soon2_view2_stock.jpeg',
+        '../../../assets/nightfall_model_6.png',
+        '../../../assets/nightfall_model_7.png',
 
       ],
       category: 'compresores',
@@ -140,7 +142,7 @@ Ideales para entrenar con intensidad y estilo.
     },
     {
       id: '12',
-      name: 'Nighfall Compression Frost',
+      name: 'Nightfall Compression Frost',
       description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
