@@ -32,7 +32,11 @@ import { MatDialog } from '@angular/material/dialog';
           @for(product of blackFridayProducts; track product.id){
           <div 
             #bfProductCard
-            class="product-card bg-black rounded-lg overflow-hidden cursor-pointer animate-slide-up border border-red-900/50 shadow-[0_0_15px_rgba(220,38,38,0.3)]"
+            class="product-card bg-black rounded-lg overflow-hidden cursor-pointer animate-slide-up border shadow-[0_0_15px_rgba(0,0,0,0)] transition-all duration-300"
+            [ngClass]="{
+              'border-red-900/50 shadow-[0_0_15px_rgba(220,38,38,0.3)] hover:shadow-[0_0_25px_rgba(220,38,38,0.5)]': product.id === '13',
+              'border-blue-900/50 shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.5)]': product.id === '14'
+            }"
             (click)="openProductModal(product)"
             (mouseenter)="onProductHover($event, true)"
             (mouseleave)="onProductHover($event, false)"
