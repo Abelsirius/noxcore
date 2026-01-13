@@ -5,10 +5,12 @@ import { EncuestaDbService } from '../../../../core/encuesta-db';
 import { Encuesta } from '../../../../core/interfaces/encuesta.model';
 import { LoadingService } from '../../../../core/loading';
 
+import { RouterModule } from '@angular/router';
+
 @Component({
   selector: 'app-encuestas',
   templateUrl: './encuesta.html',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   styleUrls: ['./encuesta.scss'],
 })
 export class EncuestasComponent {
