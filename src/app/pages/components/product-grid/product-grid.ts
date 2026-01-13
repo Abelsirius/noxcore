@@ -425,9 +425,10 @@ export class ProductGridComponent implements OnInit {
   ngOnInit() {
     this.productService.getProducts().subscribe(
       products => {
-        // Filter out the Nightfall Compression Longsleeve Heavenly Red (ID 13)
-        this.blackFridayProducts = products.filter(p => p.id === '13');
-        this.products = products.filter(p => p.id !== '13');
+        // Filter out Black Friday products (ID 13 and 14)
+        const blackFridayIds = ['13', '14'];
+        this.blackFridayProducts = products.filter(p => blackFridayIds.includes(p.id));
+        this.products = products.filter(p => !blackFridayIds.includes(p.id));
       }
     );
 
