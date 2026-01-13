@@ -1,11 +1,11 @@
-@if(!loading() && encuestas.length > 0){
+@if(!loading()){
 <!-- Full Screen Video Background Container -->
 <div class="relative min-h-screen w-full flex flex-col items-center justify-center text-center">
 
-  <!-- Background Video -->
+  <!-- Background Image -->
   <div class="absolute inset-0 z-0">
-    <video [src]="encuestas[0].videoPreview" autoplay muted loop playsinline webkit-playsinline preload="auto"
-      class="w-full h-full object-cover opacity-50"></video>
+    <img src="../../../assets/infernal_compression_bg.png" alt="Infernal Compression Background"
+      class="w-full h-full object-cover opacity-60">
     <div class="absolute inset-0 bg-black/70"></div>
   </div>
 
@@ -16,85 +16,41 @@
     <div class="flex flex-col items-center pt-8 md:pt-16 mb-20">
       <!-- Main Title -->
       <h1 class="text-4xl md:text-7xl lg:text-8xl font-black text-white tracking-wider drop-shadow-2xl mb-4 uppercase">
-        NIGHTFALL COMPRESSION<br>LONGSLEEVE
+        INFERNAL COMPRESSION
       </h1>
 
-      <!-- Black Friday Subtitle -->
+      <!-- Subtitle -->
       <h2
-        class="text-lg md:text-2xl text-red-600 font-bold uppercase tracking-[0.3em] drop-shadow-[0_0_20px_rgba(220,38,38,0.7)] mb-6">
-        BLACK FRIDAY COLLECTION
+        class="text-lg md:text-2xl text-red-600 font-bold uppercase tracking-[0.3em] drop-shadow-[0_0_20px_rgba(220,38,38,0.7)] mb-12">
+        PRÓXIMAMENTE
       </h2>
 
-      <!-- Stock Availability Message -->
-      <p
-        class="text-base md:text-xl text-gray-200 font-semibold uppercase tracking-widest border-t border-b border-white/20 py-3 px-8 mb-6">
-        DISPONIBLE AHORA
-      </p>
-
-
-      <!-- CTA Button -->
-      <a href="https://wa.me/51942301601?text=Hola,%20quiero%20adquirir%20el%20Nightfall%20Compression%20Longsleeve"
-        target="_blank"
-        class="adquirir-btn text-sm md:text-base font-bold uppercase tracking-wider px-6 py-2 md:px-8 md:py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl inline-block">
-        Adquirir
-      </a>
-    </div>
-
-    <!-- Unified Product Showcase Grid -->
-    <div class="w-full max-w-7xl grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
-
-      <!-- Photos ordered 2 to 7 -->
-      <div class="showcase-image-wrapper">
-        <img src="../../../assets/nightfall_model_2.png" alt="Nightfall Model 2" class="showcase-image">
-      </div>
-      <div class="showcase-image-wrapper">
-        <img src="../../../assets/nightfall_model_3.png" alt="Nightfall Model 3" class="showcase-image">
-      </div>
-      <div class="showcase-image-wrapper">
-        <img src="../../../assets/nightfall_model_4.png" alt="Nightfall Model 4" class="showcase-image">
-      </div>
-      <div class="showcase-image-wrapper">
-        <img src="../../../assets/nightfall_model_5.png" alt="Nightfall Model 5" class="showcase-image">
-      </div>
-      <div class="showcase-image-wrapper">
-        <img src="../../../assets/nightfall_model_6.png" alt="Nightfall Model 6" class="showcase-image">
-      </div>
-      <div class="showcase-image-wrapper">
-        <img src="../../../assets/nightfall_model_7.png" alt="Nightfall Model 7" class="showcase-image">
+      <!-- Countdown Timer -->
+      <div class="grid grid-cols-4 gap-4 md:gap-8 text-center mb-12">
+        <div class="flex flex-col items-center">
+          <span class="text-4xl md:text-6xl font-black text-white">{{ timeRemaining().days }}</span>
+          <span class="text-xs md:text-sm text-gray-400 uppercase tracking-widest mt-2">Días</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-4xl md:text-6xl font-black text-white">{{ timeRemaining().hours }}</span>
+          <span class="text-xs md:text-sm text-gray-400 uppercase tracking-widest mt-2">Horas</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-4xl md:text-6xl font-black text-white">{{ timeRemaining().minutes }}</span>
+          <span class="text-xs md:text-sm text-gray-400 uppercase tracking-widest mt-2">Minutos</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-4xl md:text-6xl font-black text-white">{{ timeRemaining().seconds }}</span>
+          <span class="text-xs md:text-sm text-gray-400 uppercase tracking-widest mt-2">Segundos</span>
+        </div>
       </div>
 
     </div>
 
-    <!-- MÁS ESPACIO NEGRO ABAJO (Spacer mobile) -->
-    <div class="h-64 md:h-32 w-full"></div>
   </div>
 </div>
 }@else {
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 container mx-auto max-w-6xl px-5">
-  <div class="skeleton-card">
-    <div class="skeleton-image"></div>
-    <div class="skeleton-text-lg"></div>
-    <div class="skeleton-text-sm"></div>
-    <div class="skeleton-button"></div>
-    <div class="skeleton-line-divider"></div>
-    <div class="skeleton-comment-input"></div>
-    <div class="skeleton-recent-comments">
-      <div class="skeleton-comment-line"></div>
-      <div class="skeleton-comment-line"></div>
-    </div>
-  </div>
-  <div class="skeleton-card">
-    <div class="skeleton-image"></div>
-    <div class="skeleton-text-lg"></div>
-    <div class="skeleton-text-sm"></div>
-    <div class="skeleton-button"></div>
-    <div class="skeleton-line-divider"></div>
-    <div class="skeleton-comment-input"></div>
-    <div class="skeleton-recent-comments">
-      <div class="skeleton-comment-line"></div>
-      <div class="skeleton-comment-line"></div>
-    </div>
-  </div>
   <div class="skeleton-card">
     <div class="skeleton-image"></div>
     <div class="skeleton-text-lg"></div>

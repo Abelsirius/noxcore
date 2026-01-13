@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import { Component, inject, signal, WritableSignal, OnInit, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EncuestaDbService } from '../../../../core/encuesta-db';
 import { Encuesta } from '../../../../core/interfaces/encuesta.model';
@@ -11,16 +11,16 @@ import { LoadingService } from '../../../../core/loading';
   imports: [CommonModule],
   styleUrls: ['./encuesta.scss'],
 })
-export class EncuestasComponent {
+export class EncuestasComponent implements OnInit, OnDestroy {
   encuestas: Encuesta[] = [];
   userId!: string;
   public loadingService = inject(LoadingService);
   loading: WritableSignal<boolean> = signal(true);
 
-  // Long press state management
-  private longPressTimer: any;
-  private isLongPressActive = false;
-  private readonly LONG_PRESS_DURATION = 200; // milliseconds
+  // Countdown State
+  targetDate: Date = new Date('2026-01-20T00:00:00'); // Set a target date
+  timeRemaining: WritableSignal<{ days: number, hours: number, minutes: number, seconds: number }> = signal({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  private intervalId: any;
 
   constructor(private encuestaDb: EncuestaDbService) {
 
@@ -29,26 +29,41 @@ export class EncuestasComponent {
   async ngOnInit() {
     this.userId = this.getUserId();
 
-    // 🔥 Carga encuestas desde Firebase (DESACTIVADO POR EL MOMENTO)
-    // this.encuestas = await this.encuestaDb.obtenerEncuestas();
-
-    // 🛑 HARDCODED: Solo mostrar Nightfall Compression Longsleeve
-    this.encuestas = [{
-      productoId: 999, // ID temporal
-      nombre: 'Nightfall Compression Longsleeve',
-      voto: 0,
-      edad: 0,
-      opinion: '',
-      userId: this.userId,
-      imagen: 'assets/nighfall_compression_longsleeve.png',
-      videoPreview: 'assets/videos_preview/WhatsApp Video 2025-12-30 at 10.09.37 PM.mp4',
-      comentarios: [],
-      likedUsers: [],
-    }];
-
-    console.log('Encuesta hardcoded cargada:', this.encuestas);
+    // Start Countdown
+    this.startTimer();
 
     this.loading.set(false);
+  }
+
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+
+  startTimer() {
+    this.updateTime();
+    this.intervalId = setInterval(() => {
+      this.updateTime();
+    }, 1000);
+  }
+
+  updateTime() {
+    const now = new Date().getTime();
+    const distance = this.targetDate.getTime() - now;
+
+    if (distance < 0) {
+      this.timeRemaining.set({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      clearInterval(this.intervalId);
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    this.timeRemaining.set({ days, hours, minutes, seconds });
   }
 
   /** Genera o recupera un ID único por dispositivo */
@@ -59,63 +74,5 @@ export class EncuestasComponent {
       localStorage.setItem('userId', userId);
     }
     return userId;
-  }
-
-
-  onProductHover(event: Event, shouldPlay: boolean) {
-    const target = event.currentTarget as HTMLElement;
-    const video = target.querySelector('video.product-video') as HTMLVideoElement;
-
-    if (video) {
-      if (shouldPlay) {
-        video.muted = true;
-        video.play().catch(error => console.log('Video play failed:', error));
-      } else {
-        video.pause();
-        video.currentTime = 0;
-      }
-    }
-  }
-
-  onTouchStart(event: TouchEvent, containerElement: HTMLElement) {
-    this.isLongPressActive = false;
-
-    this.longPressTimer = setTimeout(() => {
-      this.isLongPressActive = true;
-      const video = containerElement.querySelector('video.product-video') as HTMLVideoElement;
-
-      if (video) {
-        video.muted = true;
-        video.play().catch(error => console.log('Video play failed:', error));
-      }
-    }, this.LONG_PRESS_DURATION);
-  }
-
-  onTouchEnd(event: TouchEvent, containerElement: HTMLElement) {
-    if (this.longPressTimer) {
-      clearTimeout(this.longPressTimer);
-    }
-
-    const video = containerElement.querySelector('video.product-video') as HTMLVideoElement;
-    if (video && this.isLongPressActive) {
-      video.pause();
-      video.currentTime = 0;
-    }
-
-    this.isLongPressActive = false;
-  }
-
-  onTouchCancel(event: TouchEvent, containerElement: HTMLElement) {
-    if (this.longPressTimer) {
-      clearTimeout(this.longPressTimer);
-    }
-
-    const video = containerElement.querySelector('video.product-video') as HTMLVideoElement;
-    if (video && this.isLongPressActive) {
-      video.pause();
-      video.currentTime = 0;
-    }
-
-    this.isLongPressActive = false;
   }
 }
