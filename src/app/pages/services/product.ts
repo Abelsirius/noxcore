@@ -305,9 +305,9 @@ Ideales para entrenar con intensidad y estilo.
       `,
       price: 69.90,
       originalPrice: 89.00,
-      image: '../../../assets/nightfall_frost_main_v2.png',
+      image: '../../../assets/nightfall_frost_main_v3.png',
       images: [
-        '../../../assets/nightfall_frost_main_v2.png',
+        '../../../assets/nightfall_frost_main_v3.png',
         '../../../assets/nightfall_frost_front.png',
         '../../../assets/nightfall_frost_back.png',
       ],
