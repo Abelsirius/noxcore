@@ -21,7 +21,7 @@ import { Component, signal, WritableSignal, OnInit, OnDestroy } from '@angular/c
 })
 export class CountdownComponent implements OnInit, OnDestroy {
     // Countdown State
-    targetDate: Date = new Date('2026-01-20T00:00:00'); // Set a target date
+    targetDate: Date = new Date('2026-01-24T00:00:00'); // Set a target date (11 days from Jan 13)
     timeRemaining: WritableSignal<{ days: number, hours: number, minutes: number, seconds: number }> = signal({ days: 0, hours: 0, minutes: 0, seconds: 0 });
     private intervalId: any;
     loading: WritableSignal<boolean> = signal(true);
