@@ -3,8 +3,8 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
 
     {
-        path:'',
-        loadComponent: ()=>import('./pages/home/home').then((e)=>e.Home),
+        path: '',
+        loadComponent: () => import('./pages/home/home').then((e) => e.Home),
     },
     {
         path: 'reels',
@@ -16,6 +16,6 @@ export const routes: Routes = [
     },
     {
         path: 'drops',
-        loadComponent: () => import('./pages/components/encuesta/encuesta').then(m => m.EncuestasComponent)
+        loadComponent: () => import('./pages/components/countdown/countdown').then(m => m.CountdownComponent)
     }
 ];
