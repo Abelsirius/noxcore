@@ -277,7 +277,7 @@ Ideales para entrenar con intensidad y estilo.
 Ideales para entrenar con intensidad y estilo.
 🔥 Oscuros, cómodos y hechos para dominar.
       `,
-      price: 69.90,
+      price: 59.90,
       originalPrice: 89.00,
       image: '../../../assets/nightfall_heavenly_red_main.png',
       images: [
@@ -303,7 +303,7 @@ Ideales para entrenar con intensidad y estilo.
 Ideales para entrenar con intensidad y estilo.
 🔥 Oscuros, cómodos y hechos para dominar.
       `,
-      price: 69.90,
+      price: 59.90,
       originalPrice: 89.00,
       image: '../../../assets/nightfall_frost_main_v3.png',
       images: [
@@ -329,7 +329,7 @@ Ideales para entrenar con intensidad y estilo.
 Ideales para entrenar con intensidad y estilo.
 🔥 Oscuros, cómodos y hechos para dominar.
       `,
-      price: 69.90,
+      price: 59.90,
       originalPrice: 89.00,
       image: '../../../assets/nightfall_raichu_main.png',
       images: [
