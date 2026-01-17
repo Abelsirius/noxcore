@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ProductGridComponent } from "../components/product-grid/product-grid";
 import { HeroComponent } from "../components/hero/hero";
 import { HeaderComponent } from "../components/header/header";
@@ -9,7 +10,7 @@ import { VotoModalComponent } from '../components/voto-modal-component/voto-moda
 
 @Component({
   selector: 'app-home',
-  imports: [ProductGridComponent, HeroComponent, HeaderComponent, EncuestasComponent, Reel],
+  imports: [CommonModule, ProductGridComponent, HeroComponent, HeaderComponent, EncuestasComponent, Reel],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
