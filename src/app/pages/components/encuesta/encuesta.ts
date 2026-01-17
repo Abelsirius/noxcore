@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import { Component, inject, input, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EncuestaDbService } from '../../../../core/encuesta-db';
 import { Encuesta } from '../../../../core/interfaces/encuesta.model';
@@ -14,6 +14,7 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./encuesta.scss'],
 })
 export class EncuestasComponent {
+  hasEntered = input<boolean>(false);
   encuestas: Encuesta[] = [];
   userId!: string;
   public loadingService = inject(LoadingService);

@@ -4,8 +4,8 @@
 
   <!-- Background Video -->
   <div class="absolute inset-0 z-0">
-    <video [src]="encuestas[0].videoPreview" autoplay muted loop playsinline webkit-playsinline preload="auto"
-      class="w-full h-full object-cover opacity-50"></video>
+    <video [src]="encuestas[0].videoPreview" autoplay [muted]="!hasEntered()" loop playsinline webkit-playsinline
+      preload="auto" class="w-full h-full object-cover opacity-50"></video>
     <div class="absolute inset-0 bg-black/70"></div>
   </div>
 

@@ -14,8 +14,23 @@ import { VotoModalComponent } from '../components/voto-modal-component/voto-moda
   styleUrl: './home.scss'
 })
 export class Home implements OnInit {
+  hasEntered = false;
+
+  constructor() {
+    // Check if user already entered in this session
+    const entered = sessionStorage.getItem('hasEntered');
+    if (entered === 'true') {
+      this.hasEntered = true;
+    }
+  }
+
   ngOnInit(): void {
     //  this.openVotoModal(); 
+  }
+
+  onEnter() {
+    this.hasEntered = true;
+    sessionStorage.setItem('hasEntered', 'true');
   }
 
   openVotoModal() {
