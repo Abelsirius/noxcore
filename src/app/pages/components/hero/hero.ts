@@ -11,25 +11,11 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class HeroComponent implements AfterViewInit {
   hasEntered = input<boolean>(false);
-  @ViewChild('heroVideo') videoRef!: ElementRef<HTMLVideoElement>;
   showGlitchText = false;
 
   private cdr = inject(ChangeDetectorRef);
 
   ngAfterViewInit() {
-    if (this.videoRef?.nativeElement) {
-      const video = this.videoRef.nativeElement;
-      video.play().catch(console.warn);
-    }
-    this.triggerGlitch();
-  }
-
-  onVideoEnded() {
-    if (this.videoRef?.nativeElement) {
-      this.videoRef.nativeElement.currentTime = 0;
-      this.videoRef.nativeElement.play();
-    }
-
     this.triggerGlitch();
   }
 

@@ -1,24 +1,17 @@
 <section class="relative h-screen flex items-center justify-center overflow-hidden pt-1">
-  <!-- Background Image (Desktop) -->
-  <div class="absolute inset-0 z-0 hidden md:block">
+  <!-- Background Image -->
+  <div class="absolute inset-0 z-0">
     <img src="../../../assets/zyzz.jpeg" alt="Noxcore Hero" class="w-full h-full object-cover opacity-40">
     <div class="absolute inset-0 bg-black/60"></div>
   </div>
 
-  <!-- Background Video (Mobile) -->
-  <div class="absolute inset-0 z-0 block md:hidden">
-    <video #heroVideo src="../../../assets/nuevo_banner.mp4" autoplay [muted]="!hasEntered()" playsinline
-      webkit-playsinline preload="auto" class="w-full h-full object-cover opacity-80" (ended)="onVideoEnded()"></video>
-    <div class="absolute inset-0 bg-black/30"></div>
-
-    <!-- Glitch Text Overlay (Mobile Only) -->
-    <div class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none block md:hidden"
-      *ngIf="showGlitchText">
-      <div class="mobile-glitch-container mega-scale-in">
-        <h1 class="glitch-text text-6xl font-black text-white tracking-tighter" data-text="NYXOR FIT">
-          NYXOR FIT
-        </h1>
-      </div>
+  <!-- Glitch Text Overlay (Mobile Only) -->
+  <div class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none block md:hidden"
+    *ngIf="showGlitchText">
+    <div class="mobile-glitch-container mega-scale-in">
+      <h1 class="glitch-text text-6xl font-black text-white tracking-tighter" data-text="NYXOR FIT">
+        NYXOR FIT
+      </h1>
     </div>
   </div>
 

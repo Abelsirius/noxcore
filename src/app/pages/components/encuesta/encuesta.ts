@@ -44,7 +44,7 @@ export class EncuestasComponent {
       opinion: '',
       userId: this.userId,
       imagen: 'assets/nighfall_compression_longsleeve.png',
-      videoPreview: 'assets/videos_preview/WhatsApp Video 2025-12-30 at 10.09.37 PM.mp4',
+      videoPreview: 'assets/nuevo_banner.mp4',
       comentarios: [],
       likedUsers: [],
     }];
