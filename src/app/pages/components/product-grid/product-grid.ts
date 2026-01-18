@@ -36,7 +36,7 @@ import { MatDialog } from '@angular/material/dialog';
             [ngClass]="{
               'border-red-900/50 shadow-[0_0_15px_rgba(220,38,38,0.3)] hover:shadow-[0_0_25px_rgba(220,38,38,0.5)]': product.id === '13' || product.id === '16',
               'border-blue-900/50 shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.5)]': product.id === '14',
-              'border-yellow-600/50 shadow-[0_0_15px_rgba(202,138,4,0.3)] hover:shadow-[0_0_25px_rgba(202,138,4,0.5)]': product.id === '15'
+              'border-yellow-600/50 shadow-[0_0_15px_rgba(202,138,4,0.3)] hover:shadow-[0_0_25px_rgba(202,138,4,0.5)]': product.id === '15' || product.id === '17'
             }"
             (click)="openProductModal(product)"
             (mouseenter)="onProductHover($event, true)"
@@ -430,8 +430,8 @@ export class ProductGridComponent implements OnInit {
   ngOnInit() {
     this.productService.getProducts().subscribe(
       products => {
-        // Filter out Black Friday products (ID 13, 14, 15, 16)
-        const blackFridayIds = ['13', '14', '15', '16'];
+        // Filter out Black Friday products (ID 13, 14, 15, 16, 17)
+        const blackFridayIds = ['13', '14', '15', '16', '17'];
         this.blackFridayProducts = products.filter(p => blackFridayIds.includes(p.id));
         this.products = products.filter(p => !blackFridayIds.includes(p.id));
       }
