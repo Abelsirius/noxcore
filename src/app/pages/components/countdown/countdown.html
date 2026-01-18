@@ -27,6 +27,7 @@
             </h2>
 
             <!-- Countdown Timer -->
+            @if(showTimer){
             <div class="grid grid-cols-4 gap-4 md:gap-8 text-center mb-12">
                 <div class="flex flex-col items-center">
                     <span class="text-4xl md:text-6xl font-black text-white">{{ timeRemaining().days }}</span>
@@ -45,6 +46,7 @@
                     <span class="text-xs md:text-sm text-gray-400 uppercase tracking-widest mt-2">Segundos</span>
                 </div>
             </div>
+            }
 
         </div>
 

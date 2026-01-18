@@ -4,13 +4,14 @@ import { ProductGridComponent } from "../components/product-grid/product-grid";
 import { HeroComponent } from "../components/hero/hero";
 import { HeaderComponent } from "../components/header/header";
 import { EncuestasComponent } from "../components/encuesta/encuesta";
+import { CountdownComponent } from "../components/countdown/countdown";
 import { Reel } from "../components/reel/reel";
 import { MatDialog } from '@angular/material/dialog';
 import { VotoModalComponent } from '../components/voto-modal-component/voto-modal-component';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, ProductGridComponent, HeroComponent, HeaderComponent, EncuestasComponent, Reel],
+  imports: [CommonModule, HeroComponent, HeaderComponent, EncuestasComponent, CountdownComponent, Reel],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })

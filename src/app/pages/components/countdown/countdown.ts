@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal, WritableSignal, OnInit, OnDestroy } from '@angular/core';
+import { Component, signal, WritableSignal, OnInit, OnDestroy, Input } from '@angular/core';
 
 @Component({
     selector: 'app-countdown',
@@ -21,6 +21,7 @@ import { Component, signal, WritableSignal, OnInit, OnDestroy } from '@angular/c
 })
 export class CountdownComponent implements OnInit, OnDestroy {
     // Countdown State
+    @Input() showTimer = true;
     targetDate: Date = new Date('2026-01-18T00:00:00'); // Set a target date
     timeRemaining: WritableSignal<{ days: number, hours: number, minutes: number, seconds: number }> = signal({ days: 0, hours: 0, minutes: 0, seconds: 0 });
     private intervalId: any;
