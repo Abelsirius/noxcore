@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input, signal, WritableSignal, Input } from '@angular/core';
+import { Component, inject, input, signal, WritableSignal, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EncuestaDbService } from '../../../../core/encuesta-db';
 import { Encuesta } from '../../../../core/interfaces/encuesta.model';
@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './encuesta.html',
   imports: [CommonModule, RouterModule],
   styleUrls: ['./encuesta.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EncuestasComponent {
   hasEntered = input<boolean>(false);

@@ -21,6 +21,13 @@ swiper-slide {
     overflow: visible;
 }
 
+.carousel-item {
+    scroll-snap-align: start;
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+}
+
 .product-card {
     position: relative;
     width: 100%;
@@ -40,20 +47,10 @@ swiper-slide {
         content: '';
         position: absolute;
         inset: 0px;
-        background: conic-gradient(from var(--border-angle),
-                #ef4444 0%,
-                transparent 10%,
-                #ef4444 20%,
-                transparent 30%,
-                #ef4444 40%,
-                transparent 50%,
-                #ef4444 60%,
-                transparent 70%,
-                #ef4444 80%,
-                transparent 90%,
-                #ef4444 100%);
+        background: inherit;
+        /* Fallback */
+        border: 1px solid rgba(239, 68, 68, 0.2);
         border-radius: inherit;
-        animation: rotate-border 2s linear infinite;
         z-index: -2;
         opacity: 0.15;
         transition: all 0.5s ease;
@@ -78,6 +75,19 @@ swiper-slide {
 
         &::before {
             opacity: 1;
+            background: conic-gradient(from var(--border-angle),
+                    #ef4444 0%,
+                    transparent 10%,
+                    #ef4444 20%,
+                    transparent 30%,
+                    #ef4444 40%,
+                    transparent 50%,
+                    #ef4444 60%,
+                    transparent 70%,
+                    #ef4444 80%,
+                    transparent 90%,
+                    #ef4444 100%);
+            animation: rotate-border 2s linear infinite;
             filter: blur(4px);
         }
 

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit, AfterViewInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product } from '../../models/product';
 import { register } from 'swiper/element/bundle';
@@ -22,7 +22,8 @@ interface Particle {
     imports: [CommonModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     templateUrl: './product-carousel.html',
-    styleUrls: ['./product-carousel.scss']
+    styleUrls: ['./product-carousel.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductCarouselComponent implements OnInit, AfterViewInit {
     @Input() products: Product[] = [];
@@ -47,7 +48,7 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit {
     generateAllParticles() {
         this.displayProducts.forEach((product, index) => {
             const particles: Particle[] = [];
-            const particleCount = 25;
+            const particleCount = 25; // More particles for ash effect
             for (let i = 0; i < particleCount; i++) {
                 particles.push({
                     x: Math.random() * 100,
@@ -85,11 +86,37 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit {
     }
 
     scroll(direction: 'left' | 'right') {
-        const swiperEl = this.carouselWrapper.nativeElement;
-        if (direction === 'left') {
-            swiperEl.swiper.slidePrev();
-        } else {
-            swiperEl.swiper.slideNext();
+        const wrapper = this.carouselWrapper.nativeElement;
+        const scrollAmount = direction === 'left' ? -wrapper.offsetWidth * 0.8 : wrapper.offsetWidth * 0.8;
+
+        wrapper.scrollTo({
+            left: wrapper.scrollLeft + scrollAmount,
+            behavior: 'smooth'
+        });
+    }
+
+    onScroll() {
+        if (this.isJumping) return;
+
+        const wrapper = this.carouselWrapper.nativeElement;
+        const scrollLeft = wrapper.scrollLeft;
+        const scrollWidth = wrapper.scrollWidth;
+        const contentWidth = scrollWidth / 3;
+
+        // Infinite loop logic: jump when reaching extremes of the middle section
+        // We use requestAnimationFrame to sync with the browser's render cycle
+        if (scrollLeft >= contentWidth * 2) {
+            this.isJumping = true;
+            requestAnimationFrame(() => {
+                wrapper.scrollLeft = scrollLeft - contentWidth;
+                this.isJumping = false;
+            });
+        } else if (scrollLeft <= 1) { // When reaching the absolute start
+            this.isJumping = true;
+            requestAnimationFrame(() => {
+                wrapper.scrollLeft = contentWidth;
+                this.isJumping = false;
+            });
         }
     }
 }

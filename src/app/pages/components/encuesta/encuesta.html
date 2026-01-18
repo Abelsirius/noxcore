@@ -51,27 +51,27 @@
         <!-- Left Side: Models 2 & 3 -->
         <div class="md:col-span-3 grid grid-cols-2 md:grid-cols-1 gap-4">
           <div class="showcase-image-wrapper" *ngIf="showcaseImages[1]">
-            <img [src]="showcaseImages[1]" alt="Model 2" class="showcase-image">
+            <img [src]="showcaseImages[1]" alt="Model 2" class="showcase-image" loading="lazy">
           </div>
           <div class="showcase-image-wrapper" *ngIf="showcaseImages[2]">
-            <img [src]="showcaseImages[2]" alt="Model 3" class="showcase-image">
+            <img [src]="showcaseImages[2]" alt="Model 3" class="showcase-image" loading="lazy">
           </div>
         </div>
 
         <!-- Center: Model 1 (Prominent) -->
         <div class="md:col-span-6">
           <div class="showcase-image-wrapper featured" *ngIf="showcaseImages[0]">
-            <img [src]="showcaseImages[0]" alt="Featured Model" class="showcase-image featured">
+            <img [src]="showcaseImages[0]" alt="Featured Model" class="showcase-image featured" loading="lazy">
           </div>
         </div>
 
         <!-- Right Side: Models 4 & 5 -->
         <div class="md:col-span-3 grid grid-cols-2 md:grid-cols-1 gap-4">
           <div class="showcase-image-wrapper" *ngIf="showcaseImages[3]">
-            <img [src]="showcaseImages[3]" alt="Model 4" class="showcase-image">
+            <img [src]="showcaseImages[3]" alt="Model 4" class="showcase-image" loading="lazy">
           </div>
           <div class="showcase-image-wrapper" *ngIf="showcaseImages[4]">
-            <img [src]="showcaseImages[4]" alt="Model 5" class="showcase-image">
+            <img [src]="showcaseImages[4]" alt="Model 5" class="showcase-image" loading="lazy">
           </div>
         </div>
       </div>
@@ -79,10 +79,10 @@
       <!-- Bottom Row: Models 6 & 7 -->
       <div class="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
         <div class="showcase-image-wrapper" *ngIf="showcaseImages[5]">
-          <img [src]="showcaseImages[5]" alt="Model 6" class="showcase-image">
+          <img [src]="showcaseImages[5]" alt="Model 6" class="showcase-image" loading="lazy">
         </div>
         <div class="showcase-image-wrapper" *ngIf="showcaseImages[6]">
-          <img [src]="showcaseImages[6]" alt="Model 7" class="showcase-image">
+          <img [src]="showcaseImages[6]" alt="Model 7" class="showcase-image" loading="lazy">
         </div>
       </div>
     </div>
