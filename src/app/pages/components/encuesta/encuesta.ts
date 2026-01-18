@@ -23,6 +23,9 @@ export class EncuestasComponent {
   @Input() accentColor: string = 'red-600';
 
   encuestas: Encuesta[] = [];
+  userId!: string;
+  public loadingService = inject(LoadingService);
+  loading: WritableSignal<boolean> = signal(true);
 
   // Long press state management
   private longPressTimer: any;
