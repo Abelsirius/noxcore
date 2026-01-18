@@ -2,43 +2,39 @@
     mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
 }
 
-.carousel-wrapper {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    /* touch-action: pan-x; Removed to allow vertical page scroll */
-    scroll-padding: 0 1rem;
+/* Carousel Layout with Swiper */
+swiper-container {
+    width: 100%;
+    height: auto;
+    padding: 2rem 0 4rem;
+    /* Space for the bottom pill on mobile and cards shadow */
+}
+
+swiper-slide {
+    width: auto;
+    height: auto;
     display: flex;
-    overflow-x: auto;
-    gap: 1.5rem;
-    padding-bottom: 2rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    scroll-snap-type: x mandatory;
-
-    /* Stability and Performance */
-    will-change: scroll-position;
-    backface-visibility: hidden;
-    transform: translateZ(0);
-    /* Force 3D acceleration */
-    contain: content;
-
-    &::-webkit-scrollbar {
-        display: none;
-    }
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+    /* Allow the border glow to be visible */
+    overflow: visible;
 }
 
 .product-card {
     position: relative;
+    width: 100%;
+    cursor: pointer;
+    /* Basic styles for the rotating border container */
     padding: 2px;
-    /* Space for the border */
-    border-radius: 1.1rem;
-    /* Slightly larger than inner for smooth look */
+    background: #0a0a0a;
+    border-radius: 17px;
+    /* Slightly larger than card-inner */
+    overflow: hidden;
+    /* To clip the rotating border */
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
         box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    background: transparent;
     z-index: 1;
-    overflow: visible;
-    /* CRITICAL: Border must be visible outside */
 
     &::before {
         content: '';
