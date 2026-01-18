@@ -375,7 +375,7 @@ Ideales para entrenar con intensidad y estilo.
     },
     {
       id: '17',
-      name: 'Infernal Compression Gold',
+      name: 'Infernal Compression Raiku',
       description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
