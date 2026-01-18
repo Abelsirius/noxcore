@@ -347,115 +347,133 @@ Ideales para entrenar con intensidad y estilo.
       isNew: true,
       discount: 21
     },
-    inStock: true,
-    isNew: true,
-    discount: 21
-    },
-
-
+    {
+      id: '16',
+      name: 'Infernal Compression Red',
+      description: `
+      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
+Ideales para entrenar con intensidad y estilo.
+🔥 Oscuros, cómodos y hechos para dominar.
+      `,
+      price: 59.90,
+      originalPrice: 89.00,
+      image: '../../../assets/infernal_red_main.png',
+      images: [
+        '../../../assets/infernal_red_main.png',
+      ],
+      category: 'compresores',
+      sizes: [
+        { size: 'S', available: true },
+        { size: 'M', available: true },
+        { size: 'L', available: true }
+      ],
+      inStock: true,
+      isNew: true,
+      discount: 21
+    }
   ];
   private productsSoon: Product[] = [
-  {
-    id: '2',
-    name: 'Heavenly Red - Blood Wyvern Pants',
-    description: `
+    {
+      id: '2',
+      name: 'Heavenly Red - Blood Wyvern Pants',
+      description: `
       Heavenly Red - Blood Wyvern Pants.
 Diseño infernal y ajuste perfecto.
 🔥 Oscuros, cómodos y hechos para dominar.
       `,
-    price: 79.90,
-    originalPrice: 99.90,
-    image: '../../../assets/heavenly_red_wyvern_1.jpg',
-    images: [
-      '../../../assets/heavenly_red_wyvern_1.jpg',
-      '../../../assets/heavenly_red_wyvern_2.png',
-    ],
-    category: 'Pants',
-    sizes: [
-      { size: 'M', available: false },
-      { size: 'L', available: false },
-      { size: 'XL', available: false }
-    ],
-    inStock: false,
-    isNew: true,
-    discount: 25
-  },
-  {
-    id: '9',
-    name: 'Vampire Hunter Zip-Up Compression',
-    description: `
+      price: 79.90,
+      originalPrice: 99.90,
+      image: '../../../assets/heavenly_red_wyvern_1.jpg',
+      images: [
+        '../../../assets/heavenly_red_wyvern_1.jpg',
+        '../../../assets/heavenly_red_wyvern_2.png',
+      ],
+      category: 'Pants',
+      sizes: [
+        { size: 'M', available: false },
+        { size: 'L', available: false },
+        { size: 'XL', available: false }
+      ],
+      inStock: false,
+      isNew: true,
+      discount: 25
+    },
+    {
+      id: '9',
+      name: 'Vampire Hunter Zip-Up Compression',
+      description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
 🔥 Oscuros, cómodos y hechos para dominar.
       `,
-    price: 59.90,
-    originalPrice: 79.00,
-    image: '../../../assets/new_product_1.jpg',
-    images: [
-      '../../../assets/new_product_1.jpg',
-    ],
-    category: 'compresores',
-    sizes: [
-      { size: 'S', available: true },
-      { size: 'M', available: true },
-      { size: 'L', available: true }
-    ],
-    inStock: true,
-    isNew: true,
-    discount: 25,
-    availabilityLabel: 'DISPONIBLE',
-    videoPreview: '../../../assets/videos_preview/WhatsApp Video 2025-12-30 at 9.39.35 PM.mp4'
-  },
-  {
-    id: '3',
-    name: 'Deathblade Oversized Pullover Hoodie',
-    description: `
+      price: 59.90,
+      originalPrice: 79.00,
+      image: '../../../assets/new_product_1.jpg',
+      images: [
+        '../../../assets/new_product_1.jpg',
+      ],
+      category: 'compresores',
+      sizes: [
+        { size: 'S', available: true },
+        { size: 'M', available: true },
+        { size: 'L', available: true }
+      ],
+      inStock: true,
+      isNew: true,
+      discount: 25,
+      availabilityLabel: 'DISPONIBLE',
+      videoPreview: '../../../assets/videos_preview/WhatsApp Video 2025-12-30 at 9.39.35 PM.mp4'
+    },
+    {
+      id: '3',
+      name: 'Deathblade Oversized Pullover Hoodie',
+      description: `
       Deathblade Oversized Pullover Hoodie.
       Diseño infernal y ajuste perfecto.
       🔥 Oscuros, cómodos y hechos para dominar.
       `,
-    price: 59.90,
-    originalPrice: 119.80,
-    image: '../../../assets/deathblade_hoodie.png',
-    images: [
-      '../../../assets/deathblade_hoodie.png',
-    ],
-    category: 'Hoodies',
-    sizes: [
-      { size: 'S', available: false },
-      { size: 'M', available: false },
-      { size: 'L', available: false }
-    ],
-    inStock: false,
-    isNew: true,
-    discount: 50
-  },
-  {
-    id: '11',
-    name: 'Immortal compression',
-    description: `
+      price: 59.90,
+      originalPrice: 119.80,
+      image: '../../../assets/deathblade_hoodie.png',
+      images: [
+        '../../../assets/deathblade_hoodie.png',
+      ],
+      category: 'Hoodies',
+      sizes: [
+        { size: 'S', available: false },
+        { size: 'M', available: false },
+        { size: 'L', available: false }
+      ],
+      inStock: false,
+      isNew: true,
+      discount: 50
+    },
+    {
+      id: '11',
+      name: 'Immortal compression',
+      description: `
       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
 Ideales para entrenar con intensidad y estilo.
 🔥 Oscuros, cómodos y hechos para dominar.
       `,
-    price: 49.90,
-    originalPrice: 79.90,
-    image: '../../../assets/immortal_compression.png',
-    images: [
-      '../../../assets/immortal_compression.png',
-    ],
-    category: 'compresores',
-    sizes: [
-      { size: 'S', available: true },
-      { size: 'M', available: true },
-      { size: 'L', available: true }
-    ],
-    inStock: true,
-    isNew: true,
-    discount: 25,
-    availabilityLabel: 'DISPONIBLE'
-  }
-];
+      price: 49.90,
+      originalPrice: 79.90,
+      image: '../../../assets/immortal_compression.png',
+      images: [
+        '../../../assets/immortal_compression.png',
+      ],
+      category: 'compresores',
+      sizes: [
+        { size: 'S', available: true },
+        { size: 'M', available: true },
+        { size: 'L', available: true }
+      ],
+      inStock: true,
+      isNew: true,
+      discount: 25,
+      availabilityLabel: 'DISPONIBLE'
+    }
+  ];
   //     {
   //       id: '1',
   //       name: 'Color negro con estampado Blanco',
@@ -482,16 +500,16 @@ Ideales para entrenar con intensidad y estilo.
   private productsSoonSubject = new BehaviorSubject<Product[]>(this.productsSoon);
 
 
-getProducts(): Observable < Product[] > {
-  return this.productsSubject.asObservable();
-}
-getProductsSoon(): Observable < Product[] > {
-  return this.productsSoonSubject.asObservable();
-}
-getProduct(id: string): Product | undefined {
-  return this.products.find(product => product.id === id);
-}
-getProductSoon(id: string): Product | undefined {
-  return this.productsSoon.find(product => product.id === id);
-}
+  getProducts(): Observable<Product[]> {
+    return this.productsSubject.asObservable();
+  }
+  getProductsSoon(): Observable<Product[]> {
+    return this.productsSoonSubject.asObservable();
+  }
+  getProduct(id: string): Product | undefined {
+    return this.products.find(product => product.id === id);
+  }
+  getProductSoon(id: string): Product | undefined {
+    return this.productsSoon.find(product => product.id === id);
+  }
 }
