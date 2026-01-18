@@ -21,6 +21,7 @@ export class EncuestasComponent {
   @Input() video: string = '';
   @Input() showcaseImages: string[] = [];
   @Input() accentColor: string = 'red-600';
+  @Input() forceMuted: boolean = false;
 
   encuestas: Encuesta[] = [];
   userId!: string;
