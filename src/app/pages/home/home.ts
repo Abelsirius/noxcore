@@ -11,7 +11,7 @@ import { VotoModalComponent } from '../components/voto-modal-component/voto-moda
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, HeroComponent, HeaderComponent, EncuestasComponent, CountdownComponent, Reel],
+  imports: [CommonModule, HeaderComponent, EncuestasComponent, CountdownComponent, Reel],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })

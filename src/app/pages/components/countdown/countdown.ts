@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal, WritableSignal, OnInit, OnDestroy, Input } from '@angular/core';
+import { HeroComponent } from '../hero/hero';
 
 @Component({
     selector: 'app-countdown',
     templateUrl: './countdown.html',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, HeroComponent],
     styles: [`
     :host {
       display: block;
