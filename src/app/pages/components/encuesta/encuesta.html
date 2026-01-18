@@ -1,11 +1,11 @@
-@if(!loading() && encuestas.length > 0){
+@if(!loading()){
 <!-- Full Screen Video Background Container -->
 <div class="relative min-h-screen w-full flex flex-col items-center justify-center text-center">
 
   <!-- Background Video -->
   <div class="absolute inset-0 z-0">
-    <video [src]="encuestas[0].videoPreview" autoplay [muted]="!hasEntered()" loop playsinline webkit-playsinline
-      preload="auto" class="w-full h-full object-cover opacity-50"></video>
+    <video [src]="video" autoplay [muted]="!hasEntered()" loop playsinline webkit-playsinline preload="auto"
+      class="w-full h-full object-cover opacity-50"></video>
     <div class="absolute inset-0 bg-black/70"></div>
   </div>
 
@@ -15,14 +15,14 @@
     <!-- Top Section: Title and Messaging -->
     <div class="flex flex-col items-center pt-8 md:pt-16 mb-20">
       <!-- Main Title -->
-      <h1 class="text-4xl md:text-7xl lg:text-8xl font-black text-white tracking-wider drop-shadow-2xl mb-4 uppercase">
-        NIGHTFALL COMPRESSION<br>LONGSLEEVE
+      <h1 class="text-4xl md:text-7xl lg:text-8xl font-black text-white tracking-wider drop-shadow-2xl mb-4 uppercase"
+        [innerHTML]="title">
       </h1>
 
-      <!-- Black Friday Subtitle -->
-      <h2
-        class="text-lg md:text-2xl text-red-600 font-bold uppercase tracking-[0.3em] drop-shadow-[0_0_20px_rgba(220,38,38,0.7)] mb-6">
-        BLACK FRIDAY COLLECTION
+      <!-- Subtitle -->
+      <h2 class="text-lg md:text-2xl font-bold uppercase tracking-[0.3em] mb-6" [ngClass]="'text-' + accentColor"
+        [style.textShadow]="accentColor === 'red-600' ? '0 0 20px rgba(220,38,38,0.7)' : '0 0 20px rgba(234,179,8,0.7)'">
+        {{subtitle}}
       </h2>
 
       <!-- Stock Availability Message -->
@@ -46,40 +46,39 @@
 
         <!-- Left Side: Models 2 & 3 -->
         <div class="md:col-span-3 grid grid-cols-2 md:grid-cols-1 gap-4">
-          <div class="showcase-image-wrapper">
-            <img src="../../../assets/nightfall_model_2.png" alt="Nightfall Model 2" class="showcase-image">
+          <div class="showcase-image-wrapper" *ngIf="showcaseImages[1]">
+            <img [src]="showcaseImages[1]" alt="Model 2" class="showcase-image">
           </div>
-          <div class="showcase-image-wrapper">
-            <img src="../../../assets/nightfall_model_3.png" alt="Nightfall Model 3" class="showcase-image">
+          <div class="showcase-image-wrapper" *ngIf="showcaseImages[2]">
+            <img [src]="showcaseImages[2]" alt="Model 3" class="showcase-image">
           </div>
         </div>
 
         <!-- Center: Model 1 (Prominent) -->
         <div class="md:col-span-6">
-          <div class="showcase-image-wrapper featured">
-            <img src="../../../assets/nightfall_model_1.png" alt="Nightfall Featured Model"
-              class="showcase-image featured">
+          <div class="showcase-image-wrapper featured" *ngIf="showcaseImages[0]">
+            <img [src]="showcaseImages[0]" alt="Featured Model" class="showcase-image featured">
           </div>
         </div>
 
         <!-- Right Side: Models 4 & 5 -->
         <div class="md:col-span-3 grid grid-cols-2 md:grid-cols-1 gap-4">
-          <div class="showcase-image-wrapper">
-            <img src="../../../assets/nightfall_model_4.png" alt="Nightfall Model 4" class="showcase-image">
+          <div class="showcase-image-wrapper" *ngIf="showcaseImages[3]">
+            <img [src]="showcaseImages[3]" alt="Model 4" class="showcase-image">
           </div>
-          <div class="showcase-image-wrapper">
-            <img src="../../../assets/nightfall_model_5.png" alt="Nightfall Model 5" class="showcase-image">
+          <div class="showcase-image-wrapper" *ngIf="showcaseImages[4]">
+            <img [src]="showcaseImages[4]" alt="Model 5" class="showcase-image">
           </div>
         </div>
       </div>
 
       <!-- Bottom Row: Models 6 & 7 -->
       <div class="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
-        <div class="showcase-image-wrapper">
-          <img src="../../../assets/nightfall_model_6.png" alt="Nightfall Model 6" class="showcase-image">
+        <div class="showcase-image-wrapper" *ngIf="showcaseImages[5]">
+          <img [src]="showcaseImages[5]" alt="Model 6" class="showcase-image">
         </div>
-        <div class="showcase-image-wrapper">
-          <img src="../../../assets/nightfall_model_7.png" alt="Nightfall Model 7" class="showcase-image">
+        <div class="showcase-image-wrapper" *ngIf="showcaseImages[6]">
+          <img [src]="showcaseImages[6]" alt="Model 7" class="showcase-image">
         </div>
       </div>
     </div>

@@ -3,8 +3,8 @@
   <div class="splash-overlay fixed inset-0 z-[100] flex items-center justify-center bg-black">
     <div class="text-center animate-fade-in px-4">
       <h1 class="text-5xl md:text-8xl font-black text-white tracking-tighter mb-8 uppercase glitch-text"
-        data-text="NYXOR FIT">
-        NYXOR FIT
+        data-text="BLACK FRIDAY">
+        BLACK FRIDAY
       </h1>
       <p class="text-gray-400 mb-12 tracking-[0.3em] font-light uppercase">
         Dark • Gothic • Tribal • Gym
@@ -40,9 +40,28 @@
       </div>
     } -->
 
-    <app-countdown [showTimer]="false"></app-countdown>
+    <app-encuestas [hasEntered]="hasEntered" title="INFERNAL COMPRESSION" subtitle="AVAILABLE NOW"
+      accentColor="yellow-500" video="assets/videos_preview/WhatsApp Video 2025-12-30 at 9.39.35 PM.mp4"
+      [showcaseImages]="[
+        'assets/infernal_1.png',
+        'assets/infernal_2.png',
+        'assets/infernal_3.png',
+        'assets/infernal_4.png',
+        'assets/infernal_1.png',
+        'assets/infernal_2.png',
+        'assets/infernal_3.png'
+      ]" class="mb-8" />
 
-    <app-encuestas [hasEntered]="hasEntered" class="mb-4" />
+    <app-encuestas [hasEntered]="hasEntered" title="NIGHTFALL COMPRESSION<br>LONGSLEEVE"
+      subtitle="BLACK FRIDAY COLLECTION" accentColor="red-600" video="assets/nuevo_banner.mp4" [showcaseImages]="[
+        'assets/nightfall_model_1.png',
+        'assets/nightfall_model_2.png',
+        'assets/nightfall_model_3.png',
+        'assets/nightfall_model_4.png',
+        'assets/nightfall_model_5.png',
+        'assets/nightfall_model_6.png',
+        'assets/nightfall_model_7.png'
+      ]" class="mb-4" />
 
 
 

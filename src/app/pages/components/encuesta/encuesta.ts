@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input, signal, WritableSignal } from '@angular/core';
+import { Component, inject, input, signal, WritableSignal, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EncuestaDbService } from '../../../../core/encuesta-db';
 import { Encuesta } from '../../../../core/interfaces/encuesta.model';
@@ -15,10 +15,14 @@ import { RouterModule } from '@angular/router';
 })
 export class EncuestasComponent {
   hasEntered = input<boolean>(false);
+
+  @Input() title: string = '';
+  @Input() subtitle: string = '';
+  @Input() video: string = '';
+  @Input() showcaseImages: string[] = [];
+  @Input() accentColor: string = 'red-600';
+
   encuestas: Encuesta[] = [];
-  userId!: string;
-  public loadingService = inject(LoadingService);
-  loading: WritableSignal<boolean> = signal(true);
 
   // Long press state management
   private longPressTimer: any;
@@ -32,24 +36,21 @@ export class EncuestasComponent {
   async ngOnInit() {
     this.userId = this.getUserId();
 
-    // 🔥 Carga encuestas desde Firebase (DESACTIVADO POR EL MOMENTO)
-    // this.encuestas = await this.encuestaDb.obtenerEncuestas();
-
-    // 🛑 HARDCODED: Solo mostrar Nightfall Compression Longsleeve
-    this.encuestas = [{
-      productoId: 999, // ID temporal
-      nombre: 'Nightfall Compression Longsleeve',
-      voto: 0,
-      edad: 0,
-      opinion: '',
-      userId: this.userId,
-      imagen: 'assets/nighfall_compression_longsleeve.png',
-      videoPreview: 'assets/nuevo_banner.mp4',
-      comentarios: [],
-      likedUsers: [],
-    }];
-
-    console.log('Encuesta hardcoded cargada:', this.encuestas);
+    // If no manual inputs provided, use defaults (compatibility)
+    if (!this.title) this.title = 'NIGHTFALL COMPRESSION LONGSLEEVE';
+    if (!this.subtitle) this.subtitle = 'BLACK FRIDAY COLLECTION';
+    if (!this.video) this.video = 'assets/nuevo_banner.mp4';
+    if (!this.showcaseImages || this.showcaseImages.length === 0) {
+      this.showcaseImages = [
+        '../../../assets/nightfall_model_1.png',
+        '../../../assets/nightfall_model_2.png',
+        '../../../assets/nightfall_model_3.png',
+        '../../../assets/nightfall_model_4.png',
+        '../../../assets/nightfall_model_5.png',
+        '../../../assets/nightfall_model_6.png',
+        '../../../assets/nightfall_model_7.png',
+      ];
+    }
 
     this.loading.set(false);
   }
