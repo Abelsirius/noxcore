@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit, AfterViewInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product } from '../../models/product';
 
@@ -17,7 +17,8 @@ interface Particle {
     standalone: true,
     imports: [CommonModule],
     templateUrl: './product-carousel.html',
-    styleUrls: ['./product-carousel.scss']
+    styleUrls: ['./product-carousel.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductCarouselComponent implements OnInit, AfterViewInit {
     @Input() products: Product[] = [];
@@ -43,7 +44,7 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit {
     generateAllParticles() {
         this.displayProducts.forEach((product, index) => {
             const particles: Particle[] = [];
-            const particleCount = 25; // More particles for ash effect
+            const particleCount = 6; // Drastically reduced for performance
             for (let i = 0; i < particleCount; i++) {
                 particles.push({
                     x: Math.random() * 100,
@@ -108,20 +109,15 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit {
         const scrollWidth = wrapper.scrollWidth;
         const contentWidth = scrollWidth / 3;
 
-        // Infinite loop logic: jump when reaching extremes of the middle section
-        // We use requestAnimationFrame to sync with the browser's render cycle
+        // Optimized infinite loop logic
         if (scrollLeft >= contentWidth * 2) {
             this.isJumping = true;
-            requestAnimationFrame(() => {
-                wrapper.scrollLeft = scrollLeft - contentWidth;
-                this.isJumping = false;
-            });
-        } else if (scrollLeft <= 1) { // When reaching the absolute start
+            wrapper.scrollLeft = scrollLeft - contentWidth;
+            setTimeout(() => this.isJumping = false, 50);
+        } else if (scrollLeft <= 5) {
             this.isJumping = true;
-            requestAnimationFrame(() => {
-                wrapper.scrollLeft = contentWidth;
-                this.isJumping = false;
-            });
+            wrapper.scrollLeft = contentWidth + scrollLeft;
+            setTimeout(() => this.isJumping = false, 50);
         }
     }
 }
