@@ -347,6 +347,56 @@ Ideales para entrenar con intensidad y estilo.
       isNew: true,
       discount: 21
     },
+    {
+      id: '16',
+      name: 'Infernal Compression Red',
+      description: `
+      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
+Ideales para entrenar con intensidad y estilo.
+🔥 Oscuros, cómodos y hechos para dominar.
+      `,
+      price: 59.90,
+      originalPrice: 89.00,
+      image: '../../../assets/infernal_red_front.png',
+      images: [
+        '../../../assets/infernal_red_front.png',
+        '../../../assets/infernal_red_back.jpg',
+      ],
+      category: 'compresores',
+      sizes: [
+        { size: 'S', available: true },
+        { size: 'M', available: true },
+        { size: 'L', available: true }
+      ],
+      inStock: true,
+      isNew: true,
+      discount: 21
+    },
+    {
+      id: '17',
+      name: 'Infernal Compression Gold',
+      description: `
+      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
+Ideales para entrenar con intensidad y estilo.
+🔥 Oscuros, cómodos y hechos para dominar.
+      `,
+      price: 59.90,
+      originalPrice: 89.00,
+      image: '../../../assets/infernal_gold_front.jpg',
+      images: [
+        '../../../assets/infernal_gold_front.jpg',
+        '../../../assets/infernal_gold_back.png',
+      ],
+      category: 'compresores',
+      sizes: [
+        { size: 'S', available: true },
+        { size: 'M', available: true },
+        { size: 'L', available: true }
+      ],
+      inStock: true,
+      isNew: true,
+      discount: 21
+    },
 
   ];
   private productsSoon: Product[] = [
