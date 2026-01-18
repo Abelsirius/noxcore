@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit, AfterViewInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit, AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product } from '../../models/product';
 import { register } from 'swiper/element/bundle';
@@ -36,6 +36,7 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit {
 
     displayProducts: Product[] = [];
     productParticles: Map<string, Particle[]> = new Map();
+    private isJumping = false;
 
     ngOnInit() {
         if (this.products && this.products.length > 0) {
@@ -86,37 +87,11 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit {
     }
 
     scroll(direction: 'left' | 'right') {
-        const wrapper = this.carouselWrapper.nativeElement;
-        const scrollAmount = direction === 'left' ? -wrapper.offsetWidth * 0.8 : wrapper.offsetWidth * 0.8;
-
-        wrapper.scrollTo({
-            left: wrapper.scrollLeft + scrollAmount,
-            behavior: 'smooth'
-        });
-    }
-
-    onScroll() {
-        if (this.isJumping) return;
-
-        const wrapper = this.carouselWrapper.nativeElement;
-        const scrollLeft = wrapper.scrollLeft;
-        const scrollWidth = wrapper.scrollWidth;
-        const contentWidth = scrollWidth / 3;
-
-        // Infinite loop logic: jump when reaching extremes of the middle section
-        // We use requestAnimationFrame to sync with the browser's render cycle
-        if (scrollLeft >= contentWidth * 2) {
-            this.isJumping = true;
-            requestAnimationFrame(() => {
-                wrapper.scrollLeft = scrollLeft - contentWidth;
-                this.isJumping = false;
-            });
-        } else if (scrollLeft <= 1) { // When reaching the absolute start
-            this.isJumping = true;
-            requestAnimationFrame(() => {
-                wrapper.scrollLeft = contentWidth;
-                this.isJumping = false;
-            });
+        const swiperEl = this.carouselWrapper.nativeElement;
+        if (direction === 'left') {
+            swiperEl.swiper.slidePrev();
+        } else {
+            swiperEl.swiper.slideNext();
         }
     }
 }
