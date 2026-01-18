@@ -18,8 +18,8 @@
   }
 
   <main [class.opacity-0]="!hasEntered" [class.opacity-100]="hasEntered" class="transition-opacity duration-1000">
-    <app-encuestas [hasEntered]="hasEntered" class="mb-4" />
     <app-hero [hasEntered]="hasEntered"></app-hero>
+
     <!-- @defer (on viewport) {
     <app-reel></app-reel>
     } @placeholder {
@@ -39,10 +39,12 @@
         </div>
       </div>
     } -->
-    <!-- Hidden on mobile, visible on desktop -->
-    <div class="hidden md:block">
+
+    <div class="block">
       <app-product-grid></app-product-grid>
     </div>
+
+    <app-encuestas [hasEntered]="hasEntered" class="mb-4" />
 
 
 

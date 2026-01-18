@@ -39,29 +39,49 @@
       </a>
     </div>
 
-    <!-- Unified Product Showcase Grid -->
-    <div class="w-full max-w-7xl grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
+    <!-- Unified Product Showcase Grid (Premium Central Layout) -->
+    <div class="w-full max-w-7xl mx-auto">
+      <!-- Main Showcase Layout -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center mb-8">
 
-      <!-- Photos ordered 2 to 7 -->
-      <div class="showcase-image-wrapper">
-        <img src="../../../assets/nightfall_model_2.png" alt="Nightfall Model 2" class="showcase-image">
-      </div>
-      <div class="showcase-image-wrapper">
-        <img src="../../../assets/nightfall_model_3.png" alt="Nightfall Model 3" class="showcase-image">
-      </div>
-      <div class="showcase-image-wrapper">
-        <img src="../../../assets/nightfall_model_4.png" alt="Nightfall Model 4" class="showcase-image">
-      </div>
-      <div class="showcase-image-wrapper">
-        <img src="../../../assets/nightfall_model_5.png" alt="Nightfall Model 5" class="showcase-image">
-      </div>
-      <div class="showcase-image-wrapper">
-        <img src="../../../assets/nightfall_model_6.png" alt="Nightfall Model 6" class="showcase-image">
-      </div>
-      <div class="showcase-image-wrapper">
-        <img src="../../../assets/nightfall_model_7.png" alt="Nightfall Model 7" class="showcase-image">
+        <!-- Left Side: Models 2 & 3 -->
+        <div class="md:col-span-3 grid grid-cols-2 md:grid-cols-1 gap-4">
+          <div class="showcase-image-wrapper">
+            <img src="../../../assets/nightfall_model_2.png" alt="Nightfall Model 2" class="showcase-image">
+          </div>
+          <div class="showcase-image-wrapper">
+            <img src="../../../assets/nightfall_model_3.png" alt="Nightfall Model 3" class="showcase-image">
+          </div>
+        </div>
+
+        <!-- Center: Model 1 (Prominent) -->
+        <div class="md:col-span-6">
+          <div class="showcase-image-wrapper featured">
+            <img src="../../../assets/nightfall_model_1.png" alt="Nightfall Featured Model"
+              class="showcase-image featured">
+          </div>
+        </div>
+
+        <!-- Right Side: Models 4 & 5 -->
+        <div class="md:col-span-3 grid grid-cols-2 md:grid-cols-1 gap-4">
+          <div class="showcase-image-wrapper">
+            <img src="../../../assets/nightfall_model_4.png" alt="Nightfall Model 4" class="showcase-image">
+          </div>
+          <div class="showcase-image-wrapper">
+            <img src="../../../assets/nightfall_model_5.png" alt="Nightfall Model 5" class="showcase-image">
+          </div>
+        </div>
       </div>
 
+      <!-- Bottom Row: Models 6 & 7 -->
+      <div class="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
+        <div class="showcase-image-wrapper">
+          <img src="../../../assets/nightfall_model_6.png" alt="Nightfall Model 6" class="showcase-image">
+        </div>
+        <div class="showcase-image-wrapper">
+          <img src="../../../assets/nightfall_model_7.png" alt="Nightfall Model 7" class="showcase-image">
+        </div>
+      </div>
     </div>
 
     <!-- MÁS ESPACIO NEGRO ABAJO (Spacer mobile) -->
