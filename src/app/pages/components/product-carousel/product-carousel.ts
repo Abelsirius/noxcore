@@ -2,6 +2,16 @@ import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit, 
 import { CommonModule } from '@angular/common';
 import { Product } from '../../models/product';
 
+interface Particle {
+    x: number;
+    y: number;
+    size: number;
+    delay: number;
+    duration: number;
+    opacity: number;
+    color: string;
+}
+
 @Component({
     selector: 'app-product-carousel',
     standalone: true,
@@ -19,13 +29,47 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit {
     @ViewChild('carouselWrapper') carouselWrapper!: ElementRef<HTMLDivElement>;
 
     displayProducts: Product[] = [];
+    productParticles: Map<string, Particle[]> = new Map();
     private isJumping = false;
 
     ngOnInit() {
         if (this.products && this.products.length > 0) {
             // Triple the products for infinite effect
             this.displayProducts = [...this.products, ...this.products, ...this.products];
+            this.generateAllParticles();
         }
+    }
+
+    generateAllParticles() {
+        this.displayProducts.forEach((product, index) => {
+            const particles: Particle[] = [];
+            const particleCount = 25; // More particles for ash effect
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * 100,
+                    y: Math.random() * 100,
+                    size: Math.random() * 2 + 0.5, // Smaller particles
+                    delay: Math.random() * 8,
+                    duration: Math.random() * 4 + 4,
+                    opacity: Math.random() * 0.4 + 0.1,
+                    color: this.getAshColor(i)
+                });
+            }
+            // Use index + name as key since products repeat
+            this.productParticles.set(`${product.name}-${index}`, particles);
+        });
+    }
+
+    getAshColor(seed: number): string {
+        const colors = [
+            '#ffffff', // White ash
+            '#cccccc', // Light gray
+            '#888888', // Dark gray
+            '#ff4d4d', // Red ember
+            '#ff8c00', // Orange ember
+            this.themeColor // Brand color accent
+        ];
+        return colors[seed % colors.length];
     }
 
     ngAfterViewInit() {
@@ -64,16 +108,20 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit {
         const scrollWidth = wrapper.scrollWidth;
         const contentWidth = scrollWidth / 3;
 
-        // Infinite loop logic: jump when reaching extremes
+        // Infinite loop logic: jump when reaching extremes of the middle section
+        // We use requestAnimationFrame to sync with the browser's render cycle
         if (scrollLeft >= contentWidth * 2) {
             this.isJumping = true;
-            wrapper.scrollTo({ left: scrollLeft - contentWidth, behavior: 'auto' });
-            // Use a tiny timeout to reset state to avoid recursive scroll events
-            setTimeout(() => { this.isJumping = false; }, 10);
-        } else if (scrollLeft <= 5) { // Small buffer for zero
+            requestAnimationFrame(() => {
+                wrapper.scrollLeft = scrollLeft - contentWidth;
+                this.isJumping = false;
+            });
+        } else if (scrollLeft <= 1) { // When reaching the absolute start
             this.isJumping = true;
-            wrapper.scrollTo({ left: scrollLeft + contentWidth, behavior: 'auto' });
-            setTimeout(() => { this.isJumping = false; }, 10);
+            requestAnimationFrame(() => {
+                wrapper.scrollLeft = contentWidth;
+                this.isJumping = false;
+            });
         }
     }
 }

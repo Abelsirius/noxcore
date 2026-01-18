@@ -5,8 +5,7 @@
 .carousel-wrapper {
     -ms-overflow-style: none;
     scrollbar-width: none;
-    touch-action: pan-x;
-    -webkit-overflow-scrolling: touch;
+    /* touch-action: pan-x; Removed to allow vertical page scroll */
     scroll-padding: 0 1rem;
     display: flex;
     overflow-x: auto;
@@ -16,20 +15,146 @@
     padding-right: 1rem;
     scroll-snap-type: x mandatory;
 
+    /* Stability and Performance */
+    will-change: scroll-position;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    /* Force 3D acceleration */
+    contain: content;
+
     &::-webkit-scrollbar {
         display: none;
     }
 }
 
 .product-card {
+    position: relative;
+    padding: 2px;
+    /* Space for the border */
+    border-radius: 1.1rem;
+    /* Slightly larger than inner for smooth look */
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-        box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-        border-color 0.4s ease;
+        box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    background: transparent;
+    z-index: 1;
+    overflow: visible;
+    /* CRITICAL: Border must be visible outside */
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0px;
+        background: conic-gradient(from var(--border-angle),
+                #ef4444 0%,
+                transparent 10%,
+                #ef4444 20%,
+                transparent 30%,
+                #ef4444 40%,
+                transparent 50%,
+                #ef4444 60%,
+                transparent 70%,
+                #ef4444 80%,
+                transparent 90%,
+                #ef4444 100%);
+        border-radius: inherit;
+        animation: rotate-border 2s linear infinite;
+        z-index: -2;
+        opacity: 0.15;
+        transition: all 0.5s ease;
+    }
+
+    /* Outer glow for the "particles" */
+    &::after {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        background: inherit;
+        border-radius: inherit;
+        z-index: -1;
+        opacity: 0;
+        transition: all 0.5s ease;
+    }
 
     &:hover {
         @media (min-width: 1024px) {
             transform: translateY(-8px) scale(1.02);
         }
+
+        &::before {
+            opacity: 1;
+            filter: blur(4px);
+        }
+
+        &::after {
+            opacity: 0.5;
+            box-shadow: 0 0 20px 2px rgba(239, 68, 68, 0.3);
+        }
+    }
+}
+
+/* New inner container to hold overflow and background */
+.card-inner {
+    position: relative;
+    background: #0a0a0a;
+    border-radius: 1rem;
+    overflow: hidden;
+    height: 100%;
+    z-index: 1;
+}
+
+@property --border-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes rotate-border {
+    from {
+        --border-angle: 0deg;
+    }
+
+    to {
+        --border-angle: 360deg;
+    }
+}
+
+/* Ash Particles Effect */
+.particles-container {
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0));
+}
+
+.particle {
+    filter: blur(1px);
+    box-shadow: 0 0 5px currentColor;
+    animation: ash-float ease-in-out infinite;
+    will-change: transform, opacity;
+}
+
+@keyframes ash-float {
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: inherit;
+    }
+
+    25% {
+        transform: translate(15px, -25vh) rotate(90deg) scale(1.2);
+    }
+
+    50% {
+        transform: translate(-10px, -50vh) rotate(180deg) scale(0.8);
+    }
+
+    75% {
+        transform: translate(10px, -75vh) rotate(270deg) scale(1.1);
+    }
+
+    100% {
+        transform: translate(0px, -100vh) rotate(360deg) scale(0.5);
+        opacity: 0;
     }
 }
 
@@ -82,27 +207,52 @@
         display: none;
     }
 
-    /* On mobile, show the CTA subtly by default */
+    /* Redesigned Mobile CTA: Sleek Bottom Pill */
     .quick-view-btn {
-        opacity: 1 !important;
-        transform: translate-y(0) scale(0.9) !important;
-        padding: 0.5rem 1rem !important;
-        font-size: 0.75rem !important;
-        bottom: 1rem;
-        background: rgba(255, 255, 255, 0.9) !important;
-        backdrop-filter: blur(4px);
+        opacity: 0.9 !important;
+        transform: translateY(0) scale(1) !important;
+        padding: 0.6rem 1.2rem !important;
+        font-size: 0.7rem !important;
+        width: 85% !important;
+        /* Pill style */
+        position: absolute !important;
+        bottom: 12px !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        backdrop-filter: blur(12px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        color: white !important;
+        letter-spacing: 1px;
+        animation: mobile-cta-slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+
+        span {
+            font-weight: 600;
+        }
+
+        svg {
+            width: 14px !important;
+            height: 14px !important;
+            opacity: 0.8;
+        }
     }
 
     .absolute.inset-0.bg-black\/20 {
         opacity: 1 !important;
-        background: transparent !important;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.4) 0%, transparent 40%) !important;
+        backdrop-filter: none !important;
         pointer-events: none;
-        /* Let clicks pass through to the card */
+    }
+}
+
+@keyframes mobile-cta-slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
     }
 
-    .quick-view-btn {
-        pointer-events: auto;
-        /* Re-enable for the button specifically if needed, but whole card is clickable */
+    to {
+        opacity: 0.9;
+        transform: translateY(0) scale(1);
     }
 }
 
