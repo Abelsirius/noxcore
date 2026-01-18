@@ -22,6 +22,7 @@ export class EncuestasComponent {
   @Input() showcaseImages: string[] = [];
   @Input() accentColor: string = 'red-600';
   @Input() forceMuted: boolean = false;
+  @Input() backgroundImage: string = '';
 
   encuestas: Encuesta[] = [];
   userId!: string;
