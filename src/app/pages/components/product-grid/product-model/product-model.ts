@@ -123,11 +123,11 @@ import { CartService } from '../../../services/cart';
       [disabled]="!sizeItem.available"
       
       [ngClass]="{
-        'line-through text-gray-400 bg-gray-100 cursor-not-allowed border-gray-200': !sizeItem.available,
+        'line-through text-gray-400 bg-gray-50 cursor-not-allowed border-gray-200 opacity-50': !sizeItem.available,
         
-        'border-gray-300 text-gray-700 hover:border-red-500 hover:text-red-500': sizeItem.available && selectedSize !== sizeItem.size,
+        'border-gray-200 text-black bg-white shadow-sm hover:border-black font-bold': sizeItem.available && selectedSize !== sizeItem.size,
         
-        'border-red-500 bg-red-500 text-white': selectedSize === sizeItem.size
+        'border-black bg-black text-white scale-105 shadow-md': selectedSize === sizeItem.size
       }"
 
       (click)="sizeItem.available ? selectSize(sizeItem.size) : null"
