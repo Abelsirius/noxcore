@@ -357,8 +357,9 @@ Ideales para entrenar con intensidad y estilo.
       `,
       price: 59.90,
       originalPrice: 89.00,
-      image: '../../../assets/infernal_red_front.png',
+      image: '../../../assets/infernal_red_main.png',
       images: [
+        '../../../assets/infernal_red_main.png',
         '../../../assets/infernal_red_front.png',
         '../../../assets/infernal_red_back.jpg',
       ],
