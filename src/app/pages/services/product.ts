@@ -305,14 +305,15 @@ Ideales para entrenar con intensidad y estilo.
       `,
       price: 59.90,
       originalPrice: 89.00,
-      image: '../../../assets/nightfall_frost_main_v3.png',
+      image: '../../../assets/nightfall_frost_update.png',
       images: [
-        '../../../assets/nightfall_frost_main_v3.png',
+        '../../../assets/nightfall_frost_update.png',
         '../../../assets/nightfall_frost_front.png',
         '../../../assets/nightfall_frost_back.png',
       ],
       category: 'compresores',
       sizes: [
+        { size: 'XS', available: true },
         { size: 'S', available: true },
         { size: 'M', available: true },
         { size: 'L', available: true }
