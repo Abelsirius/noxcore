@@ -419,7 +419,7 @@ Diseño infernal y ajuste perfecto.
         { size: 'L', available: false },
         { size: 'XL', available: false }
       ],
-      inStock: false,
+      inStock: true,
       isNew: true,
       discount: 25
     },
