@@ -332,9 +332,9 @@ Ideales para entrenar con intensidad y estilo.
       `,
       price: 59.90,
       originalPrice: 89.00,
-      image: '../../../assets/nightfall_raichu_main.png',
+      image: '../../../assets/nightfall_raichu_composite_main.png',
       images: [
-        '../../../assets/nightfall_raichu_main.png',
+        '../../../assets/nightfall_raichu_composite_main.png',
         '../../../assets/nightfall_raichu_front.png',
         '../../../assets/nightfall_raichu_back.png',
       ],
