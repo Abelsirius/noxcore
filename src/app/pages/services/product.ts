@@ -279,9 +279,9 @@ Ideales para entrenar con intensidad y estilo.
       `,
       price: 59.90,
       originalPrice: 89.00,
-      image: '../../../assets/nightfall_heavenly_red_main.png',
+      image: '../../../assets/nightfall_heavenly_red_composite_main.png',
       images: [
-        '../../../assets/nightfall_heavenly_red_main.png',
+        '../../../assets/nightfall_heavenly_red_composite_main.png',
         '../../../assets/nightfall_heavenly_red_front.png',
         '../../../assets/nightfall_heavenly_red_back.png',
       ],
