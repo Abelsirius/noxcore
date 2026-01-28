@@ -358,9 +358,9 @@ Ideales para entrenar con intensidad y estilo.
       `,
       price: 59.90,
       originalPrice: 89.00,
-      image: '../../../assets/infernal_red_catalog.png',
+      image: '../../../assets/infernal_red_composite_main.png',
       images: [
-        '../../../assets/infernal_red_catalog.png',
+        '../../../assets/infernal_red_composite_main.png',
       ],
       category: 'compresores',
       sizes: [
