@@ -382,9 +382,11 @@ Ideales para entrenar con intensidad y estilo.
       `,
       price: 59.90,
       originalPrice: 89.00,
-      image: '../../../assets/infernal_raiku_catalog.png',
+      image: '../../../assets/infernal_raiku_composite_main.png',
       images: [
-        '../../../assets/infernal_raiku_catalog.png',
+        '../../../assets/infernal_raiku_composite_main.png',
+        '../../../assets/infernal_gold_front.jpg',
+        '../../../assets/infernal_gold_back.png',
       ],
       category: 'compresores',
       sizes: [
