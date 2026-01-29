@@ -18,6 +18,10 @@
   }
 
   <main [class.opacity-0]="!hasEntered" [class.opacity-100]="hasEntered" class="transition-opacity duration-1000">
+    <!-- Background Music (Hidden Video) -->
+    <video src="assets/nuevo_banner.mp4" autoplay loop playsinline [muted]="!hasEntered"
+      class="fixed inset-0 w-0 h-0 opacity-0 pointer-events-none z-[-1]"></video>
+
     <app-product-grid />
   </main>
 </div>

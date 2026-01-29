@@ -33,6 +33,10 @@ export class Home implements OnInit {
   onEnter() {
     this.hasEntered = true;
     sessionStorage.setItem('hasEntered', 'true');
+
+    // Attempt to play/unmute any video/audio elements if needed
+    // The template binding [muted]="!hasEntered" handles the unmuting,
+    // and since this is inside a click handler, it's allowed by the browser.
   }
 
   openVotoModal() {
