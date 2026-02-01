@@ -397,6 +397,31 @@ Ideales para entrenar con intensidad y estilo.
       inStock: true,
       isNew: true,
       discount: 21
+    },
+    {
+      id: '18',
+      name: 'Nighfall Compression Girl',
+      description: `
+      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
+Ideales para entrenar con intensidad y estilo.
+🔥 Oscuros, cómodos y hechos para dominar.
+      `,
+      price: 59.90,
+      originalPrice: 89.00,
+      image: '../../../assets/nightfall_compression_girl_main.png',
+      images: [
+        '../../../assets/nightfall_compression_girl_main.png',
+      ],
+      category: 'compresores',
+      sizes: [
+        { size: 'XS', available: true },
+        { size: 'S', available: true },
+        { size: 'M', available: true },
+        { size: 'L', available: true }
+      ],
+      inStock: true,
+      isNew: true,
+      discount: 21
     }
   ];
   private productsSoon: Product[] = [
