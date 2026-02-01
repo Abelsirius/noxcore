@@ -86,8 +86,8 @@ export class ProductGridComponent implements OnInit {
   ngOnInit() {
     this.productService.getProducts().subscribe(
       products => {
-        // Filter out Black Friday products (ID 13, 14, 15, 16, 17)
-        const blackFridayIds = ['13', '14', '15', '16', '17'];
+        // Filter out Black Friday products (ID 13, 14, 15, 16, 17, 18)
+        const blackFridayIds = ['13', '14', '15', '16', '17', '18'];
         this.blackFridayProducts = products.filter(p => blackFridayIds.includes(p.id));
         this.products = products.filter(p => !blackFridayIds.includes(p.id));
       }
