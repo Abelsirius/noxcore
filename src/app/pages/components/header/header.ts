@@ -10,6 +10,7 @@ import { Dialog } from '@angular/cdk/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { Cart } from './dialog/cart/cart';
 import { AuthService } from '../../services/auth.service';
+import { WishlistService } from '../../services/wishlist.service';
 
 @Component({
   selector: 'app-header',
@@ -22,6 +23,7 @@ export class HeaderComponent {
   private _router = inject(Router);
   public authService = inject(AuthService);
   public cartService = inject(CartService);
+  public wishlistService = inject(WishlistService);
   public _dialog = inject(MatDialog);
 
   get isReelsRoute(): boolean {

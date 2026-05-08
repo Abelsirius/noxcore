@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit, AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit, AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product } from '../../models/product';
 import { register } from 'swiper/element/bundle';
@@ -16,6 +16,8 @@ interface Particle {
     color: string;
 }
 
+import { WishlistService } from '../../services/wishlist.service';
+
 @Component({
     selector: 'app-product-carousel',
     standalone: true,
@@ -26,6 +28,7 @@ interface Particle {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductCarouselComponent implements OnInit, AfterViewInit, OnChanges {
+    wishlistService = inject(WishlistService);
     @Input() products: Product[] = [];
     @Input() title: string = '';
     @Input() themeColor: string = '#ef4444';

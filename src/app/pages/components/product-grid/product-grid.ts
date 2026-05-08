@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, effect } from '@angular/core';
+import { Component, inject, OnInit, effect, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,7 +25,7 @@ import { ProductCarouselComponent } from '../product-carousel/product-carousel';
     <section class="py-16 bg-black overflow-hidden" id="black-friday-collection">
       <div class="container mx-auto">
         <app-product-carousel 
-          [products]="blackFridayProducts" 
+          [products]="blackFridayProducts()" 
           title="BLACK FRIDAY COLLECTION" 
           themeColor="#dc2626"
           (productSelected)="openProductModal($event)"
@@ -37,7 +37,7 @@ import { ProductCarouselComponent } from '../product-carousel/product-carousel';
     <section class="py-16 bg-black" id="collection-shadow">
       <div class="container mx-auto">
         <app-product-carousel 
-          [products]="products" 
+          [products]="products()" 
           [title]="'STYLE COLLECTION ' + nameColeccion.toUpperCase()" 
           themeColor="#ef4444"
           (productSelected)="openProductModal($event)"
@@ -47,7 +47,7 @@ import { ProductCarouselComponent } from '../product-carousel/product-carousel';
     <section class="py-16 bg-black" id="collection-soon">
       <div class="container mx-auto">
         <app-product-carousel 
-          [products]="proximamente" 
+          [products]="proximamente()" 
           title="DROP PASADO – ÚLTIMAS UNIDADES" 
           themeColor="#ef4444"
           (productSelected)="openProductModal($event)"
@@ -69,134 +69,134 @@ import { ProductCarouselComponent } from '../product-carousel/product-carousel';
   `]
 })
 export class ProductGridComponent implements OnInit {
-  products: Product[] = [];
-  blackFridayProducts: Product[] = []; // New separate list
-  proximamente: Product[] = [];
-  selectedProduct: Product | null = null;
-  isModalOpen = false;
+blackFridayProducts = computed(() => {
+  return this.productService.products().filter(p =>
+    p.collection?.description?.includes('SECTION:black_friday')
+  );
+});
+
+proximamente = computed(() => {
+  return this.productService.products().filter(p =>
+    p.collection?.description?.includes('SECTION:drop_pasado')
+  );
+});
+
+products = computed(() => {
+  const allProducts = this.productService.products();
+  const bf = this.blackFridayProducts();
+  const prox = this.proximamente();
+
+  let filtered = allProducts.filter(p =>
+    p.collection?.description?.includes('SECTION:style_collection') ||
+    (p.collection_id && !bf.includes(p) && !prox.includes(p))
+  );
+
+  if (filtered.length === 0 && allProducts.length > 0) {
+    filtered = allProducts.filter(p => !bf.includes(p) && !prox.includes(p));
+  }
+  return filtered;
+});
+
+selectedProduct: Product | null = null;
+isModalOpen = false;
 
   // Long press state management
   private longPressTimer: any;
   private isLongPressActive = false;
   private readonly LONG_PRESS_DURATION = 200; // milliseconds
 
-  nameColeccion = 'BREATheDivinity';
-  constructor(private productService: ProductService) {
-    effect(() => {
-      const allProducts = this.productService.products();
-      
-      // Filtramos dinámicamente según la configuración de la sección en el Admin
-      this.blackFridayProducts = allProducts.filter(p => 
-        p.collection?.description?.includes('SECTION:black_friday')
-      );
+nameColeccion = 'BREATheDivinity';
+constructor(private productService: ProductService) { }
 
-      this.proximamente = allProducts.filter(p => 
-        p.collection?.description?.includes('SECTION:drop_pasado')
-      );
+ngOnInit() {
+  this.productService.fetchProducts();
+  this.productService.fetchCollections(); // Asegurarnos de tener las colecciones cargadas
+}
 
-      // La sección central muestra los que están marcados como 'style_collection'
-      // O como fallback, los que tengan colección pero no estén en las otras dos
-      this.products = allProducts.filter(p => 
-        p.collection?.description?.includes('SECTION:style_collection') ||
-        (p.collection_id && !this.blackFridayProducts.includes(p) && !this.proximamente.includes(p))
-      );
-
-      // Si después de todo la sección central está vacía, mostramos todo lo demás
-      if (this.products.length === 0 && allProducts.length > 0) {
-        this.products = allProducts.filter(p => !this.blackFridayProducts.includes(p) && !this.proximamente.includes(p));
-      }
-    });
-  }
-
-  ngOnInit() {
-    this.productService.fetchProducts();
-    this.productService.fetchCollections(); // Asegurarnos de tener las colecciones cargadas
-  }
-
-  openProductModal(product: Product) {
-    if (product.variants && product.variants.length > 0) {
-      this.selectedProduct = product;
-      this.isModalOpen = true;
-    }
-  }
-  openProductModalSoon(product: Product) {
+openProductModal(product: Product) {
+  if (product.variants && product.variants.length > 0) {
     this.selectedProduct = product;
     this.isModalOpen = true;
   }
-  closeProductModal() {
-    this.isModalOpen = false;
-    this.selectedProduct = null;
-  }
+}
+openProductModalSoon(product: Product) {
+  this.selectedProduct = product;
+  this.isModalOpen = true;
+}
+closeProductModal() {
+  this.isModalOpen = false;
+  this.selectedProduct = null;
+}
 
-  onProductHover(event: Event, shouldPlay: boolean) {
-    const target = event.currentTarget as HTMLElement;
-    const video = target.querySelector('video.product-video') as HTMLVideoElement;
+onProductHover(event: Event, shouldPlay: boolean) {
+  const target = event.currentTarget as HTMLElement;
+  const video = target.querySelector('video.product-video') as HTMLVideoElement;
+
+  if (video) {
+    if (shouldPlay) {
+      video.muted = true;
+      video.play().catch(error => console.log('Video play failed:', error));
+    } else {
+      video.pause();
+      video.currentTime = 0;
+    }
+  }
+}
+
+onTouchStart(event: TouchEvent, containerElement: HTMLElement) {
+  // Start long press timer
+  this.isLongPressActive = false;
+
+  this.longPressTimer = setTimeout(() => {
+    this.isLongPressActive = true;
+    const video = containerElement.querySelector('video.product-video') as HTMLVideoElement;
 
     if (video) {
-      if (shouldPlay) {
-        video.muted = true;
-        video.play().catch(error => console.log('Video play failed:', error));
-      } else {
-        video.pause();
-        video.currentTime = 0;
-      }
+      video.muted = true;
+      video.play().catch(error => console.log('Video play failed:', error));
     }
+  }, this.LONG_PRESS_DURATION);
+}
+
+onTouchEnd(event: TouchEvent, containerElement: HTMLElement) {
+  // Clear the timer if touch ends before long press duration
+  if (this.longPressTimer) {
+    clearTimeout(this.longPressTimer);
   }
 
-  onTouchStart(event: TouchEvent, containerElement: HTMLElement) {
-    // Start long press timer
-    this.isLongPressActive = false;
-
-    this.longPressTimer = setTimeout(() => {
-      this.isLongPressActive = true;
-      const video = containerElement.querySelector('video.product-video') as HTMLVideoElement;
-
-      if (video) {
-        video.muted = true;
-        video.play().catch(error => console.log('Video play failed:', error));
-      }
-    }, this.LONG_PRESS_DURATION);
+  // Stop video if it was playing
+  const video = containerElement.querySelector('video.product-video') as HTMLVideoElement;
+  if (video && this.isLongPressActive) {
+    video.pause();
+    video.currentTime = 0;
   }
 
-  onTouchEnd(event: TouchEvent, containerElement: HTMLElement) {
-    // Clear the timer if touch ends before long press duration
-    if (this.longPressTimer) {
-      clearTimeout(this.longPressTimer);
-    }
+  this.isLongPressActive = false;
+}
 
-    // Stop video if it was playing
-    const video = containerElement.querySelector('video.product-video') as HTMLVideoElement;
-    if (video && this.isLongPressActive) {
-      video.pause();
-      video.currentTime = 0;
-    }
-
-    this.isLongPressActive = false;
+onTouchCancel(event: TouchEvent, containerElement: HTMLElement) {
+  // Handle touch cancel (e.g., when scrolling starts)
+  if (this.longPressTimer) {
+    clearTimeout(this.longPressTimer);
   }
 
-  onTouchCancel(event: TouchEvent, containerElement: HTMLElement) {
-    // Handle touch cancel (e.g., when scrolling starts)
-    if (this.longPressTimer) {
-      clearTimeout(this.longPressTimer);
-    }
-
-    const video = containerElement.querySelector('video.product-video') as HTMLVideoElement;
-    if (video && this.isLongPressActive) {
-      video.pause();
-      video.currentTime = 0;
-    }
-
-    this.isLongPressActive = false;
+  const video = containerElement.querySelector('video.product-video') as HTMLVideoElement;
+  if (video && this.isLongPressActive) {
+    video.pause();
+    video.currentTime = 0;
   }
 
-  getAvailabilityText(product: Product): string {
-    if (!product.variants || product.variants.length === 0) return 'Agotado';
-    const availableVariants = product.variants.filter(v => v.stock > 0).length;
-    if (availableVariants === 0) {
-      return 'AGOTADO';
-    } else if (availableVariants === 1) {
-      return 'CASI AGOTADO';
-    }
-    return 'Disponible por tiempo limitado.';
+  this.isLongPressActive = false;
+}
+
+getAvailabilityText(product: Product): string {
+  if (!product.variants || product.variants.length === 0) return 'Agotado';
+  const availableVariants = product.variants.filter(v => v.stock > 0).length;
+  if (availableVariants === 0) {
+    return 'AGOTADO';
+  } else if (availableVariants === 1) {
+    return 'CASI AGOTADO';
   }
+  return 'Disponible por tiempo limitado.';
+}
 }

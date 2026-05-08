@@ -12,7 +12,7 @@ export const ADMIN_ROUTES: Routes = [
       },
       {
         path: 'stats',
-        loadComponent: () => import('./stats/admin-stats').then(m => m.AdminStatsComponent)
+        loadComponent: () => import('./dashboard-stats/admin-stats').then(m => m.AdminStatsComponent)
       },
       {
         path: 'products',

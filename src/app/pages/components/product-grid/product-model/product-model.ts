@@ -7,6 +7,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { FormsModule } from '@angular/forms';
 import { CartItem, Product, ProductVariant } from '../../../models/product';
 import { CartService } from '../../../services/cart';
+import { ProductService } from '../../../services/product';
 
 @Component({
   selector: 'app-product-modal',
@@ -16,7 +17,6 @@ import { CartService } from '../../../services/cart';
     MatDialogModule,
     MatButtonModule,
     MatIconModule,
-    MatChipsModule,
     FormsModule
   ],
   template: `
@@ -113,7 +113,52 @@ import { CartService } from '../../../services/cart';
 
               <!-- Size Selection -->
               <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-3">Talla</label>
+                <div class="flex items-center justify-between mb-3">
+                  <label class="block text-sm font-medium text-gray-700">Talla</label>
+                  <button (click)="showSizeGuide = !showSizeGuide" class="text-[10px] font-black text-red-600 uppercase tracking-widest hover:underline">
+                    ¿Cuál es mi talla?
+                  </button>
+                </div>
+
+                <!-- Smart Size Calculator -->
+                <div *ngIf="showSizeGuide" class="bg-[#0a0a0a] border border-white/10 rounded-xl p-5 mb-6 animate-fade-in shadow-2xl">
+                  <div class="flex items-center gap-2 mb-4">
+                    <i class="ti ti-calculator text-red-600"></i>
+                    <p class="text-[9px] font-black text-white uppercase tracking-[0.2em]">Calculadora de Talla Inteligente</p>
+                  </div>
+                  
+                  <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div class="space-y-1.5">
+                      <label class="text-[8px] text-gray-500 uppercase font-black tracking-widest">Altura (cm)</label>
+                      <input 
+                        type="number" 
+                        [(ngModel)]="userHeight" 
+                        placeholder="175" 
+                        class="w-full bg-white/5 border border-white/10 text-white text-xs p-3 rounded-lg focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none transition-all placeholder:text-gray-700"
+                      >
+                    </div>
+                    <div class="space-y-1.5">
+                      <label class="text-[8px] text-gray-500 uppercase font-black tracking-widest">Peso (kg)</label>
+                      <input 
+                        type="number" 
+                        [(ngModel)]="userWeight" 
+                        placeholder="75" 
+                        class="w-full bg-white/5 border border-white/10 text-white text-xs p-3 rounded-lg focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none transition-all placeholder:text-gray-700"
+                      >
+                    </div>
+                  </div>
+
+                  <div *ngIf="recommendedSize" class="bg-red-600 text-white p-4 rounded-lg text-center animate-slide-up">
+                    <p class="text-[8px] uppercase tracking-[0.3em] font-black text-white/80 mb-1">Tu talla ideal es</p>
+                    <p class="text-3xl font-black tracking-tighter">TALLA {{recommendedSize}}</p>
+                    <p class="text-[8px] mt-1 text-white/60 uppercase font-bold">Ajuste recomendado para Streetwear</p>
+                  </div>
+                  
+                  <p class="text-[7px] text-gray-600 mt-4 text-center uppercase tracking-widest italic">
+                    *Basado en tus medidas y el corte de la prenda
+                  </p>
+                </div>
+
                 <div class="flex flex-wrap gap-2">
                   <button
                     *ngFor="let variant of product?.variants"
@@ -182,11 +227,25 @@ import { CartService } from '../../../services/cart';
               >
                 CONSULTAR POR WHATSAPP
               </button>
-
-              <button class="w-full text-gray-600 hover:text-gray-800 py-2 text-sm font-medium">
-                Ver todos los detalles →
-              </button>
             </div>
+
+            <!-- Related Products Section -->
+            <div *ngIf="relatedProducts.length > 0" class="mt-12 pt-8 border-t border-gray-100">
+              <h3 class="text-[10px] font-black tracking-[0.2em] uppercase text-gray-400 mb-6">Completa tu Look</h3>
+              <div class="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+                <div *ngFor="let rel of relatedProducts" 
+                     (click)="switchProduct(rel)"
+                     class="flex-shrink-0 w-32 cursor-pointer group">
+                  <div class="relative aspect-[3/4] rounded-lg overflow-hidden mb-2">
+                    <img [src]="rel.images[0]" class="w-full h-full object-cover transition-transform group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  </div>
+                  <p class="text-[9px] font-bold uppercase truncate">{{rel.name}}</p>
+                  <p class="text-[9px] text-red-600 font-black">S/. {{rel.base_price | number:'1.2-2'}}</p>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -203,12 +262,59 @@ import { CartService } from '../../../services/cart';
   loading = false;
   errorMessage = '';
 
+  // Size Guide Logic
+  showSizeGuide = false;
+  userHeight: number | null = null;
+  userWeight: number | null = null;
+
+  get recommendedSize(): string | null {
+    if (!this.userHeight || !this.userWeight) return null;
+
+    // Lógica simple de recomendación (Streetwear/Oversized)
+    const bmi = this.userWeight / ((this.userHeight / 100) ** 2);
+
+    if (this.userHeight < 165) {
+      return bmi < 22 ? 'S' : 'M';
+    } else if (this.userHeight < 175) {
+      return bmi < 24 ? 'M' : 'L';
+    } else if (this.userHeight < 185) {
+      return bmi < 26 ? 'L' : 'XL';
+    } else {
+      return 'XL';
+    }
+  }
+
+  private productService = inject(ProductService);
+
+  get relatedProducts(): Product[] {
+    if (!this.product || !this.product.collection_id) return [];
+    return this.productService.products().filter(p =>
+      p.collection_id === this.product?.collection_id && p.id !== this.product?.id
+    ).slice(0, 4);
+  }
+
+  switchProduct(newProduct: Product) {
+    this.product = newProduct;
+    this.initProduct();
+    // Scroll modal to top
+    const modalContent = document.querySelector('.relative.bg-white.rounded-lg');
+    if (modalContent) modalContent.scrollTop = 0;
+  }
+
   constructor(private cartService: CartService) { }
 
   ngOnInit() {
+    this.initProduct();
+  }
+
+  initProduct() {
     if (this.product) {
       this.selectedImage = this.product.images[0];
-      // Default to first variant if available
+      this.quantity = 1;
+      this.showSizeGuide = false;
+      this.userHeight = null;
+      this.userWeight = null;
+
       if (this.product.variants && this.product.variants.length > 0) {
         this.selectedVariant = this.product.variants[0];
       }
