@@ -1,27 +1,6 @@
 <div class="min-h-screen bg-black relative">
-  @if (!hasEntered) {
-  <div class="splash-overlay fixed inset-0 z-[1500] flex items-center justify-center bg-black">
-    <div class="text-center animate-fade-in px-4">
-      <h1 class="text-5xl md:text-8xl font-black text-white tracking-tighter mb-8 uppercase glitch-text"
-        data-text="NYXOR FIT">
-        NYXOR FIT
-      </h1>
-      <p class="text-gray-400 mb-12 tracking-[0.3em] font-light uppercase">
-        Dark • Gothic • Tribal • Gym
-      </p>
-      <button (click)="onEnter()"
-        class="enter-btn px-12 py-4 text-lg font-bold uppercase tracking-widest border border-white/20 hover:bg-white hover:text-black transition-all duration-500 hover:scale-105">
-        Entrar
-      </button>
-    </div>
-  </div>
-  }
-
-  <main [class.opacity-0]="!hasEntered" [class.opacity-100]="hasEntered" class="transition-opacity duration-1000">
-    <!-- Background Music (Hidden Video) -->
-    <video src="assets/nuevo_banner.mp4" autoplay loop playsinline [muted]="!hasEntered"
-      class="fixed inset-0 w-0 h-0 opacity-0 pointer-events-none z-[-1]"></video>
-
+  <main class="opacity-100 transition-opacity duration-1000 pt-20">
+    <!-- Solo los Carruseles de Productos -->
     <app-product-grid />
   </main>
 </div>

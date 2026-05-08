@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { FormsModule } from '@angular/forms';
-import { CartItem, Product } from '../../../models/product';
+import { CartItem, Product, ProductVariant } from '../../../models/product';
 import { CartService } from '../../../services/cart';
 
 @Component({
@@ -91,21 +91,20 @@ import { CartService } from '../../../services/cart';
               <h2 class="  text-[18px] md:text-3xl font-bold text-gray-900 mb-4">{{product?.name}}</h2>
 
               <!-- Price -->
-              <div class="flex items-center space-x-4 mb-6">
-                <span class="text-base md:text-3xl font-bold text-red-600">
-                  S/. {{product?.price?.toFixed(2)}}
-                </span>
+              <div class="flex items-center gap-4 mb-6">
+                <div class="flex flex-col">
+                  <span *ngIf="product?.discount_percent" class="text-gray-400 line-through text-xs mb-1">
+                    S/. {{currentPrice | number:'1.2-2'}}
+                  </span>
+                  <span class="text-2xl md:text-4xl font-black text-red-600 tracking-tighter">
+                    S/. {{ (product?.discount_percent ? currentPrice * (1 - product!.discount_percent! / 100) : currentPrice) | number:'1.2-2' }}
+                  </span>
+                </div>
                 <span 
-                  *ngIf="product?.originalPrice" 
-                  class="text-xl text-gray-500 line-through"
+                  *ngIf="product?.discount_percent"
+                  class="bg-red-600 text-white text-[10px] px-2 py-1 font-black uppercase tracking-widest"
                 >
-                  S/. {{product?.originalPrice?.toFixed(2)}}
-                </span>
-                <span 
-                  *ngIf="product?.discount"
-                  class="bg-red-500 text-white text-sm px-2 py-1 rounded font-bold"
-                >
-                  Oferta
+                  {{product?.discount_percent}}% OFF
                 </span>
               </div>
 
@@ -113,36 +112,34 @@ import { CartService } from '../../../services/cart';
               <p class=" text-[14px] md:text-base text-gray-600 mb-6 ">{{product?.description}}</p>
 
               <!-- Size Selection -->
-<div class="mb-6">
-  <label class="block text-sm font-medium text-gray-700 mb-3">Talla</label>
-  <div class="flex flex-wrap gap-2">
-    <button
-      *ngFor="let sizeItem of product?.sizes"
-      class="px-4 py-2 border rounded-md font-medium transition-all"
-      
-      [disabled]="!sizeItem.available"
-      
-      [ngClass]="{
-        'line-through text-gray-400 bg-gray-50 cursor-not-allowed border-gray-200 opacity-50': !sizeItem.available,
-        
-        'border-gray-200 text-black bg-white shadow-sm hover:border-black font-bold': sizeItem.available && selectedSize !== sizeItem.size,
-        
-        'border-black bg-black text-white scale-105 shadow-md': selectedSize === sizeItem.size
-      }"
-
-      (click)="sizeItem.available ? selectSize(sizeItem.size) : null"
-    >
-      {{sizeItem.size}}
-    </button>
-  </div>
-</div>
+              <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-3">Talla</label>
+                <div class="flex flex-wrap gap-2">
+                  <button
+                    *ngFor="let variant of product?.variants"
+                    class="px-4 py-2 border rounded-md font-medium transition-all"
+                    [disabled]="variant.stock === 0"
+                    [ngClass]="{
+                      'line-through text-gray-400 bg-gray-50 cursor-not-allowed border-gray-200 opacity-50': variant.stock === 0,
+                      'border-gray-200 text-black bg-white shadow-sm hover:border-black font-bold': variant.stock > 0 && selectedVariant?.id !== variant.id,
+                      'border-black bg-black text-white scale-105 shadow-md': selectedVariant?.id === variant.id
+                    }"
+                    (click)="variant.stock > 0 ? selectVariant(variant) : null"
+                  >
+                    {{variant.size}}
+                  </button>
+                </div>
+                <p *ngIf="selectedVariant" class="text-[10px] text-gray-500 mt-2 uppercase tracking-widest">
+                  Stock disponible: {{selectedVariant.stock}} uds.
+                </p>
+              </div>
 
               <!-- Quantity -->
               <div class="mb-8">
                 <label class="block text-sm font-medium text-gray-700 mb-3">Cantidad</label>
                 <div class="flex items-center border border-gray-300 rounded-md w-32">
                   <button 
-                    class="px-3 py-2 text-gray-600 hover:text-gray-800"
+                    class="px-3 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-30"
                     (click)="decrementQuantity()"
                     [disabled]="quantity <= 1"
                   >
@@ -156,8 +153,9 @@ import { CartService } from '../../../services/cart';
                     readonly
                   >
                   <button 
-                    class="px-3 py-2 text-gray-600 hover:text-gray-800"
+                    class="px-3 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-30"
                     (click)="incrementQuantity()"
+                    [disabled]="!selectedVariant || quantity >= selectedVariant.stock"
                   >
                     +
                   </button>
@@ -167,20 +165,22 @@ import { CartService } from '../../../services/cart';
 
             <!-- Action Buttons -->
             <div class="space-y-4">
-              <!-- <button 
-                class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-4 px-6 rounded-md transition-all"
+              <div *ngIf="errorMessage" class="text-red-600 text-[10px] font-bold uppercase mb-2">{{errorMessage}}</div>
+              
+              <button 
+                class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-4 px-6 rounded-md transition-all disabled:opacity-50"
                 (click)="addToCart()"
-                [disabled]="!selectedSize"
+                [disabled]="!selectedVariant || loading"
               >
-                Agregar al carrito
-              </button> -->
+                {{ loading ? 'AGREGANDO...' : 'AGREGAR AL CARRITO' }}
+              </button>
               
               <button 
                 class="w-full bg-black hover:bg-gray-800 text-white font-semibold py-4 px-6 rounded-md transition-all"
                 (click)="buyNow()"
-                [disabled]="!selectedSize"
+                [disabled]="!selectedVariant"
               >
-                Comprar por WhatsApp
+                CONSULTAR POR WHATSAPP
               </button>
 
               <button class="w-full text-gray-600 hover:text-gray-800 py-2 text-sm font-medium">
@@ -192,21 +192,32 @@ import { CartService } from '../../../services/cart';
       </div>
     </div>
   `
-})
-export class ProductModalComponent implements OnInit {
+}) export class ProductModalComponent implements OnInit {
   @Input() product: Product | null = null;
   @Input() isOpen = false;
   @Output() close = new EventEmitter<void>();
+
   selectedImage = '';
-  selectedSize = '';
+  selectedVariant: ProductVariant | null = null;
   quantity = 1;
+  loading = false;
+  errorMessage = '';
 
   constructor(private cartService: CartService) { }
 
   ngOnInit() {
     if (this.product) {
-      this.selectedImage = this.product.image;
+      this.selectedImage = this.product.images[0];
+      // Default to first variant if available
+      if (this.product.variants && this.product.variants.length > 0) {
+        this.selectedVariant = this.product.variants[0];
+      }
     }
+  }
+
+  get currentPrice() {
+    if (this.selectedVariant?.price_override) return this.selectedVariant.price_override;
+    return this.product?.base_price ?? 0;
   }
 
   onClose() {
@@ -217,12 +228,15 @@ export class ProductModalComponent implements OnInit {
     this.selectedImage = image;
   }
 
-  selectSize(size: string) {
-    this.selectedSize = size;
+  selectVariant(variant: ProductVariant) {
+    this.selectedVariant = variant;
+    this.quantity = 1; // Reset quantity on variant change
   }
 
   incrementQuantity() {
-    this.quantity++;
+    if (this.selectedVariant && this.quantity < this.selectedVariant.stock) {
+      this.quantity++;
+    }
   }
 
   decrementQuantity() {
@@ -231,39 +245,39 @@ export class ProductModalComponent implements OnInit {
     }
   }
 
-  addToCart() {
-    if (this.product && this.selectedSize) {
-      const cartItem: CartItem = {
-        product: this.product,
-        size: this.selectedSize,
-        quantity: this.quantity
-      };
-      this.cartService.addToCart(cartItem);
-      this.onClose();
+  async addToCart() {
+    if (this.product && this.selectedVariant) {
+      this.loading = true;
+      this.errorMessage = '';
+      try {
+        await this.cartService.addToCart(this.selectedVariant, this.product, this.quantity);
+        this.onClose();
+      } catch (e: any) {
+        this.errorMessage = e.message;
+      } finally {
+        this.loading = false;
+      }
     }
   }
+
   // --- ZOOM EFECTO LUPA INTENSO ---
   isZooming = false;
   lensX = 0;
   lensY = 0;
-  backgroundSize = '500%'; // 🔥 zoom aumentado (antes era 250%)
+  backgroundSize = '500%';
   backgroundPosition = 'center';
 
   onMouseMove(event: MouseEvent) {
     const target = event.target as HTMLElement;
     const rect = target.getBoundingClientRect();
-
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
-
-    const lensRadius = 100; // 🔥 lupa más grande (antes era 60)
+    const lensRadius = 100;
     const clampedX = Math.max(lensRadius, Math.min(x, rect.width - lensRadius));
     const clampedY = Math.max(lensRadius, Math.min(y, rect.height - lensRadius));
-
     this.lensX = clampedX;
     this.lensY = clampedY;
     this.isZooming = true;
-
     const posX = (x / rect.width) * 100;
     const posY = (y / rect.height) * 100;
     this.backgroundPosition = `${posX}% ${posY}%`;
@@ -272,21 +286,19 @@ export class ProductModalComponent implements OnInit {
   onMouseLeave() {
     this.isZooming = false;
   }
+
   buyNow() {
-    this.addToCart();
-    // Here you would typically redirect to checkout
-    const phone = "51942301601"; // Tu número en formato internacional (ejemplo Perú: 51 + número)
+    const phone = "51942301601";
     const message = `
 🔥 *Hola*, estoy interesado en el siguiente producto:  
 
 🖤 *Producto:* ${this.product?.name}  
-💸 *Precio:* S/. ${this.product?.price.toFixed(2)}  
-📏 *Talla:* ${this.selectedSize}  
+💸 *Precio:* S/. ${this.currentPrice.toFixed(2)}  
+📏 *Talla:* ${this.selectedVariant?.size}  
 🔢 *Cantidad:* ${this.quantity}  
 
 ¿Podrías darme más información, por favor?
 `;
-
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
   }

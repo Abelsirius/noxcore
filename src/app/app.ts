@@ -1,12 +1,13 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Loading } from "./pages/components/loading/loading";
+import { ToastComponent } from './pages/components/ui/toast.component';
+import { HeaderComponent } from './pages/components/header/header';
 import { BottomNavComponent } from './pages/components/bottom-nav/bottom-nav';
-import { HeaderComponent } from "./pages/components/header/header";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Loading, BottomNavComponent, HeaderComponent],
+  imports: [RouterOutlet, Loading, BottomNavComponent, HeaderComponent, ToastComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

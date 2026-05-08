@@ -1,565 +1,76 @@
-﻿import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Product } from '../models/product';
-
+import { Injectable, signal, inject } from '@angular/core';
+import { SupabaseService } from './supabase.service';
+import { Product, Collection } from '../models/product';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  private products: Product[] = [
-    {
-      id: '1',
-      name: 'Evangelion Compression Void Black',
-      description: `
-      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
-Ideales para entrenar con intensidad y estilo.
-🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 49.90,
-      originalPrice: 79.00,
-      image: '../../../assets/gotico1.jpeg',
-      images: [
-        '../../../assets/gotico1_view1.jpeg',
-        '../../../assets/gotico1_view2.jpeg',
-        '../../../assets/gotico1_view3.jpeg',
-        '../../../assets/gotico1_view4.jpeg',
-      ],
-      category: 'compresores',
-      sizes: [
-        { size: 'S', available: true },
-        { size: 'M', available: false },
-        { size: 'L', available: true }
-      ],
-      inStock: true,
-      isNew: true,
-      discount: 25
-    },
-    {
-      id: '2',
-      name: 'Evangelion Compression Divine White',
-      description: `
-      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
-Ideales para entrenar con intensidad y estilo.
-🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 49.90,
-      originalPrice: 79.90,
-      image: '../../../assets/white.jpeg',
-      images: [
-        '../../../assets/white.jpeg',
-        '../../../assets/white-back.jpeg'
-      ],
-      category: 'Camisetas',
-      sizes: [
-        { size: 'S', available: false }, // No disponible -> Tachar
-        { size: 'M', available: false },  // Disponible
-        { size: 'L', available: false }  // No disponible -> Tachar
-      ],
-      inStock: false,
-      discount: 25
-    },
-    {
-      id: '3',
-      name: 'Evangelion Compression Crimson Red',
-      description: `
-      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
-Ideales para entrenar con intensidad y estilo.
-🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 49.90,
-      originalPrice: 79.00,
-      image: '../../../assets/style2.jpeg',
-      images: [
-        '../../../assets/style2.jpeg',
-        '../../../assets/style2.2.jpeg'
-      ],
-      category: 'Hoodies',
-      sizes: [
-        { size: 'S', available: true }, // No disponible -> Tachar
-        { size: 'M', available: false },  // Disponible
-        { size: 'L', available: true }  // No disponible -> Tachar
-      ],
-      inStock: true,
-      isNew: true,
-      discount: 25
-    },
-    {
-      id: '4',
-      name: 'Dark Matter Compression',
-      description: `
-      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
-Ideales para entrenar con intensidad y estilo.
-🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 49.90,
-      originalPrice: 89.00,
-      image: '../../../assets/soon1_view.jpeg',
-      images: [
-        '../../../assets/soon1_view.jpeg',
-        '../../../assets/soon1_view_stock.jpeg',
-        '../../../assets/soon1_view2_stock.jpeg',
+  private supabase = inject(SupabaseService).client;
+  
+  products = signal<Product[]>([]);
+  collections = signal<Collection[]>([]);
+  loading = signal<boolean>(false);
 
-      ],
-      category: 'compresores',
-      sizes: [
-        { size: 'S', available: false },
-        { size: 'M', available: false },
-        { size: 'L', available: false }
-      ],
-      inStock: false,
-      isNew: true,
-      discount: 25
-    },
-    {
-      id: '5',
-      name: 'Nightfall Compression Longsleeve',
-      description: `
-      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
-Ideales para entrenar con intensidad y estilo.
-🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 49.90,
-      originalPrice: 89.00,
-      image: '../../../assets/gotico2.jpeg',
-      images: [
-        '../../../assets/gotico2.jpeg',
-        '../../../assets/soon2_view_stock.jpeg',
-        '../../../assets/soon2_view2_stock.jpeg',
-        '../../../assets/nightfall_model_6.png',
-        '../../../assets/nightfall_model_7.png',
+  constructor() {}
 
-      ],
-      category: 'compresores',
-      sizes: [
-        { size: 'S', available: false },
-        { size: 'M', available: false },
-        { size: 'L', available: true }
-      ],
-      inStock: true,
-      isNew: false,
-      discount: 25
-    },
-    {
-      id: '12',
-      name: 'Nightfall Compression Frost',
-      description: `
-      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
-Ideales para entrenar con intensidad y estilo.
-🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 49.90,
-      originalPrice: 89.00,
-      image: '../../../assets/nighfall_frost.png',
-      images: [
-        '../../../assets/nighfall_frost.png',
-      ],
-      category: 'compresores',
-      sizes: [
-        { size: 'S', available: false },
-        { size: 'M', available: false },
-        { size: 'L', available: true }
-      ],
-      inStock: true,
-      isNew: true,
-      discount: 25
-    },
-    {
-      id: '6',
-      name: 'Dark Fantasy compression Heavenly Red',
-      description: `
-      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
-Ideales para entrenar con intensidad y estilo.
-🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 49.90,
-      originalPrice: 89.00,
-      image: '../../../assets/view5.jpeg',
-      images: [
-        '../../../assets/view5.jpeg',
-        '../../../assets/producto5.jpeg',
-        '../../../assets/producto5_2.jpeg',
+  async fetchProducts(filters?: { collectionId?: string, search?: string, sort?: string }) {
+    this.loading.set(true);
+    let query = this.supabase
+      .from('products')
+      .select(`
+        *,
+        variants:product_variants (*),
+        collection:collections (*)
+      `);
 
-      ],
-      category: 'compresores',
-      sizes: [
-        { size: 'S', available: false }, // No disponible -> Tachar
-        { size: 'M', available: false },  // Disponible
-        { size: 'L', available: true }  // No disponible -> Tachar
-      ],
-      inStock: true,
-      isNew: false,
-      discount: 25
-    },
-    {
-      id: '7',
-      name: 'Soul Decay Compression Void Black ',
-      description: `
-      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
-Ideales para entrenar con intensidad y estilo.
-🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 59.90,
-      originalPrice: 89.00,
-      image: '../../../assets/gotico7.jpeg',
-      images: [
-        '../../../assets/gotico7_view1.jpeg',
-        '../../../assets/gotico7_view2.jpeg',
-
-      ],
-      category: 'compresores',
-      sizes: [
-        { size: 'S', available: true }, // No disponible -> Tachar
-        { size: 'M', available: false },  // Disponible
-        { size: 'L', available: true }  // No disponible -> Tachar
-      ],
-      inStock: true,
-      isNew: false,
-      discount: 25
-    },
-    {
-      id: '8',
-      name: 'Soul Decay Compression  Abyssal Blue ',
-      description: `
-      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
-Ideales para entrenar con intensidad y estilo.
-🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 59.90,
-      originalPrice: 89.00,
-      image: '../../../assets/gotico6.jpeg',
-      images: [
-        '../../../assets/gotico6_view1.jpeg',
-        '../../../assets/gotico6_view2.jpeg',
-
-      ],
-      category: 'compresores',
-      sizes: [
-        { size: 'S', available: false }, // No disponible -> Tachar
-        { size: 'M', available: false },  // Disponible
-        { size: 'L', available: true }  // No disponible -> Tachar
-      ],
-      inStock: true,
-      isNew: false,
-      discount: 25
-    },
-    {
-      id: '10',
-      name: 'Soul Decay Compression Void Black',
-      description: `
-      Compresores de alta elasticidad, diseo infernal y ajuste perfecto.
-Ideales para entrenar con intensidad y estilo.
- Oscuros, cmodos y hechos para dominar.
-      `,
-      price: 49.90,
-      originalPrice: 79.00,
-      image: '../../../assets/soul_decay_short.jpeg',
-      images: [
-        '../../../assets/soul_decay_short.jpeg',
-        '../../../assets/soul_decay_void_black_extra1.png',
-        '../../../assets/soul_decay_void_black_extra2.png'
-      ],
-      category: 'compresores',
-      sizes: [
-        { size: 'S', available: false },
-        { size: 'M', available: false },
-        { size: 'L', available: true }
-      ],
-      inStock: true,
-      isNew: true,
-      discount: 25
-    },
-    {
-      id: '13',
-      name: 'Nighfall Compression Longsleeve Heavenly Red',
-      description: `
-      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
-Ideales para entrenar con intensidad y estilo.
-🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 59.90,
-      originalPrice: 89.00,
-      image: '../../../assets/nightfall_heavenly_red_composite_main.png',
-      images: [
-        '../../../assets/nightfall_heavenly_red_composite_main.png',
-        '../../../assets/nightfall_heavenly_red_front.png',
-        '../../../assets/nightfall_heavenly_red_back.png',
-      ],
-      category: 'compresores',
-      sizes: [
-        { size: 'S', available: false },
-        { size: 'M', available: true },
-        { size: 'L', available: true }
-      ],
-      inStock: true,
-      isNew: true,
-      discount: 21
-    },
-    {
-      id: '14',
-      name: 'Nighfall Compression Longsleeve Frost',
-      description: `
-      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
-Ideales para entrenar con intensidad y estilo.
-🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 59.90,
-      originalPrice: 89.00,
-      image: '../../../assets/nightfall_frost_composite_main.png',
-      images: [
-        '../../../assets/nightfall_frost_composite_main.png',
-        '../../../assets/nightfall_frost_front.png',
-        '../../../assets/nightfall_frost_back.png',
-      ],
-      category: 'compresores',
-      sizes: [
-        { size: 'XS', available: true },
-        { size: 'S', available: false },
-        { size: 'M', available: true },
-        { size: 'L', available: true }
-      ],
-      inStock: true,
-      isNew: true,
-      discount: 21
-    },
-    {
-      id: '15',
-      name: 'Nighfall Compression Longsleeve Raichu',
-      description: `
-      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
-Ideales para entrenar con intensidad y estilo.
-🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 59.90,
-      originalPrice: 89.00,
-      image: '../../../assets/nightfall_raichu_composite_main.png',
-      images: [
-        '../../../assets/nightfall_raichu_composite_main.png',
-        '../../../assets/nightfall_raichu_front.png',
-        '../../../assets/nightfall_raichu_back.png',
-      ],
-      category: 'compresores',
-      sizes: [
-        { size: 'S', available: true },
-        { size: 'M', available: false },
-        { size: 'L', available: false }
-      ],
-      inStock: true,
-      isNew: true,
-      discount: 21
-    },
-    {
-      id: '16',
-      name: 'Infernal Compression Red',
-      description: `
-      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
-Ideales para entrenar con intensidad y estilo.
-🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 59.90,
-      originalPrice: 89.00,
-      image: '../../../assets/infernal_red_composite_main.png',
-      images: [
-        '../../../assets/infernal_red_composite_main.png',
-      ],
-      category: 'compresores',
-      sizes: [
-        { size: 'S', available: true },
-        { size: 'M', available: false },
-        { size: 'L', available: false }
-      ],
-      inStock: true,
-      isNew: true,
-      discount: 21
-    },
-    {
-      id: '17',
-      name: 'Infernal Compression Raiku',
-      description: `
-      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
-Ideales para entrenar con intensidad y estilo.
-🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 59.90,
-      originalPrice: 89.00,
-      image: '../../../assets/infernal_raiku_composite_main.png',
-      images: [
-        '../../../assets/infernal_raiku_composite_main.png',
-        '../../../assets/infernal_gold_front.jpg',
-        '../../../assets/infernal_gold_back.png',
-      ],
-      category: 'compresores',
-      sizes: [
-        { size: 'S', available: true },
-        { size: 'M', available: false },
-        { size: 'L', available: false }
-      ],
-      inStock: true,
-      isNew: true,
-      discount: 21
-    },
-    {
-      id: '18',
-      name: 'Nighfall Compression Girl',
-      description: `
-      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
-Ideales para entrenar con intensidad y estilo.
-🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 59.90,
-      originalPrice: 89.00,
-      image: '../../../assets/nightfall_compression_girl_main.png',
-      images: [
-        '../../../assets/nightfall_compression_girl_main.png',
-      ],
-      category: 'compresores',
-      sizes: [
-        { size: 'XXS', available: true },
-        { size: 'XS', available: true }
-      ],
-      inStock: true,
-      isNew: true,
-      discount: 21
+    if (filters?.collectionId) {
+      query = query.eq('collection_id', filters.collectionId);
     }
-  ];
-  private productsSoon: Product[] = [
-    {
-      id: '2',
-      name: 'Heavenly Red - Blood Wyvern Pants',
-      description: `
-      Heavenly Red - Blood Wyvern Pants.
-Diseño infernal y ajuste perfecto.
-🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 79.90,
-      originalPrice: 99.90,
-      image: '../../../assets/heavenly_red_wyvern_1.jpg',
-      images: [
-        '../../../assets/heavenly_red_wyvern_1.jpg',
-        '../../../assets/heavenly_red_wyvern_2.png',
-      ],
-      category: 'Pants',
-      sizes: [
-        { size: 'M', available: true },
-        { size: 'L', available: false },
-        { size: 'XL', available: false }
-      ],
-      inStock: true,
-      isNew: true,
-      discount: 25
-    },
-    {
-      id: '9',
-      name: 'Vampire Hunter Zip-Up Compression',
-      description: `
-      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
-Ideales para entrenar con intensidad y estilo.
-🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 59.90,
-      originalPrice: 79.00,
-      image: '../../../assets/new_product_1.jpg',
-      images: [
-        '../../../assets/new_product_1.jpg',
-      ],
-      category: 'compresores',
-      sizes: [
-        { size: 'S', available: false },
-        { size: 'M', available: false },
-        { size: 'L', available: true }
-      ],
-      inStock: true,
-      isNew: true,
-      discount: 25,
-      availabilityLabel: 'DISPONIBLE',
-      videoPreview: '../../../assets/videos_preview/WhatsApp Video 2025-12-30 at 9.39.35 PM.mp4'
-    },
-    {
-      id: '3',
-      name: 'Deathblade Oversized Pullover Hoodie',
-      description: `
-      Deathblade Oversized Pullover Hoodie.
-      Diseño infernal y ajuste perfecto.
-      🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 59.90,
-      originalPrice: 119.80,
-      image: '../../../assets/deathblade_hoodie.png',
-      images: [
-        '../../../assets/deathblade_hoodie.png',
-      ],
-      category: 'Hoodies',
-      sizes: [
-        { size: 'S', available: false },
-        { size: 'M', available: false },
-        { size: 'L', available: false }
-      ],
-      inStock: false,
-      isNew: true,
-      discount: 50
-    },
-    {
-      id: '11',
-      name: 'Immortal compression',
-      description: `
-      Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
-Ideales para entrenar con intensidad y estilo.
-🔥 Oscuros, cómodos y hechos para dominar.
-      `,
-      price: 49.90,
-      originalPrice: 79.90,
-      image: '../../../assets/immortal_compression.png',
-      images: [
-        '../../../assets/immortal_compression.png',
-      ],
-      category: 'compresores',
-      sizes: [
-        { size: 'S', available: true },
-        { size: 'M', available: true },
-        { size: 'L', available: true }
-      ],
-      inStock: true,
-      isNew: true,
-      discount: 25,
-      availabilityLabel: 'DISPONIBLE'
+
+    if (filters?.search) {
+      query = query.ilike('name', `%${filters.search}%`);
     }
-  ];
-  //     {
-  //       id: '1',
-  //       name: 'Color negro con estampado Blanco',
-  //       description: `
-  //       Compresores de alta elasticidad, diseño infernal y ajuste perfecto.
-  // Ideales para entrenar con intensidad y estilo.
-  // 🔥 Oscuros, cómodos y hechos para dominar.
-  //       `,
-  //       price: 59.90,
-  //       originalPrice: 89.00,
-  //       image: '../../../assets/gotico2.jpeg',
-  //       images: [
-  //         '../../../assets/gotico2_view1.jpeg',
-  //       ],
-  //       category: 'compresores',
-  //       sizes: ['S', 'M', 'L'],
-  //       inStock: true,
-  //       isNew: false,
-  //       discount: 25
-  //     },
 
+    // Sort logic
+    if (filters?.sort === 'price_asc') {
+      query = query.order('base_price', { ascending: true });
+    } else if (filters?.sort === 'price_desc') {
+      query = query.order('base_price', { ascending: false });
+    } else {
+      query = query.order('created_at', { ascending: false });
+    }
 
-  private productsSubject = new BehaviorSubject<Product[]>(this.products);
-  private productsSoonSubject = new BehaviorSubject<Product[]>(this.productsSoon);
+    const { data, error } = await query;
 
-
-  getProducts(): Observable<Product[]> {
-    return this.productsSubject.asObservable();
+    if (!error && data) {
+      this.products.set(data as unknown as Product[]);
+    }
+    this.loading.set(false);
   }
-  getProductsSoon(): Observable<Product[]> {
-    return this.productsSoonSubject.asObservable();
+
+  async fetchCollections() {
+    const { data, error } = await this.supabase
+      .from('collections')
+      .select('*')
+      .order('name');
+
+    if (!error && data) {
+      this.collections.set(data);
+    }
   }
-  getProduct(id: string): Product | undefined {
-    return this.products.find(product => product.id === id);
-  }
-  getProductSoon(id: string): Product | undefined {
-    return this.productsSoon.find(product => product.id === id);
+
+  async getProductBySlug(slug: string): Promise<Product | null> {
+    const { data, error } = await this.supabase
+      .from('products')
+      .select(`
+        *,
+        variants:product_variants (*),
+        collection:collections (*)
+      `)
+      .eq('slug', slug)
+      .single();
+
+    return error ? null : (data as unknown as Product);
   }
 }

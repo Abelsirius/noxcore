@@ -9,6 +9,7 @@ import { H } from '@angular/cdk/keycodes';
 import { Dialog } from '@angular/cdk/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { Cart } from './dialog/cart/cart';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -19,23 +20,26 @@ import { Cart } from './dialog/cart/cart';
 })
 export class HeaderComponent {
   private _router = inject(Router);
+  public authService = inject(AuthService);
+  public cartService = inject(CartService);
+  public _dialog = inject(MatDialog);
 
   get isReelsRoute(): boolean {
     return this._router.url.includes('/reels');
-  }
-  public _cartService = inject(CartService);
-  cartCount$ = this._cartService.getCartCount();
-  public _dialog = inject(MatDialog)
-  openCart() {
-    this._dialog.open(Cart, {
-      width: '800px',
-      data: { cartItems: this._cartService.getCartItems() }
-    })
   }
 
   isScrolled = false;
 
   @HostListener('window:scroll', []) onWindowScroll() {
     this.isScrolled = window.scrollY > 50;
+  }
+
+  openCart() {
+    this._dialog.open(Cart, {
+      width: '100%',
+      maxWidth: '500px',
+      position: { right: '0' },
+      panelClass: 'cart-drawer-panel'
+    });
   }
 }

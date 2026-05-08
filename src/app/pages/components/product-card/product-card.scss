@@ -1,0 +1,17 @@
+.product-card {
+  .size-chip {
+    @apply bg-white/15 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded-md transition-colors;
+
+    &.out-of-stock {
+      @apply opacity-30 line-through;
+    }
+
+    &.extra {
+      @apply bg-white/10 text-white/60;
+    }
+  }
+
+  .info-btn {
+    @apply w-7 h-7 rounded-full bg-white/15 backdrop-blur-sm flex items-center justify-center text-white/70 hover:text-white hover:bg-white/25 transition-all;
+  }
+}

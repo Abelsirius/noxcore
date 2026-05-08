@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit, AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnInit, AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product } from '../../models/product';
 import { register } from 'swiper/element/bundle';
@@ -25,7 +25,7 @@ interface Particle {
     styleUrls: ['./product-carousel.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProductCarouselComponent implements OnInit, AfterViewInit {
+export class ProductCarouselComponent implements OnInit, AfterViewInit, OnChanges {
     @Input() products: Product[] = [];
     @Input() title: string = '';
     @Input() themeColor: string = '#ef4444';
@@ -39,10 +39,21 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit {
     private isJumping = false;
 
     ngOnInit() {
+        this.updateData();
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['products']) {
+            this.updateData();
+        }
+    }
+
+    private updateData() {
         if (this.products && this.products.length > 0) {
-            // Swiper handles looping natively, so we only need the original products
             this.displayProducts = [...this.products];
             this.generateAllParticles();
+        } else {
+            this.displayProducts = [];
         }
     }
 
@@ -93,5 +104,18 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit {
         } else {
             swiperEl.swiper.slideNext();
         }
+    }
+
+    getLowestPrice(product: Product): number {
+        if (!product.variants || product.variants.length === 0) {
+            return product.base_price;
+        }
+        const prices = product.variants.map(v => v.price_override ?? product.base_price);
+        return Math.min(...prices);
+    }
+
+    hasStock(product: Product): boolean {
+        if (!product.variants || product.variants.length === 0) return false;
+        return product.variants.some(v => v.stock > 0);
     }
 }

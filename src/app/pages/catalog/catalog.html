@@ -1,0 +1,109 @@
+<div class="min-h-screen bg-black pt-24 pb-12">
+  <div class="container mx-auto px-4">
+    <!-- Header & Search -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 border-b border-white/10 pb-8">
+      <div class="space-y-2">
+        <h1 class="text-4xl md:text-6xl font-black text-white tracking-tighter uppercase glitch-text" data-text="TIENDA">
+          TIENDA
+        </h1>
+        <p class="text-gray-500 text-xs tracking-[0.3em] font-light uppercase">
+          Nyxor Fit • Dark Athletics
+        </p>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="relative w-full md:w-80 group">
+        <input 
+          type="text" 
+          [(ngModel)]="searchQuery" 
+          (ngModelChange)="applyFilters()"
+          placeholder="BUSCAR PRODUCTO..."
+          class="w-full bg-[#111] border border-white/10 text-white px-4 py-3 text-xs tracking-widest uppercase focus:border-red-600 outline-none transition-all placeholder:text-gray-700"
+        >
+        <i class="ti ti-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-700 group-focus-within:text-red-600 transition-colors"></i>
+      </div>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-12">
+      <!-- Sidebar Filters -->
+      <aside class="w-full lg:w-64 space-y-10">
+        <!-- Collections -->
+        <div class="space-y-4">
+          <h3 class="text-[10px] font-black text-white tracking-[0.4em] uppercase border-l-2 border-red-600 pl-3">
+            Colecciones
+          </h3>
+          <div class="flex flex-col gap-2">
+            <button 
+              (click)="selectedCollectionId = ''; applyFilters()"
+              [class.text-red-600]="selectedCollectionId === ''"
+              class="text-left text-xs tracking-widest uppercase py-1 hover:text-white transition-colors"
+              [class.text-gray-500]="selectedCollectionId !== ''"
+            >
+              Todas las piezas
+            </button>
+            <button 
+              *ngFor="let col of productService.collections()"
+              (click)="selectedCollectionId = col.id; applyFilters()"
+              [class.text-red-600]="selectedCollectionId === col.id"
+              class="text-left text-xs tracking-widest uppercase py-1 hover:text-white transition-colors"
+              [class.text-gray-500]="selectedCollectionId !== col.id"
+            >
+              {{col.name}}
+            </button>
+          </div>
+        </div>
+
+        <!-- Sorting -->
+        <div class="space-y-4">
+          <h3 class="text-[10px] font-black text-white tracking-[0.4em] uppercase border-l-2 border-red-600 pl-3">
+            Ordenar por
+          </h3>
+          <select 
+            [(ngModel)]="sortOrder" 
+            (change)="applyFilters()"
+            class="w-full bg-[#111] border border-white/10 text-white px-3 py-2 text-xs tracking-widest uppercase outline-none focus:border-red-600"
+          >
+            <option value="newest">Lo más nuevo</option>
+            <option value="price_asc">Precio: Menor a Mayor</option>
+            <option value="price_desc">Precio: Mayor a Menor</option>
+          </select>
+        </div>
+      </aside>
+
+      <!-- Grid -->
+      <main class="flex-1">
+        <div *ngIf="productService.loading()" class="grid grid-cols-2 md:grid-cols-3 gap-6 animate-pulse">
+          <div *ngFor="let i of [1,2,3,4,5,6]" class="aspect-[3/4] bg-[#111] border border-white/5"></div>
+        </div>
+
+        <div *ngIf="!productService.loading() && productService.products().length > 0" 
+             class="grid grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8">
+          <app-product-card 
+            *ngFor="let prod of productService.products()" 
+            [product]="prod"
+            (select)="onProductSelect($event)"
+          ></app-product-card>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="!productService.loading() && productService.products().length === 0" 
+             class="flex flex-col items-center justify-center py-20 text-center space-y-4">
+          <i class="ti ti-ghost text-6xl text-gray-800"></i>
+          <p class="text-gray-500 tracking-widest uppercase text-xs">No se encontraron piezas en esta dimensión</p>
+          <button (click)="selectedCollectionId = ''; searchQuery = ''; applyFilters()" 
+                  class="text-red-600 text-[10px] font-bold tracking-[0.2em] uppercase hover:underline">
+            Limpiar filtros
+          </button>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- Product Detail Modal -->
+<app-product-modal
+  *ngIf="selectedProduct"
+  [product]="selectedProduct"
+  [isOpen]="isModalOpen"
+  (close)="closeModal()"
+></app-product-modal>

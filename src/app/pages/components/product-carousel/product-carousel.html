@@ -46,29 +46,24 @@
                         }
                     </div>
 
-                    <!-- Product Image / Video -->
+                    <!-- Product Image -->
                     <div class="relative aspect-[4/5] overflow-hidden group/img">
-                        <img [src]="product.image" [alt]="product.name" loading="lazy"
+                        <img [src]="product.images[0]" [alt]="product.name" loading="lazy"
                             class="w-full h-full object-contain bg-black transition-transform duration-700 group-hover/img:scale-105">
 
-                        <!-- Video Preview -->
-                        <video *ngIf="product.videoPreview" [src]="product.videoPreview"
-                            class="absolute inset-0 w-full h-full object-contain opacity-0 group-hover/img:opacity-100 transition-opacity duration-500 pointer-events-none"
-                            muted loop playsinline #videoElement></video>
-
                         <!-- Stock Status -->
-                        <div *ngIf="!product.inStock"
+                        <div *ngIf="!hasStock(product)"
                             class="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center text-white text-lg font-bold tracking-widest">
                             AGOTADO
                         </div>
 
                         <!-- Badges -->
                         <div class="absolute top-4 left-4 flex flex-col gap-2 z-20">
-                            <span *ngIf="product.discount"
+                            <span *ngIf="(product.discount_percent ?? 0) > 0"
                                 class="bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-lg shadow-red-600/20">
-                                -{{product.discount}}%
+                                -{{product.discount_percent}}%
                             </span>
-                            <span *ngIf="product.isNew"
+                            <span *ngIf="product.is_new"
                                 class="bg-white text-black text-[10px] font-bold px-2 py-1 rounded-full uppercase shadow-lg shadow-white/10">
                                 New
                             </span>
@@ -95,27 +90,27 @@
                         <h3 class="text-lg font-medium text-white mb-1 line-clamp-1 truncate">{{ product.name }}</h3>
 
                         <div class="flex items-center gap-3">
-                            <span class="text-xl font-bold text-white">S/. {{product.price.toFixed(2)}}</span>
-                            <span *ngIf="product.originalPrice" class="text-sm text-white/40 line-through">S/.
-                                {{product.originalPrice.toFixed(2)}}</span>
+                            <span class="text-xl font-bold text-white">S/. {{getLowestPrice(product).toFixed(2)}}</span>
+                            <span *ngIf="(product.discount_percent ?? 0) > 0" class="text-sm text-white/40 line-through">S/.
+                                {{product.base_price.toFixed(2)}}</span>
                         </div>
 
                         <!-- Sizes -->
-                        <div class="mt-4 flex items-center justify-between">
+                        <div class="mt-4 flex items-center justify-between" *ngIf="product.variants">
                             <div class="flex gap-1">
-                                @for(sizeItem of product.sizes.slice(0, 3); track sizeItem.size) {
+                                @for(variant of product.variants.slice(0, 3); track variant.id) {
                                 <span class="text-[10px] px-2 py-1 rounded-md transition-all duration-300"
-                                    [class.bg-white]="sizeItem.available" [class.text-black]="sizeItem.available"
-                                    [class.font-bold]="sizeItem.available"
-                                    [class.shadow-[0_0_10px_rgba(255,255,255,0.5)]]="sizeItem.available"
-                                    [class.bg-white/5]="!sizeItem.available" [class.text-white/40]="!sizeItem.available"
-                                    [class.line-through]="!sizeItem.available">
-                                    {{sizeItem.size}}
+                                    [class.bg-white]="variant.stock > 0" [class.text-black]="variant.stock > 0"
+                                    [class.font-bold]="variant.stock > 0"
+                                    [class.shadow-[0_0_10px_rgba(255,255,255,0.5)]]="variant.stock > 0"
+                                    [class.bg-white/5]="variant.stock === 0" [class.text-white/40]="variant.stock === 0"
+                                    [class.line-through]="variant.stock === 0">
+                                    {{variant.size}}
                                 </span>
                                 }
-                                <span *ngIf="product.sizes.length > 3"
+                                <span *ngIf="product.variants.length > 3"
                                     class="text-[10px] px-2 py-1 rounded-md bg-white/5 text-white/60">
-                                    +{{product.sizes.length - 3}}
+                                    +{{product.variants.length - 3}}
                                 </span>
                             </div>
 

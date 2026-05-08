@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -81,25 +81,40 @@ export class ProductGridComponent implements OnInit {
   private readonly LONG_PRESS_DURATION = 200; // milliseconds
 
   nameColeccion = 'BREATheDivinity';
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService) {
+    effect(() => {
+      const allProducts = this.productService.products();
+      
+      // Filtramos dinámicamente según la configuración de la sección en el Admin
+      this.blackFridayProducts = allProducts.filter(p => 
+        p.collection?.description?.includes('SECTION:black_friday')
+      );
+
+      this.proximamente = allProducts.filter(p => 
+        p.collection?.description?.includes('SECTION:drop_pasado')
+      );
+
+      // La sección central muestra los que están marcados como 'style_collection'
+      // O como fallback, los que tengan colección pero no estén en las otras dos
+      this.products = allProducts.filter(p => 
+        p.collection?.description?.includes('SECTION:style_collection') ||
+        (p.collection_id && !this.blackFridayProducts.includes(p) && !this.proximamente.includes(p))
+      );
+
+      // Si después de todo la sección central está vacía, mostramos todo lo demás
+      if (this.products.length === 0 && allProducts.length > 0) {
+        this.products = allProducts.filter(p => !this.blackFridayProducts.includes(p) && !this.proximamente.includes(p));
+      }
+    });
+  }
 
   ngOnInit() {
-    this.productService.getProducts().subscribe(
-      products => {
-        // Filter out Black Friday products (ID 13, 14, 15, 16, 17, 18)
-        const blackFridayIds = ['13', '14', '15', '16', '17', '18'];
-        this.blackFridayProducts = products.filter(p => blackFridayIds.includes(p.id));
-        this.products = products.filter(p => !blackFridayIds.includes(p.id));
-      }
-    );
-
-    this.productService.getProductsSoon().subscribe(
-      products => this.proximamente = products
-    );
+    this.productService.fetchProducts();
+    this.productService.fetchCollections(); // Asegurarnos de tener las colecciones cargadas
   }
 
   openProductModal(product: Product) {
-    if (product.inStock) {
+    if (product.variants && product.variants.length > 0) {
       this.selectedProduct = product;
       this.isModalOpen = true;
     }
@@ -175,11 +190,11 @@ export class ProductGridComponent implements OnInit {
   }
 
   getAvailabilityText(product: Product): string {
-    if (product.availabilityLabel) {
-      return product.availabilityLabel;
-    }
-    const availableSizesCount = product.sizes.filter(s => s.available).length;
-    if (availableSizesCount === 1) {
+    if (!product.variants || product.variants.length === 0) return 'Agotado';
+    const availableVariants = product.variants.filter(v => v.stock > 0).length;
+    if (availableVariants === 0) {
+      return 'AGOTADO';
+    } else if (availableVariants === 1) {
       return 'CASI AGOTADO';
     }
     return 'Disponible por tiempo limitado.';

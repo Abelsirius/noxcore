@@ -416,7 +416,6 @@ export class Reel implements AfterViewInit {
   private intersectionObserver: IntersectionObserver | null = null;
 
   // Product Logic
-  allProducts: Product[] = [];
   selectedProduct: Product | null = null;
   isModalOpen = false;
 
@@ -466,14 +465,8 @@ export class Reel implements AfterViewInit {
   }
 
   private loadProducts() {
-    // Suscribirse a ambos observables de productos para tener el catálogo completo
-    this.productService.getProducts().subscribe(products => {
-      this.allProducts = [...this.allProducts, ...products];
-    });
-
-    this.productService.getProductsSoon().subscribe(productsSoon => {
-      this.allProducts = [...this.allProducts, ...productsSoon];
-    });
+    // This will trigger a fetch and populate the signal
+    this.productService.fetchProducts();
   }
 
   ngOnDestroy() {
@@ -612,10 +605,11 @@ export class Reel implements AfterViewInit {
     }
 
     console.log('🔍 Searching product for:', reel.cliente);
-    console.log('📦 Total products available:', this.allProducts.length);
+    const allProducts = this.productService.products();
+    console.log('📦 Total products available:', allProducts.length);
 
     // Buscar coincidencia exacta por nombre
-    const product = this.allProducts.find(p => p.name === reel.cliente);
+    const product = allProducts.find(p => p.name === reel.cliente);
 
     if (product) {
       console.log('✅ Exact match found:', product.name);
@@ -633,7 +627,7 @@ export class Reel implements AfterViewInit {
       // Normalizamos strings para comparar mejor
       const reelName = reel.cliente.toLowerCase();
 
-      const partialMatch = this.allProducts.find(p => {
+      const partialMatch = allProducts.find(p => {
         const prodName = p.name.toLowerCase();
         return prodName.includes(reelName) || reelName.includes(prodName);
       });

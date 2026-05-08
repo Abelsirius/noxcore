@@ -1,110 +1,69 @@
-<div class="fixed inset-0 z-50 flex items-center justify-center p-4 ">
-  <!-- Backdrop -->
-  <div class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
-
-  <!-- Modal Content -->
-  <div
-    class="relative bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden animate-slide-up overflow-y-auto min-h-[350px]"
-    (click)="$event.stopPropagation()">
-    <!-- Close Button -->
-    <button
-      class=" ti ti-x absolute top-4 right-4 z-10 text-white md:text-black w-[25px] h-[25px] hover:bg-white rounded-full p-2 shadow-lg transition-all"
-      (click)="close()">
-
+<div class="h-full bg-black flex flex-col text-white shadow-2xl border-l border-white/10">
+  <!-- Header -->
+  <div class="p-6 border-b border-white/10 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <h2 class="text-xl font-black tracking-tighter uppercase glitch-text" data-text="CARRITO">CARRITO</h2>
+      <span class="text-[10px] bg-red-600 text-white font-black px-2 py-0.5 rounded-full">{{cartService.cartCount()}}</span>
+    </div>
+    <button (click)="close()" class="text-gray-500 hover:text-white transition-colors">
+      <i class="ti ti-x text-2xl"></i>
     </button>
+  </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 h-full">
-      <!-- Product Image -->
-      <div class="relative h-[250px] md:h-full bg-gray-100">
-        <img class="w-full h-full object-cover">
+  <!-- Items List -->
+  <div class="flex-1 overflow-y-auto p-6 space-y-6">
+    <div *ngIf="cartService.cartItems().length === 0" class="flex flex-col items-center justify-center h-full text-center space-y-4">
+      <i class="ti ti-shopping-cart-off text-6xl text-gray-800"></i>
+      <p class="text-xs text-gray-500 tracking-widest uppercase">Tu carrito está vacío</p>
+      <button (click)="close()" class="text-red-600 text-[10px] font-black tracking-widest uppercase hover:underline">Ir a la tienda</button>
+    </div>
 
-        <!-- Image Thumbnails -->
-        <div class="absolute bottom-4 left-4 flex space-x-2">
-          <!-- <button 
-                *ngFor="let img of product?.images; let i = index"
-                class="w-12 h-12 rounded border-2 overflow-hidden transition-all"
-                [class.border-blue-500]="selectedImage === img"
-                [class.border-gray-300]="selectedImage !== img"
-                (click)="selectImage(img)"
-              >
-                <img [src]="img" [alt]="product?.name" class="w-full h-full object-cover">
-              </button> -->
-        </div>
+    <div *ngFor="let item of cartService.cartItems()" class="flex gap-4 group">
+      <!-- Thumbnail -->
+      <div class="w-20 h-24 bg-[#111] border border-white/5 overflow-hidden flex-shrink-0">
+        <img [src]="item.product?.images?.[0]" class="w-full h-full object-cover">
       </div>
-
-      <!-- Product Details -->
-      <div class="p-8 flex flex-col justify-between max-h-[90vh] overflow-y-auto">
-        <div>
-          <!-- Brand -->
-          <div class="text-sm text-gray-500 mb-2">NYXOR FIT</div>
-
-          <!-- Product Name -->
-          <!-- <h2 class="text-3xl font-bold text-gray-900 mb-4">{{product?.name}}</h2> -->
-
-          <!-- Price -->
-          <div class="flex items-center space-x-4 mb-6">
-            <span class="text-3xl font-bold text-red-600">
-              S/.
-            </span>
-            <span class="text-xl text-gray-500 line-through">
-              S/.
-            </span>
-            <span class="bg-red-500 text-white text-sm px-2 py-1 rounded font-bold">
-              Oferta
-            </span>
-          </div>
-
-          <!-- Description -->
-          <p class="text-gray-600 mb-6">awra</p>
-
-          <!-- Size Selection -->
-          <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-3">Talla</label>
-            <div class="flex flex-wrap gap-2">
-              <!-- <button
-                    *ngFor="let size of product?.sizes"
-                    class="px-4 py-2 border rounded-md font-medium transition-all"
-                    [class.border-gray-300]="selectedSize !== size"
-                    [class.text-gray-700]="selectedSize !== size"
-                    [class.border-red-500]="selectedSize === size"
-                    [class.bg-red-500]="selectedSize === size"
-                    [class.text-white]="selectedSize === size"
-                    (click)="selectSize(size)"
-                  >
-                    {{size}}
-                  </button> -->
-            </div>
-          </div>
-
-          <!-- Quantity -->
-          <div class="mb-8">
-            <label class="block text-sm font-medium text-gray-700 mb-3">Cantidad</label>
-            <div class="flex items-center border border-gray-300 rounded-md w-32">
-              <button class="px-3 py-2 text-gray-600 hover:text-gray-800">
-                -
-              </button>
-              <input type="number" min="1" class="flex-1 px-3 py-2 text-center border-0 focus:ring-0 text-primary"
-                readonly>
-              <button class="px-3 py-2 text-gray-600 hover:text-gray-800">
-                +
-              </button>
-            </div>
-          </div>
+      
+      <!-- Details -->
+      <div class="flex-1 flex flex-col justify-between">
+        <div class="space-y-0.5">
+          <h3 class="text-xs font-bold uppercase tracking-tight">{{item.product?.name}}</h3>
+          <p class="text-[10px] text-gray-500 uppercase tracking-widest">Talla: {{item.variant?.size}}</p>
+          <p class="text-[10px] text-red-600 font-bold uppercase tracking-widest">S/. {{getItemPrice(item) | number:'1.2-2'}}</p>
         </div>
-
-        <!-- Action Buttons -->
-        <div class="space-y-4">
-
-          <button
-            class="w-full bg-black hover:bg-gray-800 text-white font-semibold py-4 px-6 rounded-md transition-all">
-            Comprar ahora
-          </button>
-
-          <button class="w-full text-gray-600 hover:text-gray-800 py-2 text-sm font-medium">
-            Ver todos los detalles →
+        
+        <div class="flex items-center justify-between">
+          <div class="flex items-center border border-white/10 text-[10px]">
+            <button class="px-2 py-1 hover:bg-white/5 disabled:opacity-30" 
+                    (click)="updateQuantity(item.variant_id, item.quantity, -1)" 
+                    [disabled]="item.quantity <= 1 || isUpdating()">-</button>
+            <span class="px-3 py-1 font-black">
+              <i *ngIf="isUpdating()" class="ti ti-loader-2 animate-spin mr-1"></i>
+              {{item.quantity}}
+            </span>
+            <button class="px-2 py-1 hover:bg-white/5 disabled:opacity-30" 
+                    (click)="updateQuantity(item.variant_id, item.quantity, 1)"
+                    [disabled]="isUpdating()">+</button>
+          </div>
+          <button (click)="removeItem(item.variant_id)" class="text-gray-700 hover:text-red-600 transition-colors">
+            <i class="ti ti-trash text-sm"></i>
           </button>
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Footer / Checkout -->
+  <div *ngIf="cartService.cartItems().length > 0" class="p-6 border-t border-white/10 bg-[#0a0a0a] space-y-4">
+    <div class="flex items-center justify-between">
+      <span class="text-[10px] text-gray-500 font-black tracking-widest uppercase">Subtotal</span>
+      <span class="text-lg font-black tracking-tighter">S/. {{cartService.totalPrice() | number:'1.2-2'}}</span>
+    </div>
+    <p class="text-[9px] text-gray-600 uppercase tracking-widest text-center">Impuestos y envío calculados al finalizar</p>
+    
+    <button (click)="goToCheckout()" 
+      class="w-full bg-white text-black font-black py-4 uppercase tracking-[0.2em] hover:bg-red-600 hover:text-white transition-all shadow-xl">
+      FINALIZAR PEDIDO
+    </button>
   </div>
 </div>

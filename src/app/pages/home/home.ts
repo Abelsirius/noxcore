@@ -11,32 +11,15 @@ import { VotoModalComponent } from '../components/voto-modal-component/voto-moda
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, HeaderComponent, ProductGridComponent, EncuestasComponent, CountdownComponent, Reel],
+  imports: [CommonModule, ProductGridComponent],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
 export class Home implements OnInit {
-  hasEntered = false;
-
-  constructor() {
-    // Check if user already entered in this session
-    const entered = sessionStorage.getItem('hasEntered');
-    if (entered === 'true') {
-      this.hasEntered = true;
-    }
-  }
+  constructor() { }
 
   ngOnInit(): void {
     //  this.openVotoModal(); 
-  }
-
-  onEnter() {
-    this.hasEntered = true;
-    sessionStorage.setItem('hasEntered', 'true');
-
-    // Attempt to play/unmute any video/audio elements if needed
-    // The template binding [muted]="!hasEntered" handles the unmuting,
-    // and since this is inside a click handler, it's allowed by the browser.
   }
 
   openVotoModal() {
