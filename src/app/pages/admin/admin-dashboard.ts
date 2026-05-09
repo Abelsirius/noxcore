@@ -25,6 +25,10 @@ import { AuthService } from '../services/auth.service';
              class="flex items-center gap-3 px-4 py-3 text-xs tracking-widest text-gray-400 hover:text-white uppercase transition-all">
             <i class="ti ti-package"></i> Productos
           </a>
+          <a routerLink="./orders" routerLinkActive="bg-white/5 border-l-4 border-red-600" 
+             class="flex items-center gap-3 px-4 py-3 text-xs tracking-widest text-gray-400 hover:text-white uppercase transition-all">
+            <i class="ti ti-shopping-cart"></i> Pedidos
+          </a>
           <a routerLink="./collections" routerLinkActive="bg-white/5 border-l-4 border-red-600" 
              class="flex items-center gap-3 px-4 py-3 text-xs tracking-widest text-gray-400 hover:text-white uppercase transition-all">
             <i class="ti ti-category"></i> Colecciones

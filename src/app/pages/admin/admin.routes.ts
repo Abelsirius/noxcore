@@ -32,7 +32,7 @@ export const ADMIN_ROUTES: Routes = [
       },
       {
         path: 'orders',
-        loadComponent: () => import('./orders').then(m => m.AdminOrdersComponent)
+        loadComponent: () => import('./orders/admin-orders').then(m => m.AdminOrdersComponent)
       }
     ]
   }

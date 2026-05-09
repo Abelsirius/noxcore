@@ -73,4 +73,16 @@ export class ProductService {
 
     return error ? null : (data as unknown as Product);
   }
+
+  async deleteProduct(id: string) {
+    const { error } = await this.supabase
+      .from('products')
+      .delete()
+      .eq('id', id);
+
+    if (error) throw error;
+    
+    // Update local state
+    this.products.set(this.products().filter(p => p.id !== id));
+  }
 }

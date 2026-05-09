@@ -39,4 +39,15 @@ export class OrderService {
       await this.fetchOrders();
     }
   }
+
+  async deleteOrder(id: string) {
+    const { error } = await this.supabase
+      .from('orders')
+      .delete()
+      .eq('id', id);
+    
+    if (!error) {
+      this.orders.set(this.orders().filter(o => o.id !== id));
+    }
+  }
 }

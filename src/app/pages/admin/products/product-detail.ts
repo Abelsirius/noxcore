@@ -24,10 +24,16 @@ import { NotificationService } from '../../services/notification.service';
             <p class="text-[10px] text-red-600 font-bold tracking-[0.2em] uppercase">{{isNew ? 'Crear nueva pieza' : 'Edición de Pieza & Variantes'}}</p>
           </div>
         </div>
-        <button (click)="saveChanges()" 
-          class="bg-red-600 text-white text-[10px] font-black px-8 py-3 tracking-widest uppercase hover:bg-white hover:text-black transition-all">
-          {{isNew ? 'Crear Producto' : 'Guardar Todo'}}
-        </button>
+        <div class="flex items-center gap-3">
+          <button *ngIf="!isNew" (click)="deleteCurrentProduct()" 
+            class="bg-transparent border border-red-600 text-red-600 text-[10px] font-black px-6 py-3 tracking-widest uppercase hover:bg-red-600 hover:text-white transition-all">
+            Eliminar
+          </button>
+          <button (click)="saveChanges()" 
+            class="bg-red-600 text-white text-[10px] font-black px-8 py-3 tracking-widest uppercase hover:bg-white hover:text-black transition-all">
+            {{isNew ? 'Crear Producto' : 'Guardar Todo'}}
+          </button>
+        </div>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -236,6 +242,19 @@ export class AdminProductDetailComponent implements OnInit {
       console.error('Unexpected error in ngOnInit:', e);
     } finally {
       this.isLoading.set(false);
+    }
+  }
+
+  async deleteCurrentProduct() {
+    if (!this.product?.id) return;
+    if (confirm('¿Estás seguro de eliminar este producto permanentemente?')) {
+      try {
+        await this.productService.deleteProduct(this.product.id);
+        this.notify.success('Producto eliminado');
+        this.router.navigate(['..'], { relativeTo: this.route });
+      } catch (e) {
+        this.notify.error('No se pudo eliminar el producto');
+      }
     }
   }
 

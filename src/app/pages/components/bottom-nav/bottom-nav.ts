@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-bottom-nav',
@@ -49,6 +50,16 @@ import { RouterModule, RouterLink, RouterLinkActive } from '@angular/router';
             <path d="M12 16a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
           </svg>
           <span style="font-size: 9px;">Drops</span>
+        </a>
+
+        <!-- Admin Link (Only for admins) -->
+        <a *ngIf="authService.isAdmin()" routerLink="/admin" routerLinkActive="active" class="nav-item admin-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M12 8v4"/>
+            <path d="M12 16h.01"/>
+          </svg>
+          <span>Admin</span>
         </a>
       </div>
     </nav>
@@ -136,6 +147,12 @@ import { RouterModule, RouterLink, RouterLinkActive } from '@angular/router';
       width: 28px;
       height: 28px;
     }
+
+    .admin-item.active {
+      color: #dc2626 !important;
+    }
   `]
 })
-export class BottomNavComponent {}
+export class BottomNavComponent {
+  authService = inject(AuthService);
+}
