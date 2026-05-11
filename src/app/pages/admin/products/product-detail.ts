@@ -12,172 +12,245 @@ import { NotificationService } from '../../services/notification.service';
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule],
   template: `
-    <div class="space-y-12" *ngIf="product; else loadingTmpl">
+    <div class="space-y-10 reveal" *ngIf="product; else loadingTmpl">
       <!-- Header -->
-      <div class="flex items-center justify-between border-b border-white/10 pb-6">
-        <div class="flex items-center gap-4">
-          <a routerLink=".." class="text-gray-500 hover:text-white transition-colors">
-            <i class="ti ti-arrow-left text-2xl"></i>
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/5 pb-8">
+        <div class="flex items-center gap-6">
+          <a routerLink=".." class="w-12 h-12 flex items-center justify-center rounded-2xl glass hover:bg-red-500/10 hover:text-red-500 hover:border-red-500/20 transition-all group">
+            <i class="ti ti-arrow-narrow-left text-2xl group-hover:-translate-x-1 transition-transform"></i>
           </a>
           <div>
-            <h1 class="text-4xl font-black text-white tracking-tighter uppercase">{{isNew ? 'NUEVO PRODUCTO' : product.name}}</h1>
-            <p class="text-[10px] text-red-600 font-bold tracking-[0.2em] uppercase">{{isNew ? 'Crear nueva pieza' : 'Edición de Pieza & Variantes'}}</p>
+            <div class="flex items-center gap-3 mb-1">
+              <span class="px-2 py-0.5 rounded text-[9px] font-black tracking-widest uppercase bg-red-500/10 text-red-500 border border-red-500/20">
+                {{isNew ? 'Draft' : 'Active Product'}}
+              </span>
+              <p class="text-[10px] text-zinc-500 font-bold tracking-[0.2em] uppercase">Gestión de Inventario</p>
+            </div>
+            <h1 class="text-4xl font-black text-white tracking-tighter uppercase font-display leading-none">
+              {{isNew ? 'NUEVO PRODUCTO' : product.name}}
+            </h1>
           </div>
         </div>
         <div class="flex items-center gap-3">
           <button *ngIf="!isNew" (click)="deleteCurrentProduct()" 
-            class="bg-transparent border border-red-600 text-red-600 text-[10px] font-black px-6 py-3 tracking-widest uppercase hover:bg-red-600 hover:text-white transition-all">
+            class="px-6 py-3 rounded-2xl text-[11px] font-bold tracking-widest uppercase text-zinc-400 hover:text-red-500 hover:bg-red-500/5 transition-all">
             Eliminar
           </button>
-          <button (click)="saveChanges()" 
-            class="bg-red-600 text-white text-[10px] font-black px-8 py-3 tracking-widest uppercase hover:bg-white hover:text-black transition-all">
-            {{isNew ? 'Crear Producto' : 'Guardar Todo'}}
+          <button (click)="saveChanges()" class="btn-premium">
+            <span class="flex items-center gap-2 text-[11px] tracking-widest uppercase">
+              <i class="ti ti-device-floppy text-lg"></i>
+              {{isNew ? 'Crear Producto' : 'Guardar Cambios'}}
+            </span>
           </button>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-        <!-- Main Data -->
-        <div class="lg:col-span-2 space-y-8">
-          <section class="bg-[#0a0a0a] border border-white/10 p-8 space-y-6">
-            <h3 class="text-xs font-black text-white tracking-widest uppercase border-b border-white/5 pb-4">Detalles Generales</h3>
-            <div class="grid grid-cols-2 gap-6">
-              <div class="space-y-2">
-                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Nombre</label>
-                <input type="text" [(ngModel)]="product.name" class="admin-input">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Left Column: Main Data -->
+        <div class="lg:col-span-8 space-y-8">
+          <section class="glass-card p-10 rounded-[2.5rem] space-y-8">
+            <div class="flex items-center gap-3 border-b border-white/5 pb-6">
+              <div class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center">
+                <i class="ti ti-info-circle text-zinc-400"></i>
               </div>
-              <div class="space-y-2">
-                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Slug (URL)</label>
-                <input type="text" [(ngModel)]="product.slug" class="admin-input">
+              <h3 class="text-sm font-bold text-white tracking-widest uppercase font-display">Detalles Generales</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div class="space-y-3">
+                <label class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest ml-1">Nombre del Producto</label>
+                <input type="text" [(ngModel)]="product.name" class="admin-input" placeholder="Ej: Black Tech Jacket">
               </div>
-              <div class="space-y-2">
-                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Precio Base (S/.)</label>
-                <input type="number" [(ngModel)]="product.base_price" class="admin-input" placeholder="0.00">
+              <div class="space-y-3">
+                <label class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest ml-1">Slug / URL Amigable</label>
+                <div class="relative">
+                  <span class="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 text-xs">nyxor.fit/p/</span>
+                  <input type="text" [(ngModel)]="product.slug" class="admin-input pl-24" placeholder="black-tech-jacket">
+                </div>
               </div>
-              <div class="space-y-2">
-                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Disponible</label>
-                <select [(ngModel)]="product.is_available" class="admin-input">
-                  <option [ngValue]="true">Sí</option>
-                  <option [ngValue]="false">No</option>
+              <div class="space-y-3">
+                <label class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest ml-1">Precio Base (S/.)</label>
+                <div class="relative">
+                  <span class="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 text-xs">S/.</span>
+                  <input type="number" [(ngModel)]="product.base_price" class="admin-input pl-10" placeholder="0.00">
+                </div>
+              </div>
+              <div class="space-y-3">
+                <label class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest ml-1">Estado de Disponibilidad</label>
+                <select [(ngModel)]="product.is_available" class="admin-input appearance-none">
+                  <option [ngValue]="true">Disponible en Tienda</option>
+                  <option [ngValue]="false">Agotado / Oculto</option>
                 </select>
               </div>
-              <div class="space-y-2">
-                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Colección (Drop)</label>
-                <select [(ngModel)]="product.collection_id" class="admin-input">
-                  <option [ngValue]="null">Ninguna / General</option>
+              <div class="space-y-3 md:col-span-2">
+                <label class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest ml-1">Colección / Drop</label>
+                <select [(ngModel)]="product.collection_id" class="admin-input appearance-none">
+                  <option [ngValue]="null">General / Sin Colección</option>
                   <option *ngFor="let col of collections()" [ngValue]="col.id">{{col.name}}</option>
                 </select>
               </div>
-              <div class="space-y-2 col-span-2">
-                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Descripción</label>
-                <textarea [(ngModel)]="product.description" rows="4" class="admin-input"></textarea>
+              <div class="space-y-3 md:col-span-2">
+                <label class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest ml-1">Descripción de la Pieza</label>
+                <textarea [(ngModel)]="product.description" rows="5" class="admin-input resize-none" placeholder="Escribe los detalles, materiales y fit del producto..."></textarea>
               </div>
             </div>
           </section>
 
           <!-- Variant Manager -->
-          <section class="bg-[#0a0a0a] border border-white/10 p-8 space-y-6">
-            <div class="flex items-center justify-between border-b border-white/5 pb-4">
-              <h3 class="text-xs font-black text-white tracking-widest uppercase">Variantes (Tallas & Stock)</h3>
-              <button (click)="addVariant()" class="text-[10px] font-bold text-red-600 hover:text-white uppercase tracking-widest transition-colors">
-                + Añadir Talla
+          <section class="glass-card p-10 rounded-[2.5rem] space-y-8">
+            <div class="flex items-center justify-between border-b border-white/5 pb-6">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center">
+                  <i class="ti ti-box-model-2 text-zinc-400"></i>
+                </div>
+                <h3 class="text-sm font-bold text-white tracking-widest uppercase font-display">Variantes de Tallas</h3>
+              </div>
+              <button (click)="addVariant()" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-white text-[10px] font-bold uppercase tracking-widest transition-all">
+                <i class="ti ti-plus text-red-500"></i>
+                Añadir Talla
               </button>
             </div>
             
             <div class="space-y-4">
+              <div *ngIf="variants().length === 0" class="py-12 text-center bg-white/[0.02] border border-dashed border-white/5 rounded-3xl">
+                <p class="text-zinc-600 text-xs">No hay variantes registradas. Añade una para gestionar el stock.</p>
+              </div>
+              
               <div *ngFor="let variant of variants(); let i = index" 
-                   class="grid grid-cols-5 gap-4 items-end bg-black/40 p-4 border border-white/5 hover:border-white/20 transition-all group">
+                   class="grid grid-cols-1 md:grid-cols-5 gap-6 items-end p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-red-500/20 transition-all group reveal">
                 <div class="space-y-2">
-                  <label class="text-[9px] font-bold text-gray-600 uppercase">Talla</label>
-                  <input type="text" [(ngModel)]="variant.size" class="admin-input py-1 text-xs" placeholder="S, M, L...">
+                  <label class="text-[9px] font-bold text-zinc-600 uppercase tracking-widest ml-1">Talla</label>
+                  <input type="text" [(ngModel)]="variant.size" class="admin-input-small" placeholder="M, XL, OS...">
                 </div>
                 <div class="space-y-2">
-                  <label class="text-[9px] font-bold text-gray-600 uppercase">Stock</label>
-                  <input type="number" [(ngModel)]="variant.stock" class="admin-input py-1 text-xs">
+                  <label class="text-[9px] font-bold text-zinc-600 uppercase tracking-widest ml-1">Stock</label>
+                  <input type="number" [(ngModel)]="variant.stock" class="admin-input-small">
                 </div>
                 <div class="space-y-2">
-                  <label class="text-[9px] font-bold text-gray-600 uppercase">SKU</label>
-                  <input type="text" [(ngModel)]="variant.sku" class="admin-input py-1 text-xs" placeholder="NX-V1-S">
+                  <label class="text-[9px] font-bold text-zinc-600 uppercase tracking-widest ml-1">SKU</label>
+                  <input type="text" [(ngModel)]="variant.sku" class="admin-input-small" placeholder="SKU-CODE">
                 </div>
                 <div class="space-y-2">
-                  <label class="text-[9px] font-bold text-gray-600 uppercase">Precio Override</label>
-                  <input type="number" [(ngModel)]="variant.price_override" class="admin-input py-1 text-xs" placeholder="Opcional">
+                  <label class="text-[9px] font-bold text-zinc-600 uppercase tracking-widest ml-1">Price Override</label>
+                  <input type="number" [(ngModel)]="variant.price_override" class="admin-input-small" placeholder="Opcional">
                 </div>
-                <div class="flex items-center justify-end gap-3 pb-1">
-                  <button (click)="moveVariant(i, -1)" [disabled]="i === 0" class="text-gray-600 hover:text-white disabled:opacity-0"><i class="ti ti-chevron-up"></i></button>
-                  <button (click)="moveVariant(i, 1)" [disabled]="i === variants().length - 1" class="text-gray-600 hover:text-white disabled:opacity-0"><i class="ti ti-chevron-down"></i></button>
-                  <button (click)="removeVariant(i)" class="text-gray-700 hover:text-red-600 transition-colors ml-2"><i class="ti ti-trash"></i></button>
+                <div class="flex items-center justify-end gap-2 pb-1">
+                  <button (click)="moveVariant(i, -1)" [disabled]="i === 0" class="w-8 h-8 flex items-center justify-center rounded-lg text-zinc-600 hover:text-white hover:bg-white/10 disabled:opacity-0 transition-all">
+                    <i class="ti ti-chevron-up"></i>
+                  </button>
+                  <button (click)="moveVariant(i, 1)" [disabled]="i === variants().length - 1" class="w-8 h-8 flex items-center justify-center rounded-lg text-zinc-600 hover:text-white hover:bg-white/10 disabled:opacity-0 transition-all">
+                    <i class="ti ti-chevron-down"></i>
+                  </button>
+                  <button (click)="removeVariant(i)" class="w-8 h-8 flex items-center justify-center rounded-lg text-zinc-600 hover:text-red-500 hover:bg-red-500/10 transition-all">
+                    <i class="ti ti-trash"></i>
+                  </button>
                 </div>
               </div>
             </div>
           </section>
         </div>
 
-        <!-- Media & Secondary -->
-        <aside class="space-y-8">
-          <section class="bg-[#0a0a0a] border border-white/10 p-8 space-y-6">
-            <h3 class="text-xs font-black text-white tracking-widest uppercase border-b border-white/5 pb-4">Imágenes</h3>
-            <div class="grid grid-cols-2 gap-4">
-              <div *ngFor="let img of product.images; let i = index" class="relative group aspect-square bg-black border border-white/10">
-                <img [src]="img" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity">
-                <button (click)="removeImage(i)" class="absolute top-2 right-2 bg-red-600 text-white p-1 text-xs opacity-0 group-hover:opacity-100 transition-opacity">
-                  <i class="ti ti-x"></i>
-                </button>
+        <!-- Right Column: Media -->
+        <div class="lg:col-span-4 space-y-8">
+          <section class="glass-card p-10 rounded-[2.5rem] space-y-8">
+            <div class="flex items-center gap-3 border-b border-white/5 pb-6">
+              <div class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center">
+                <i class="ti ti-photo text-zinc-400"></i>
               </div>
-              <!-- Hidden file input -->
-              <input #fileInput type="file" accept="image/*" multiple style="display:none"
-                     (change)="onFileSelected($event)">
-              <!-- Upload Button -->
+              <h3 class="text-sm font-bold text-white tracking-widest uppercase font-display">Galería de Medios</h3>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+              <div *ngFor="let img of product.images; let i = index" class="relative group aspect-[3/4] bg-zinc-900 rounded-2xl overflow-hidden border border-white/5 shadow-2xl">
+                <img [src]="img" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <button (click)="removeImage(i)" class="w-10 h-10 flex items-center justify-center rounded-full bg-red-600 text-white hover:scale-110 transition-transform">
+                    <i class="ti ti-trash-x text-lg"></i>
+                  </button>
+                </div>
+                <div class="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-black/40 backdrop-blur-md text-[8px] font-black uppercase text-white border border-white/10">
+                  Img #{{i + 1}}
+                </div>
+              </div>
+              
+              <input #fileInput type="file" accept="image/*" multiple style="display:none" (change)="onFileSelected($event)">
+              
               <button (click)="fileInput.click()" [disabled]="isUploading()"
-                class="aspect-square border-2 border-dashed border-white/10 flex flex-col items-center justify-center transition-all"
-                [class]="isUploading() ? 'text-red-600 border-red-600/30 cursor-wait' : 'text-gray-600 hover:text-white hover:border-white'">
-                <i [class]="isUploading() ? 'ti ti-loader-2 animate-spin text-2xl' : 'ti ti-plus text-2xl'"></i>
-                <span class="text-[9px] font-bold uppercase tracking-widest mt-2">{{isUploading() ? 'Subiendo...' : 'Subir'}}</span>
+                class="aspect-[3/4] rounded-2xl border-2 border-dashed border-white/5 flex flex-col items-center justify-center gap-3 transition-all group"
+                [class]="isUploading() ? 'bg-red-500/5 border-red-500/20 cursor-wait' : 'hover:bg-white/[0.02] hover:border-zinc-700'">
+                <div class="w-12 h-12 rounded-full bg-zinc-900 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <i [class]="isUploading() ? 'ti ti-loader-2 animate-spin text-red-500' : 'ti ti-cloud-upload text-zinc-500 group-hover:text-white'" class="text-2xl"></i>
+                </div>
+                <div class="text-center">
+                  <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-500 group-hover:text-white">{{isUploading() ? 'Subiendo...' : 'Subir Medios'}}</p>
+                  <p class="text-[8px] text-zinc-700 mt-1 uppercase">PNG, JPG hasta 5MB</p>
+                </div>
               </button>
             </div>
           </section>
-        </aside>
+
+          <!-- Status Widget -->
+          <section class="glass-card p-8 rounded-[2.5rem] bg-gradient-to-br from-white/5 to-transparent">
+             <div class="flex items-center justify-between mb-6">
+                <p class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Información de Sistema</p>
+                <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+             </div>
+             <div class="space-y-4">
+                <div class="flex items-center justify-between py-3 border-b border-white/5">
+                   <span class="text-[10px] text-zinc-400">Creado el</span>
+                   <span class="text-[10px] font-mono text-zinc-500">{{product.created_at | date:'dd/MM/yyyy HH:mm'}}</span>
+                </div>
+                <div class="flex items-center justify-between py-3 border-b border-white/5">
+                   <span class="text-[10px] text-zinc-400">Variantes</span>
+                   <span class="text-[10px] font-mono text-zinc-500">{{variants().length}} tallas</span>
+                </div>
+                <div class="flex items-center justify-between py-3">
+                   <span class="text-[10px] text-zinc-400">Stock Total</span>
+                   <span class="text-[10px] font-mono text-white px-2 py-0.5 rounded bg-white/5">Calculando...</span>
+                </div>
+             </div>
+          </section>
+        </div>
       </div>
     </div>
 
     <ng-template #loadingTmpl>
-      <div class="space-y-12 animate-pulse">
-        <!-- Header Shimmer -->
-        <div class="flex items-center justify-between border-b border-white/10 pb-6">
-          <div class="flex items-center gap-4">
-            <div class="w-8 h-8 bg-white/5 rounded-full shimmer"></div>
-            <div class="space-y-2">
-              <div class="w-48 h-8 bg-white/5 shimmer"></div>
-              <div class="w-32 h-3 bg-white/5 shimmer"></div>
+      <div class="space-y-12 reveal">
+        <div class="flex items-center justify-between border-b border-white/5 pb-8">
+          <div class="flex items-center gap-6">
+            <div class="w-12 h-12 rounded-2xl bg-white/5 shimmer"></div>
+            <div class="space-y-3">
+              <div class="w-24 h-3 bg-white/5 shimmer rounded"></div>
+              <div class="w-64 h-10 bg-white/5 shimmer rounded-xl"></div>
             </div>
           </div>
-          <div class="w-32 h-10 bg-white/5 shimmer"></div>
+          <div class="w-40 h-12 bg-white/5 shimmer rounded-full"></div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          <div class="lg:col-span-2 space-y-8">
-            <div class="h-[400px] bg-white/5 border border-white/10 shimmer"></div>
-            <div class="h-[300px] bg-white/5 border border-white/10 shimmer"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div class="lg:col-span-8 space-y-8">
+            <div class="h-[600px] rounded-[2.5rem] bg-white/5 shimmer"></div>
           </div>
-          <div class="space-y-8">
-            <div class="h-[300px] bg-white/5 border border-white/10 shimmer"></div>
+          <div class="lg:col-span-4 space-y-8">
+            <div class="h-[400px] rounded-[2.5rem] bg-white/5 shimmer"></div>
+            <div class="h-[200px] rounded-[2.5rem] bg-white/5 shimmer"></div>
           </div>
         </div>
-      </div>
-      
-      <!-- Error State -->
-      <div *ngIf="!isLoading()" class="flex flex-col items-center justify-center min-h-[60vh] space-y-4">
-        <i class="ti ti-alert-circle text-4xl text-red-600"></i>
-        <p class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">No se pudo encontrar el producto.</p>
-        <a routerLink=".." class="text-[10px] font-black text-white uppercase tracking-widest border border-white/10 px-6 py-3 hover:bg-white hover:text-black transition-all">
-          Volver a la lista
-        </a>
       </div>
     </ng-template>
   `,
   styles: [`
     .admin-input {
-      @apply w-full bg-black border border-white/10 text-white px-4 py-2 text-sm focus:border-red-600 outline-none transition-all placeholder:text-gray-800;
+      @apply w-full bg-zinc-900/50 border border-white/5 text-white px-5 py-4 rounded-2xl text-sm focus:border-red-500/50 focus:bg-zinc-900 focus:ring-4 focus:ring-red-500/10 outline-none transition-all placeholder:text-zinc-700 font-medium shadow-inner;
+    }
+    .admin-input-small {
+      @apply w-full bg-zinc-900/80 border border-white/5 text-white px-4 py-3 rounded-xl text-xs focus:border-red-500/50 outline-none transition-all placeholder:text-zinc-800 font-semibold;
+    }
+    select.admin-input {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23444' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1.2em;
     }
   `]
 })

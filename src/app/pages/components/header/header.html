@@ -68,6 +68,13 @@
           class="nav-link text-sm font-medium tracking-widest text-gray-300 hover:text-white transition-colors relative py-2 hidden md:block">
           REELS
         </a>
+
+        @if (authService.isAdmin()) {
+        <a routerLink="/admin" routerLinkActive="active"
+          class="nav-link text-sm font-medium tracking-widest text-red-600 hover:text-red-500 transition-colors relative py-2 hidden lg:block uppercase">
+          PANEL
+        </a>
+        }
       </nav>
 
       <!-- Right: Actions -->
@@ -80,14 +87,18 @@
         </ng-container>
         <ng-container *ngIf="authService.currentUser()">
           <div class="flex items-center gap-2 md:gap-3">
-            <!-- Mobile Admin Link -->
-            <a *ngIf="authService.isAdmin()" routerLink="/admin" 
-               class="md:hidden flex items-center justify-center w-8 h-8 rounded-full bg-red-600/10 border border-red-600/20 text-red-600">
-              <i class="ti ti-shield-lock text-lg"></i>
-            </a>
+            <!-- Admin Link (Universal) -->
+            @if (authService.isAdmin()) {
+              <a routerLink="/admin" 
+                 class="flex items-center justify-center w-8 h-8 rounded-full bg-red-600/10 border border-red-600/20 text-red-600 hover:bg-red-600 hover:text-white transition-all">
+                <i class="ti ti-shield-lock text-lg"></i>
+              </a>
+            }
 
             <div class="flex flex-col items-end">
-              <span *ngIf="authService.isAdmin()" class="text-[8px] font-black text-red-600 tracking-[0.2em] mb-1 animate-pulse hidden md:block">ADMINISTRADOR</span>
+              @if (authService.isAdmin()) {
+                <a routerLink="/admin" class="text-[8px] font-black text-red-600 tracking-[0.2em] mb-1 animate-pulse hidden md:block hover:text-white transition-colors">ADMINISTRADOR</a>
+              }
               <button (click)="authService.signOut()" class="text-[9px] md:text-[10px] font-bold text-gray-400 hover:text-red-600 tracking-widest uppercase transition-colors flex items-center gap-1">
                 <span class="hidden md:block">Salir</span>
                 <i class="ti ti-logout text-base md:text-lg"></i>
