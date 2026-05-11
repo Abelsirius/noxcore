@@ -215,7 +215,7 @@ import { NotificationService } from '../../services/notification.service';
     </div>
 
     <ng-template #loadingTmpl>
-      <div class="space-y-12 reveal">
+      <div class="space-y-12">
         <div class="flex items-center justify-between border-b border-white/5 pb-8">
           <div class="flex items-center gap-6">
             <div class="w-12 h-12 rounded-2xl bg-white/5 shimmer"></div>
@@ -269,15 +269,15 @@ export class AdminProductDetailComponent implements OnInit {
   isNew = false;
 
   async ngOnInit() {
-    try {
-      const id = this.route.snapshot.paramMap.get('id');
-      
-      // Fetch collections
-      const { data: cols } = await this.supabase.from('collections').select('*').order('name');
-      this.collections.set(cols || []);
+    const id = this.route.snapshot.paramMap.get('id');
+    this.isNew = !id || id === 'new';
 
-      if (!id || id === 'new') {
-        this.isNew = true;
+    try {
+      // 1. Iniciar fetch de colecciones de inmediato (no bloqueante para el estado inicial)
+      const collectionsPromise = this.supabase.from('collections').select('*').order('name');
+
+      if (this.isNew) {
+        // 2. Si es nuevo, inicializar objeto de producto de inmediato para mostrar el form
         this.product = {
           id: '',
           name: 'Nuevo Producto',
@@ -291,28 +291,39 @@ export class AdminProductDetailComponent implements OnInit {
           variants: []
         } as any;
         this.isLoading.set(false);
-        return;
-      }
 
-      const { data, error } = await this.supabase
-        .from('products')
-        .select('*, product_variants(*)')
-        .eq('id', id)
-        .single();
-      
-      if (error) {
-        console.error('Error fetching product:', error);
-        this.isLoading.set(false);
-        return;
-      }
+        // Cargar colecciones en segundo plano
+        const { data: cols } = await collectionsPromise;
+        this.collections.set(cols || []);
+      } else {
+        // 3. Si es edición, cargar producto y colecciones en paralelo
+        const productPromise = this.supabase
+          .from('products')
+          .select('*, product_variants(*)')
+          .eq('id', id)
+          .single();
 
-      if (data) {
-        this.product = data as unknown as Product;
-        const v = data.product_variants || [];
-        this.variants.set(v.sort((a: any, b: any) => (a.order_index || 0) - (b.order_index || 0)));
+        const [colsResult, prodResult] = await Promise.all([collectionsPromise, productPromise]);
+
+        this.collections.set(colsResult.data || []);
+        
+        if (prodResult.error) throw prodResult.error;
+
+        if (prodResult.data) {
+          this.product = prodResult.data as unknown as Product;
+          const v = prodResult.data.product_variants || [];
+          this.variants.set(v.sort((a: any, b: any) => (a.order_index || 0) - (b.order_index || 0)));
+        } else {
+          throw new Error('Producto no encontrado');
+        }
       }
-    } catch (e) {
-      console.error('Unexpected error in ngOnInit:', e);
+    } catch (e: any) {
+      console.error('Error en ngOnInit:', e);
+      this.notify.error('Error al cargar datos: ' + (e.message || 'Error desconocido'));
+      // Si falla, al menos dejamos de cargar para no quedar en shimmer infinito
+      if (!this.product) {
+        this.router.navigate(['..'], { relativeTo: this.route });
+      }
     } finally {
       this.isLoading.set(false);
     }
