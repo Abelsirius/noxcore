@@ -107,14 +107,14 @@ interface ValidationErrors {
               <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="space-y-3">
                   <label class="text-[10px] font-bold uppercase tracking-widest ml-1"
-                         [class.text-red-500]="showValidation() && !prod.name?.trim()"
-                         [class.text-zinc-500]="!(showValidation() && !prod.name?.trim())">
+                         [class.text-red-500]="showValidation() && !prod.name.trim()"
+                         [class.text-zinc-500]="!(showValidation() && !prod.name.trim())">
                     Nombre del Producto <span class="text-red-500">*</span>
                   </label>
                   <input type="text" [(ngModel)]="prod.name"
-                         [class.border-red-500/50]="showValidation() && !prod.name?.trim()"
-                         [class.ring-4]="showValidation() && !prod.name?.trim()"
-                         [class.ring-red-500/10]="showValidation() && !prod.name?.trim()"
+                         [class.border-red-500/50]="showValidation() && !prod.name.trim()"
+                         [class.ring-4]="showValidation() && !prod.name.trim()"
+                         [class.ring-red-500/10]="showValidation() && !prod.name.trim()"
                          class="admin-input" placeholder="Ej: Black Tech Jacket">
                 </div>
                 <div class="space-y-3">
@@ -155,12 +155,12 @@ interface ValidationErrors {
                 </div>
                 <div class="space-y-3 md:col-span-2">
                   <label class="text-[10px] font-bold uppercase tracking-widest ml-1"
-                         [class.text-red-500]="showValidation() && !prod.description?.trim()"
-                         [class.text-zinc-500]="!(showValidation() && !prod.description?.trim())">
+                         [class.text-red-500]="showValidation() && !prod.description.trim()"
+                         [class.text-zinc-500]="!(showValidation() && !prod.description.trim())">
                     Descripción de la Pieza <span class="text-red-500">*</span>
                   </label>
                   <textarea [(ngModel)]="prod.description" rows="5"
-                            [class.border-red-500/50]="showValidation() && !prod.description?.trim()"
+                            [class.border-red-500/50]="showValidation() && !prod.description.trim()"
                             class="admin-input resize-none" placeholder="Escribe los detalles, materiales y fit del producto..."></textarea>
                 </div>
               </div>

@@ -36,7 +36,7 @@ import { ProductService } from '../../services/product';
               @for (prod of productService.products(); track prod.id) {
                 <tr class="hover:bg-white/[0.02] transition-colors group">
                   <td class="px-6 py-4">
-                    <img [src]="prod.images?.[0] || 'https://placehold.co/400x533/111/333?text=Sin+Imagen'" class="w-10 h-14 object-cover bg-black border border-white/5">
+                    <img [src]="prod.images[0] || 'https://placehold.co/400x533/111/333?text=Sin+Imagen'" class="w-10 h-14 object-cover bg-black border border-white/5">
                   </td>
                   <td class="px-6 py-4">
                     <div class="flex flex-col">

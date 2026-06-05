@@ -6,8 +6,9 @@
     <!-- Image -->
     <div class="relative aspect-[3/4] overflow-hidden">
       <img
-        [src]="product.images?.[0] || 'https://placehold.co/400x533/111/333?text=Sin+Imagen'"
+        [ngSrc]="product.images[0] || 'https://placehold.co/400x533/111/333?text=Sin+Imagen'"
         [alt]="product.name"
+        fill
         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
       >
 

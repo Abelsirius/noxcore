@@ -25,26 +25,35 @@ import { ProductCarouselComponent } from '../product-carousel/product-carousel';
     </section>
 
     <!-- ORIGINAL STYLE COLLECTION SECTION -->
-    <section class="py-16 bg-black" id="collection-shadow">
-      <div class="container mx-auto">
-        <app-product-carousel 
-          [products]="products()" 
-          [title]="'STYLE COLLECTION ' + nameColeccion.toUpperCase()" 
-          themeColor="#ef4444"
-          (productSelected)="openProductModal($event)"
-        ></app-product-carousel>
-      </div>
-    </section>
-    <section class="py-16 bg-black" id="collection-soon">
-      <div class="container mx-auto">
-        <app-product-carousel 
-          [products]="proximamente()" 
-          title="DROP PASADO – ÚLTIMAS UNIDADES" 
-          themeColor="#ef4444"
-          (productSelected)="openProductModal($event)"
-        ></app-product-carousel>
-      </div>
-    </section>
+    @defer (on viewport) {
+      <section class="py-16 bg-black" id="collection-shadow">
+        <div class="container mx-auto">
+          <app-product-carousel 
+            [products]="products()" 
+            [title]="'STYLE COLLECTION ' + nameColeccion.toUpperCase()" 
+            themeColor="#ef4444"
+            (productSelected)="openProductModal($event)"
+          ></app-product-carousel>
+        </div>
+      </section>
+    } @placeholder {
+      <div class="py-32 text-center text-zinc-800 uppercase tracking-widest text-xs">Cargando colección...</div>
+    }
+
+    @defer (on viewport) {
+      <section class="py-16 bg-black" id="collection-soon">
+        <div class="container mx-auto">
+          <app-product-carousel 
+            [products]="proximamente()" 
+            title="DROP PASADO – ÚLTIMAS UNIDADES" 
+            themeColor="#ef4444"
+            (productSelected)="openProductModal($event)"
+          ></app-product-carousel>
+        </div>
+      </section>
+    } @placeholder {
+      <div class="py-32 text-center text-zinc-800 uppercase tracking-widest text-xs">Cargando colección...</div>
+    }
     <!-- Product Modal -->
     @if (selectedProduct) {
       <app-product-modal

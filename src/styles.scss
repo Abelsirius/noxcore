@@ -33,7 +33,13 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6, .font-display {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-display {
   font-family: 'Outfit', sans-serif;
 }
 
@@ -41,13 +47,16 @@ h1, h2, h3, h4, h5, h6, .font-display {
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--bg-primary);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--bg-tertiary);
   border-radius: 10px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #222;
 }
@@ -111,19 +120,22 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 
 .shimmer {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.05) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.05) 50%,
+      rgba(255, 255, 255, 0) 100%);
   background-size: 200% 100%;
   animation: shimmer 2s infinite;
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 /* Animation Utilities */
@@ -138,4 +150,51 @@ h1, h2, h3, h4, h5, h6, .font-display {
     opacity: 1;
     transform: translateY(0);
   }
-}
+}
+
+/* Custom View Transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-group(*) {
+  animation-duration: 0.4s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Modal Animations */
+@keyframes modal-backdrop-entry {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+
+  to {
+    opacity: 1;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+}
+
+@keyframes modal-content-entry {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-backdrop-fade {
+  animation: modal-backdrop-entry 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-modal-entry {
+  animation: modal-content-entry 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

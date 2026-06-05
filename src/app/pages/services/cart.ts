@@ -98,24 +98,13 @@ export class CartService {
   }
 
   async addToCart(variant: ProductVariant, product: any, quantity: number = 1) {
-    // Real-time stock validation
-    const { data: latestVariant, error } = await this.supabase
-      .from('product_variants')
-      .select('stock')
-      .eq('id', variant.id)
-      .single();
+    const backupCart = [...this.cartItems()];
 
-    if (error || !latestVariant || latestVariant.stock < quantity) {
-      throw new Error('Stock insuficiente');
-    }
-
+    // 1. Optimistic Update: Instantly update cart items in UI
     const current = this.cartItems();
     const existingIndex = current.findIndex(item => item.variant_id === variant.id);
 
     if (existingIndex > -1) {
-      if (current[existingIndex].quantity + quantity > latestVariant.stock) {
-        throw new Error('Stock insuficiente');
-      }
       const updated = [...current];
       updated[existingIndex] = { ...updated[existingIndex], quantity: updated[existingIndex].quantity + quantity };
       this.cartItems.set(updated);
@@ -123,7 +112,28 @@ export class CartService {
       this.cartItems.set([...current, { variant_id: variant.id, quantity, product, variant }]);
     }
 
-    await this.persistCart();
+    try {
+      // 2. Network Check: Real-time stock validation in background
+      const { data: latestVariant, error } = await this.supabase
+        .from('product_variants')
+        .select('stock')
+        .eq('id', variant.id)
+        .single();
+
+      const newRequestedQty = existingIndex > -1 
+        ? backupCart[existingIndex].quantity + quantity 
+        : quantity;
+
+      if (error || !latestVariant || latestVariant.stock < newRequestedQty) {
+        throw new Error('Stock insuficiente');
+      }
+
+      await this.persistCart();
+    } catch (err) {
+      // 3. Rollback: If anything fails, revert to previous state
+      this.cartItems.set(backupCart);
+      throw err;
+    }
   }
 
   removeFromCart(variantId: string) {

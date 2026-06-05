@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DecimalPipe } from '@angular/common';
 import { CartService } from '../services/cart';
@@ -167,7 +167,7 @@ import { CartItem } from '../models/product';
     </div>
   `
 })
-export class CheckoutComponent {
+export class CheckoutComponent implements OnInit {
   cartService = inject(CartService);
   notify = inject(NotificationService);
   authService = inject(AuthService);
@@ -184,6 +184,46 @@ export class CheckoutComponent {
     city: '',
     address: ''
   };
+
+  ngOnInit() {
+    this.autofillProfileDetails();
+  }
+
+  async autofillProfileDetails() {
+    const user = this.authService.currentUser();
+    if (!user) return;
+
+    // 1. Autofill names from Auth Metadata
+    const fullName = user.user_metadata?.['full_name'] || '';
+    if (fullName) {
+      const parts = fullName.trim().split(/\s+/);
+      this.form.firstName = parts[0] || '';
+      this.form.lastName = parts.slice(1).join(' ') || '';
+    }
+
+    // 2. Fetch the most recent order for this user to autofill address and phone
+    try {
+      const { data: lastOrder, error } = await this.supabase
+        .from('orders')
+        .select('contact_phone, shipping_address')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (!error && lastOrder) {
+        if (lastOrder.contact_phone) {
+          this.form.phone = lastOrder.contact_phone;
+        }
+        if (lastOrder.shipping_address) {
+          this.form.city = lastOrder.shipping_address.city || '';
+          this.form.address = lastOrder.shipping_address.address || '';
+        }
+      }
+    } catch (e) {
+      console.warn('Could not fetch last order for autofill:', e);
+    }
+  }
 
   getItemPrice(item: CartItem): number {
     return item.variant?.price_override ?? item.product?.base_price ?? 0;

@@ -39,6 +39,10 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit, OnChange
 
     displayProducts: Product[] = [];
     productParticles: Map<string, Particle[]> = new Map();
+    get shouldLoop(): boolean {
+        return this.displayProducts.length >= 5;
+    }
+
     private isJumping = false;
 
     ngOnInit() {

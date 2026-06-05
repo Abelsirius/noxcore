@@ -20,8 +20,14 @@ import { ProductService } from '../../../services/product';
 
         <!-- Modal Content -->
         <div
-          class="relative bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden animate-slide-up overflow-y-auto min-h-[350px]"
+          class="relative bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden overflow-y-auto min-h-[350px]"
           (click)="$event.stopPropagation()"
+          (touchstart)="onTouchStart($event)"
+          (touchmove)="onTouchMove($event)"
+          (touchend)="onTouchEnd()"
+          [style.transform]="modalTransform()"
+          [style.transition]="isDragging() ? 'none' : 'transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)'"
+          [class.animate-slide-up]="!isDragging() && !modalTransform()"
         >
           <!-- Close Button -->
           <button
@@ -124,7 +130,8 @@ import { ProductService } from '../../../services/product';
                           <label class="text-[8px] text-gray-500 uppercase font-black tracking-widest">Altura (cm)</label>
                           <input
                             type="number"
-                            [(ngModel)]="userHeight"
+                            [ngModel]="userHeight()"
+                            (ngModelChange)="userHeight.set($event)"
                             placeholder="175"
                             class="w-full bg-white/5 border border-white/10 text-white text-xs p-3 rounded-lg focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none transition-all placeholder:text-gray-700"
                           >
@@ -133,10 +140,51 @@ import { ProductService } from '../../../services/product';
                           <label class="text-[8px] text-gray-500 uppercase font-black tracking-widest">Peso (kg)</label>
                           <input
                             type="number"
-                            [(ngModel)]="userWeight"
+                            [ngModel]="userWeight()"
+                            (ngModelChange)="userWeight.set($event)"
                             placeholder="75"
                             class="w-full bg-white/5 border border-white/10 text-white text-xs p-3 rounded-lg focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none transition-all placeholder:text-gray-700"
                           >
+                        </div>
+                      </div>
+
+                      <!-- Fit Preference Selector -->
+                      <div class="space-y-1.5 mb-4">
+                        <label class="text-[8px] text-gray-500 uppercase font-black tracking-widest block">Estilo de Ajuste Deseado</label>
+                        <div class="grid grid-cols-3 gap-2">
+                          <button
+                            (click)="fitPreference.set('slim')"
+                            [class.border-red-600]="fitPreference() === 'slim'"
+                            [class.bg-red-600]="fitPreference() === 'slim'"
+                            [class.text-white]="fitPreference() === 'slim'"
+                            [class.border-white/10]="fitPreference() !== 'slim'"
+                            [class.text-gray-400]="fitPreference() !== 'slim'"
+                            class="px-2 py-2 border text-[8px] font-black uppercase tracking-widest rounded-lg transition-all"
+                          >
+                            Ajustado
+                          </button>
+                          <button
+                            (click)="fitPreference.set('regular')"
+                            [class.border-red-600]="fitPreference() === 'regular'"
+                            [class.bg-red-600]="fitPreference() === 'regular'"
+                            [class.text-white]="fitPreference() === 'regular'"
+                            [class.border-white/10]="fitPreference() !== 'regular'"
+                            [class.text-gray-400]="fitPreference() !== 'regular'"
+                            class="px-2 py-2 border text-[8px] font-black uppercase tracking-widest rounded-lg transition-all"
+                          >
+                            Regular
+                          </button>
+                          <button
+                            (click)="fitPreference.set('oversized')"
+                            [class.border-red-600]="fitPreference() === 'oversized'"
+                            [class.bg-red-600]="fitPreference() === 'oversized'"
+                            [class.text-white]="fitPreference() === 'oversized'"
+                            [class.border-white/10]="fitPreference() !== 'oversized'"
+                            [class.text-gray-400]="fitPreference() !== 'oversized'"
+                            class="px-2 py-2 border text-[8px] font-black uppercase tracking-widest rounded-lg transition-all"
+                          >
+                            Oversized
+                          </button>
                         </div>
                       </div>
 
@@ -149,7 +197,7 @@ import { ProductService } from '../../../services/product';
                       }
 
                       <p class="text-[7px] text-gray-600 mt-4 text-center uppercase tracking-widest italic">
-                        *Basado en tus medidas y el corte de la prenda
+                        *Basado en tus medidas y el estilo de ajuste seleccionado
                       </p>
                     </div>
                   }
@@ -269,17 +317,45 @@ export class ProductModalComponent implements OnInit, OnChanges {
   backgroundSize = '500%';
   backgroundPosition = signal('center');
 
-  // Size guide inputs (plain values — no Signal needed, just triggers compute)
-  userHeight: number | null = null;
-  userWeight: number | null = null;
+  // Size guide inputs
+  userHeight = signal<number | null>(null);
+  userWeight = signal<number | null>(null);
+  fitPreference = signal<'slim' | 'regular' | 'oversized'>('regular');
+
+  // Swipe Gestures
+  touchStartY = 0;
+  touchCurrentY = 0;
+  modalTransform = signal('');
+  isDragging = signal(false);
 
   recommendedSize = computed(() => {
-    if (!this.userHeight || !this.userWeight) return null;
-    const bmi = this.userWeight / ((this.userHeight / 100) ** 2);
-    if (this.userHeight < 165) return bmi < 22 ? 'S' : 'M';
-    else if (this.userHeight < 175) return bmi < 24 ? 'M' : 'L';
-    else if (this.userHeight < 185) return bmi < 26 ? 'L' : 'XL';
-    else return 'XL';
+    const height = this.userHeight();
+    const weight = this.userWeight();
+    if (!height || !weight) return null;
+    const bmi = weight / ((height / 100) ** 2);
+    
+    // Baseline size
+    let baseSize: 'S' | 'M' | 'L' | 'XL' = 'M';
+    if (height < 165) {
+      baseSize = bmi < 22 ? 'S' : 'M';
+    } else if (height < 175) {
+      baseSize = bmi < 24 ? 'M' : 'L';
+    } else if (height < 185) {
+      baseSize = bmi < 26 ? 'L' : 'XL';
+    } else {
+      baseSize = 'XL';
+    }
+
+    // Shift based on fit preference
+    const sizes: ('S' | 'M' | 'L' | 'XL')[] = ['S', 'M', 'L', 'XL'];
+    const index = sizes.indexOf(baseSize);
+    
+    if (this.fitPreference() === 'slim' && index > 0) {
+      return sizes[index - 1];
+    } else if (this.fitPreference() === 'oversized' && index < sizes.length - 1) {
+      return sizes[index + 1];
+    }
+    return baseSize;
   });
 
   private productService = inject(ProductService);
@@ -318,8 +394,9 @@ export class ProductModalComponent implements OnInit, OnChanges {
       this.quantity.set(1);
       this.showSizeGuide.set(false);
       this.errorMessage.set('');
-      this.userHeight = null;
-      this.userWeight = null;
+      this.userHeight.set(null);
+      this.userWeight.set(null);
+      this.fitPreference.set('regular');
 
       if (this.product.variants && this.product.variants.length > 0) {
         this.selectedVariant.set(this.product.variants[0]);
@@ -413,5 +490,30 @@ export class ProductModalComponent implements OnInit, OnChanges {
 `;
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
+  }
+
+  // Swipe Gesture Handlers
+  onTouchStart(event: TouchEvent) {
+    this.touchStartY = event.touches[0].clientY;
+    this.isDragging.set(true);
+  }
+
+  onTouchMove(event: TouchEvent) {
+    this.touchCurrentY = event.touches[0].clientY;
+    const deltaY = this.touchCurrentY - this.touchStartY;
+    if (deltaY > 0) {
+      this.modalTransform.set(`translateY(${deltaY}px)`);
+    }
+  }
+
+  onTouchEnd() {
+    this.isDragging.set(false);
+    const deltaY = this.touchCurrentY - this.touchStartY;
+    if (deltaY > 150) {
+      this.onClose();
+    }
+    this.modalTransform.set('');
+    this.touchStartY = 0;
+    this.touchCurrentY = 0;
   }
 }

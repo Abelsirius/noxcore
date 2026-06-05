@@ -72,7 +72,7 @@ import { ProductService } from '../../services/product';
               @for (prod of lowStockItems(); track prod.id) {
                 <div class="flex items-center justify-between border-b border-white/5 pb-4">
                   <div class="flex items-center gap-3">
-                    <img [src]="prod.images?.[0]" class="w-8 h-10 object-cover bg-black border border-white/10">
+                    <img [src]="prod.images[0]" class="w-8 h-10 object-cover bg-black border border-white/10">
                     <div>
                       <p class="text-[10px] font-bold uppercase">{{prod.name}}</p>
                       <p class="text-[8px] text-gray-500 uppercase">Total: {{getTotalStock(prod)}} uds.</p>

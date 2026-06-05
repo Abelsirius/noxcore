@@ -1,11 +1,11 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, NgOptimizedImage } from '@angular/common';
 import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, NgOptimizedImage],
   templateUrl: './product-card.html',
   styleUrl: './product-card.scss'
 })

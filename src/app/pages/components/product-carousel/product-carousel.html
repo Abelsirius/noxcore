@@ -29,7 +29,7 @@
     }
 
     <!-- Swiper Carousel -->
-    <swiper-container #carouselWrapper class="carousel-wrapper pb-12" [attr.loop]="true" [attr.slides-per-view]="'auto'"
+    <swiper-container #carouselWrapper class="carousel-wrapper pb-12" [attr.loop]="shouldLoop" [attr.slides-per-view]="'auto'"
         [attr.space-between]="24" [attr.centered-slides]="false" [attr.grab-cursor]="true" [attr.mousewheel]="true"
         [attr.keyboard]="true">
         @for(product of displayProducts; track $index; let idx = $index) {
