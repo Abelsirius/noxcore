@@ -1,4 +1,4 @@
-import { Injectable, signal, computed, effect, inject } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
 import { CartItem, ProductVariant } from '../models/product';
 import { SupabaseService } from './supabase.service';
 import { AuthService } from './auth.service';
@@ -20,21 +20,11 @@ export class CartService {
     return acc + (price * item.quantity);
   }, 0));
 
-  constructor(
-    private supabaseService: SupabaseService
-  ) {
-    // Initial load
-    this.loadCart();
+  private cartLoaded = false;
 
-    // Effect to sync with DB when user changes or cart changes
-    effect(() => {
-      const user = this.authService.currentUser();
-      if (user) {
-        this.syncWithDB();
-      } else {
-        this.saveToLocalStorage();
-      }
-    });
+  constructor() {
+    // Initial load on first construction
+    this.loadCart();
   }
 
   private async loadCart() {
@@ -44,12 +34,17 @@ export class CartService {
     } else {
       this.loadFromLocalStorage();
     }
+    this.cartLoaded = true;
   }
 
   private loadFromLocalStorage() {
-    const saved = localStorage.getItem('nox_cart');
-    if (saved) {
-      this.cartItems.set(JSON.parse(saved));
+    try {
+      const saved = localStorage.getItem('nox_cart');
+      if (saved) {
+        this.cartItems.set(JSON.parse(saved));
+      }
+    } catch {
+      this.cartItems.set([]);
     }
   }
 
@@ -70,10 +65,20 @@ export class CartService {
       const items: CartItem[] = data.map((item: any) => ({
         variant_id: item.variant_id,
         quantity: item.quantity,
-        product: item.product_variants.products,
+        product: item.product_variants?.products,
         variant: item.product_variants
       }));
       this.cartItems.set(items);
+    }
+  }
+
+  /** Persist cart: to DB if logged in, else to localStorage */
+  private async persistCart() {
+    const user = this.authService.currentUser();
+    if (user) {
+      await this.syncWithDB();
+    } else {
+      this.saveToLocalStorage();
     }
   }
 
@@ -81,8 +86,6 @@ export class CartService {
     const user = this.authService.currentUser();
     if (!user) return;
 
-    // This is a simplified sync - in a real app you'd diff or batch upsert
-    // For now, we'll just upsert the current cart items
     const itemsToSync = this.cartItems().map(item => ({
       user_id: user.id,
       variant_id: item.variant_id,
@@ -110,25 +113,28 @@ export class CartService {
     const existingIndex = current.findIndex(item => item.variant_id === variant.id);
 
     if (existingIndex > -1) {
-      // Check total quantity vs stock
       if (current[existingIndex].quantity + quantity > latestVariant.stock) {
         throw new Error('Stock insuficiente');
       }
-      current[existingIndex].quantity += quantity;
-      this.cartItems.set([...current]);
+      const updated = [...current];
+      updated[existingIndex] = { ...updated[existingIndex], quantity: updated[existingIndex].quantity + quantity };
+      this.cartItems.set(updated);
     } else {
       this.cartItems.set([...current, { variant_id: variant.id, quantity, product, variant }]);
     }
+
+    await this.persistCart();
   }
 
   removeFromCart(variantId: string) {
     const updated = this.cartItems().filter(item => item.variant_id !== variantId);
     this.cartItems.set(updated);
 
-    // If logged in, also delete from DB
     const user = this.authService.currentUser();
     if (user) {
       this.supabase.from('cart_items').delete().eq('user_id', user.id).eq('variant_id', variantId).then();
+    } else {
+      this.saveToLocalStorage();
     }
   }
 
@@ -138,7 +144,6 @@ export class CartService {
       return;
     }
 
-    // Validar stock antes de actualizar
     const { data: latestVariant } = await this.supabase
       .from('product_variants')
       .select('stock')
@@ -153,8 +158,9 @@ export class CartService {
     const index = current.findIndex(item => item.variant_id === variantId);
 
     if (index > -1) {
-      current[index].quantity = quantity;
-      this.cartItems.set([...current]);
+      const updated = [...current];
+      updated[index] = { ...updated[index], quantity };
+      this.cartItems.set(updated);
 
       const user = this.authService.currentUser();
       if (user) {
@@ -163,6 +169,8 @@ export class CartService {
           .update({ quantity })
           .eq('user_id', user.id)
           .eq('variant_id', variantId);
+      } else {
+        this.saveToLocalStorage();
       }
     }
   }

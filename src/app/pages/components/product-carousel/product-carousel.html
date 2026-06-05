@@ -1,43 +1,45 @@
 <div class="carousel-container relative overflow-hidden group">
     <!-- Title and Navigation -->
-    <div class="flex items-center justify-between mb-8 px-4" *ngIf="title">
-        <div class="flex flex-col">
-            <h2 class="text-3xl md:text-4xl font-bold text-white tracking-tight">{{ title }}</h2>
-            <div class="w-16 h-1 mt-2" [style.backgroundColor]="themeColor || '#ef4444'"></div>
-        </div>
+    @if (title) {
+      <div class="flex items-center justify-between mb-8 px-4">
+          <div class="flex flex-col">
+              <h2 class="text-3xl md:text-4xl font-bold text-white tracking-tight">{{ title }}</h2>
+              <div class="w-16 h-1 mt-2" [style.backgroundColor]="themeColor || '#ef4444'"></div>
+          </div>
 
-        <div class="flex space-x-2">
-            <button (click)="scroll('left')"
-                class="nav-btn p-2 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all focus:outline-none"
-                aria-label="Anterior">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="m15 18-6-6 6-6" />
-                </svg>
-            </button>
-            <button (click)="scroll('right')"
-                class="nav-btn p-2 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all focus:outline-none"
-                aria-label="Siguiente">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="m9 18 6-6-6-6" />
-                </svg>
-            </button>
-        </div>
-    </div>
+          <div class="flex space-x-2">
+              <button (click)="scroll('left')"
+                  class="nav-btn p-2 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all focus:outline-none"
+                  aria-label="Anterior">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="m15 18-6-6 6-6" />
+                  </svg>
+              </button>
+              <button (click)="scroll('right')"
+                  class="nav-btn p-2 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all focus:outline-none"
+                  aria-label="Siguiente">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="m9 18 6-6-6-6" />
+                  </svg>
+              </button>
+          </div>
+      </div>
+    }
 
     <!-- Swiper Carousel -->
     <swiper-container #carouselWrapper class="carousel-wrapper pb-12" [attr.loop]="true" [attr.slides-per-view]="'auto'"
         [attr.space-between]="24" [attr.centered-slides]="false" [attr.grab-cursor]="true" [attr.mousewheel]="true"
         [attr.keyboard]="true">
-        @for(product of displayProducts; track $index) {
+        @for(product of displayProducts; track $index; let idx = $index) {
         <swiper-slide class="w-[280px] md:w-[320px]">
             <div class="product-card transition-all duration-500" (click)="selectProduct(product)">
                 <div
                     class="card-inner bg-[#111] rounded-2xl overflow-hidden border border-white/5 hover:border-white/20 hover:shadow-2xl hover:shadow-white/5">
                     <!-- Particles Effect -->
                     <div class="particles-container absolute inset-0 pointer-events-none z-30">
-                        @for(p of productParticles.get(product.name + '-' + $index); track $index) {
+                        @for(p of productParticles.get(product.name + '-' + idx); track $index) {
                         <div class="particle absolute rounded-full" [style.left.%]="p.x" [style.top.%]="p.y"
                             [style.width.px]="p.size" [style.height.px]="p.size" [style.backgroundColor]="p.color"
                             [style.opacity]="p.opacity" [style.animationDelay.s]="p.delay"
@@ -52,26 +54,29 @@
                             class="w-full h-full object-contain bg-black transition-transform duration-700 group-hover/img:scale-105">
 
                         <!-- Stock Status -->
-                        <div *ngIf="!hasStock(product)"
-                            class="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center text-white text-lg font-bold tracking-widest">
-                            AGOTADO
-                        </div>
+                        @if (!hasStock(product)) {
+                          <div class="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center text-white text-lg font-bold tracking-widest">
+                              AGOTADO
+                          </div>
+                        }
 
                         <!-- Badges -->
                         <div class="absolute top-4 left-4 flex flex-col gap-2 z-20">
-                            <span *ngIf="(product.discount_percent ?? 0) > 0"
-                                class="bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-lg shadow-red-600/20">
-                                -{{product.discount_percent}}%
-                            </span>
-                            <span *ngIf="product.is_new"
-                                class="bg-white text-black text-[10px] font-bold px-2 py-1 rounded-full uppercase shadow-lg shadow-white/10">
-                                New
-                            </span>
+                            @if ((product.discount_percent ?? 0) > 0) {
+                              <span class="bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-lg shadow-red-600/20">
+                                  -{{product.discount_percent}}%
+                              </span>
+                            }
+                            @if (product.is_new) {
+                              <span class="bg-white text-black text-[10px] font-bold px-2 py-1 rounded-full uppercase shadow-lg shadow-white/10">
+                                  New
+                              </span>
+                            }
                         </div>
 
                         <!-- Wishlist Toggle -->
                         <div class="absolute top-4 right-4 z-40">
-                            <button (click)="wishlistService.toggleWishlist(product); $event.stopPropagation()" 
+                            <button (click)="wishlistService.toggleWishlist(product); $event.stopPropagation()"
                                     class="p-2 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-white hover:bg-white hover:text-black transition-all group/heart">
                                 <i [class]="wishlistService.isInWishlist(product.id) ? 'ti ti-heart-filled text-red-600' : 'ti ti-heart group-hover/heart:text-red-600'"></i>
                             </button>
@@ -99,43 +104,48 @@
 
                         <div class="flex items-center gap-3">
                             <span class="text-xl font-bold text-white">S/. {{getLowestPrice(product).toFixed(2)}}</span>
-                            <span *ngIf="(product.discount_percent ?? 0) > 0" class="text-sm text-white/40 line-through">S/.
-                                {{product.base_price.toFixed(2)}}</span>
+                            @if ((product.discount_percent ?? 0) > 0) {
+                              <span class="text-sm text-white/40 line-through">S/. {{product.base_price.toFixed(2)}}</span>
+                            }
                         </div>
 
                         <!-- Sizes -->
-                        <div class="mt-4 flex items-center justify-between" *ngIf="product.variants">
-                            <div class="flex gap-1">
-                                @for(variant of product.variants.slice(0, 3); track variant.id) {
-                                <span class="text-[10px] px-2 py-1 rounded-md transition-all duration-300"
-                                    [class.bg-white]="variant.stock > 0" [class.text-black]="variant.stock > 0"
-                                    [class.font-bold]="variant.stock > 0"
-                                    [class.shadow-[0_0_10px_rgba(255,255,255,0.5)]]="variant.stock > 0"
-                                    [class.bg-white/5]="variant.stock === 0" [class.text-white/40]="variant.stock === 0"
-                                    [class.line-through]="variant.stock === 0">
-                                    {{variant.size}}
-                                </span>
-                                }
-                                <span *ngIf="product.variants.length > 3"
-                                    class="text-[10px] px-2 py-1 rounded-md bg-white/5 text-white/60">
-                                    +{{product.variants.length - 3}}
-                                </span>
-                            </div>
+                        @if (product.variants) {
+                          <div class="mt-4 flex items-center justify-between">
+                              <div class="flex gap-1">
+                                  @for(variant of product.variants.slice(0, 3); track variant.id) {
+                                  <span class="text-[10px] px-2 py-1 rounded-md transition-all duration-300"
+                                      [class.bg-white]="variant.stock > 0" [class.text-black]="variant.stock > 0"
+                                      [class.font-bold]="variant.stock > 0"
+                                      [class.shadow-[0_0_10px_rgba(255,255,255,0.5)]]="variant.stock > 0"
+                                      [class.bg-white/5]="variant.stock === 0" [class.text-white/40]="variant.stock === 0"
+                                      [class.line-through]="variant.stock === 0">
+                                      {{variant.size}}
+                                  </span>
+                                  }
+                                  @if (product.variants.length > 3) {
+                                    <span class="text-[10px] px-2 py-1 rounded-md bg-white/5 text-white/60">
+                                        +{{product.variants.length - 3}}
+                                    </span>
+                                  }
+                              </div>
 
-                            <button class="text-white/40 hover:text-white transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path d="M12 16v-4" />
-                                    <path d="M12 8h.01" />
-                                </svg>
-                            </button>
-                        </div>
+                              <button class="text-white/40 hover:text-white transition-colors">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                      stroke-linejoin="round">
+                                      <circle cx="12" cy="12" r="10" />
+                                      <path d="M12 16v-4" />
+                                      <path d="M12 8h.01" />
+                                  </svg>
+                              </button>
+                          </div>
+                        }
                     </div>
                 </div>
             </div>
         </swiper-slide>
         }
     </swiper-container>
+
 </div>

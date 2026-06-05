@@ -13,14 +13,16 @@
 
       <!-- Top Badges -->
       <div class="absolute top-3 left-3 flex flex-col gap-2 z-10">
-        <span *ngIf="hasDiscount"
-          class="bg-red-500 text-white text-[11px] font-bold px-2 py-1 rounded-full">
-          -{{product.discount_percent}}%
-        </span>
-        <span *ngIf="product.is_new"
-          class="bg-white text-black text-[11px] font-bold px-2 py-1 rounded-full uppercase">
-          New
-        </span>
+        @if (hasDiscount) {
+          <span class="bg-red-500 text-white text-[11px] font-bold px-2 py-1 rounded-full">
+            -{{product.discount_percent}}%
+          </span>
+        }
+        @if (product.is_new) {
+          <span class="bg-white text-black text-[11px] font-bold px-2 py-1 rounded-full uppercase">
+            New
+          </span>
+        }
       </div>
 
       <!-- Gradient overlay at bottom -->
@@ -38,31 +40,36 @@
           <span class="text-white font-bold text-base">
             S/. {{lowestPrice | number:'1.2-2'}}
           </span>
-          <span *ngIf="hasDiscount" class="text-white/50 text-xs line-through">
-            S/. {{product.base_price | number:'1.2-2'}}
-          </span>
+          @if (hasDiscount) {
+            <span class="text-white/50 text-xs line-through">
+              S/. {{product.base_price | number:'1.2-2'}}
+            </span>
+          }
         </div>
 
         <!-- Size chips + info -->
-        <div class="flex items-center justify-between" *ngIf="product.variants && product.variants.length > 0">
-          <div class="flex gap-1 flex-wrap">
-            <ng-container *ngFor="let variant of product.variants | slice:0:3; let i = index">
-              <span class="size-chip" [class.out-of-stock]="variant.stock === 0">
-                {{variant.size}}
-              </span>
-            </ng-container>
-            <span *ngIf="product.variants.length > 3"
-              class="size-chip extra">
-              +{{product.variants.length - 3}}
-            </span>
+        @if (product.variants && product.variants.length > 0) {
+          <div class="flex items-center justify-between">
+            <div class="flex gap-1 flex-wrap">
+              @for (variant of product.variants.slice(0,3); track variant.id; let i = $index) {
+                <span class="size-chip" [class.out-of-stock]="variant.stock === 0">
+                  {{variant.size}}
+                </span>
+              }
+              @if (product.variants.length > 3) {
+                <span class="size-chip extra">
+                  +{{product.variants.length - 3}}
+                </span>
+              }
+            </div>
+            <!-- Info icon -->
+            <button class="info-btn" (click)="$event.stopPropagation(); onSelect()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+              </svg>
+            </button>
           </div>
-          <!-- Info icon -->
-          <button class="info-btn" (click)="$event.stopPropagation(); onSelect()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
-            </svg>
-          </button>
-        </div>
+        }
       </div>
     </div>
 

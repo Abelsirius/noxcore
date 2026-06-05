@@ -1,11 +1,11 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule, SlicePipe } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [CommonModule, SlicePipe],
+  imports: [DecimalPipe],
   templateUrl: './product-card.html',
   styleUrl: './product-card.scss'
 })

@@ -2,7 +2,7 @@
   <div class="container mx-auto px-4 py-3">
     <div class="flex items-center justify-between">
       <!-- Left: Logo & Social (Mobile Only) -->
-      <div class="flex items-center  gap-4 ">
+      <div class="flex items-center gap-4">
         <!-- Logo -->
         <div class="flex items-center gap-2">
           <a routerLink="/">
@@ -13,14 +13,13 @@
           </a>
 
           @if (isReelsRoute) {
-          <a target="_blank" href="https://www.tiktok.com/@nyxorfit" class="animate-fade-in flex items-center">
-            <button mat-icon-button
-              class="text-gray-400 hover:text-white ti ti-brand-tiktok text-[24px] !w-auto !h-auto leading-none flex items-center justify-center p-0">
-            </button>
-          </a>
+            <a target="_blank" href="https://www.tiktok.com/@nyxorfit" class="animate-fade-in flex items-center">
+              <button mat-icon-button
+                class="text-gray-400 hover:text-white ti ti-brand-tiktok text-[24px] !w-auto !h-auto leading-none flex items-center justify-center p-0">
+              </button>
+            </a>
           }
         </div>
-
       </div>
 
       <!-- Center: Navigation (Desktop Only) -->
@@ -29,35 +28,38 @@
           class="nav-link text-sm font-medium tracking-widest text-gray-300 hover:text-white transition-colors relative py-2">
           INICIO
         </a>
-        
+
         <!-- Smart Search Bar -->
         <div class="relative group/search">
           <div class="flex items-center bg-white/5 border border-white/10 rounded-full px-4 py-1.5 focus-within:border-red-600 transition-all w-32 md:w-48 md:focus-within:w-64">
             <i class="ti ti-search text-gray-500 text-xs mr-2"></i>
-            <input 
-              type="text" 
-              [(ngModel)]="searchQuery" 
+            <input
+              type="text"
+              [(ngModel)]="searchQuery"
               (input)="onSearch()"
-              placeholder="BUSCAR..." 
+              placeholder="BUSCAR..."
               class="bg-transparent border-none text-[9px] md:text-[10px] text-white placeholder:text-gray-600 focus:ring-0 w-full uppercase tracking-widest"
             >
           </div>
 
           <!-- Search Results Dropdown -->
-          <div *ngIf="searchResults.length > 0 && searchQuery" 
-               class="absolute top-full left-0 right-[-100px] md:right-0 mt-2 bg-[#0a0a0a] border border-white/10 rounded-xl p-4 shadow-2xl z-[100] animate-fade-in max-h-96 overflow-y-auto">
-            <div class="space-y-4">
-              <div *ngFor="let prod of $any(searchResults)" 
-                   (click)="selectSearchResult(prod)"
-                   class="flex items-center gap-3 p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-colors group/res">
-                <img [src]="prod.images[0]" class="w-10 h-12 object-cover bg-black border border-white/5">
-                <div>
-                  <p class="text-[10px] font-bold text-white uppercase truncate">{{prod.name}}</p>
-                  <p class="text-[9px] text-red-600 font-black">S/. {{prod.base_price | number:'1.2-2'}}</p>
-                </div>
+          @if (searchResults.length > 0 && searchQuery) {
+            <div class="absolute top-full left-0 right-[-100px] md:right-0 mt-2 bg-[#0a0a0a] border border-white/10 rounded-xl p-4 shadow-2xl z-[100] animate-fade-in max-h-96 overflow-y-auto">
+              <div class="space-y-4">
+                @for (prod of searchResults; track prod.id) {
+                  <div
+                    (click)="selectSearchResult(prod)"
+                    class="flex items-center gap-3 p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-colors group/res">
+                    <img [src]="prod.images[0]" class="w-10 h-12 object-cover bg-black border border-white/5">
+                    <div>
+                      <p class="text-[10px] font-bold text-white uppercase truncate">{{prod.name}}</p>
+                      <p class="text-[9px] text-red-600 font-black">S/. {{prod.base_price | number:'1.2-2'}}</p>
+                    </div>
+                  </div>
+                }
               </div>
             </div>
-          </div>
+          }
         </div>
 
         <a routerLink="/catalog" routerLinkActive="active"
@@ -70,26 +72,25 @@
         </a>
 
         @if (authService.isAdmin()) {
-        <a routerLink="/admin" routerLinkActive="active"
-          class="nav-link text-sm font-medium tracking-widest text-red-600 hover:text-red-500 transition-colors relative py-2 hidden lg:block uppercase">
-          PANEL
-        </a>
+          <a routerLink="/admin" routerLinkActive="active"
+            class="nav-link text-sm font-medium tracking-widest text-red-600 hover:text-red-500 transition-colors relative py-2 hidden lg:block uppercase">
+            PANEL
+          </a>
         }
       </nav>
 
       <!-- Right: Actions -->
       <div class="flex items-center space-x-2 md:space-x-6">
         <!-- Auth / Profile -->
-        <ng-container *ngIf="!authService.currentUser()">
+        @if (!authService.currentUser()) {
           <a routerLink="/auth/login" class="text-[9px] md:text-[10px] font-bold text-gray-400 hover:text-white tracking-widest uppercase transition-colors">
             Entrar
           </a>
-        </ng-container>
-        <ng-container *ngIf="authService.currentUser()">
+        } @else {
           <div class="flex items-center gap-2 md:gap-3">
-            <!-- Admin Link (Universal) -->
+            <!-- Admin Link -->
             @if (authService.isAdmin()) {
-              <a routerLink="/admin" 
+              <a routerLink="/admin"
                  class="flex items-center justify-center w-8 h-8 rounded-full bg-red-600/10 border border-red-600/20 text-red-600 hover:bg-red-600 hover:text-white transition-all">
                 <i class="ti ti-shield-lock text-lg"></i>
               </a>
@@ -105,25 +106,30 @@
               </button>
             </div>
           </div>
-        </ng-container>
+        }
 
         <!-- Wishlist -->
         <button class="text-gray-400 hover:text-white transition-colors relative flex items-center justify-center p-2 group">
           <i [class]="wishlistService.wishlist().length > 0 ? 'ti ti-heart-filled text-red-600' : 'ti ti-heart'"></i>
-          <span *ngIf="wishlistService.wishlist().length > 0" 
-                class="absolute top-0 right-0 bg-white text-[7px] font-black text-black w-3 h-3 flex items-center justify-center rounded-full border border-black">
-            {{wishlistService.wishlist().length}}
-          </span>
-          
-          <!-- Dropdown Wishlist (Simplified) -->
+          @if (wishlistService.wishlist().length > 0) {
+            <span class="absolute top-0 right-0 bg-white text-[7px] font-black text-black w-3 h-3 flex items-center justify-center rounded-full border border-black">
+              {{wishlistService.wishlist().length}}
+            </span>
+          }
+
+          <!-- Dropdown Wishlist -->
           <div class="absolute top-full right-0 mt-2 w-64 bg-[#0a0a0a] border border-white/10 p-4 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
             <h3 class="text-[9px] font-black tracking-widest uppercase mb-3">Tus Favoritos</h3>
             <div class="space-y-3 max-h-64 overflow-y-auto">
-              <div *ngFor="let item of $any(wishlistService.wishlist())" class="flex items-center gap-3">
-                <img [src]="item.images[0]" class="w-10 h-12 object-cover border border-white/5">
-                <span class="text-[10px] uppercase font-bold truncate text-white">{{item.name}}</span>
-              </div>
-              <p *ngIf="wishlistService.wishlist().length === 0" class="text-[8px] text-gray-500 text-center py-4 uppercase">No hay favoritos</p>
+              @for (item of wishlistService.wishlist(); track item.id) {
+                <div class="flex items-center gap-3">
+                  <img [src]="item.images[0]" class="w-10 h-12 object-cover border border-white/5">
+                  <span class="text-[10px] uppercase font-bold truncate text-white">{{item.name}}</span>
+                </div>
+              }
+              @if (wishlistService.wishlist().length === 0) {
+                <p class="text-[8px] text-gray-500 text-center py-4 uppercase">No hay favoritos</p>
+              }
             </div>
           </div>
         </button>
@@ -131,10 +137,11 @@
         <!-- Cart -->
         <button (click)="openCart()" class="text-gray-400 hover:text-white transition-colors relative flex items-center justify-center p-2">
           <i class="ti ti-shopping-cart text-lg md:text-xl"></i>
-          <span *ngIf="cartService.cartCount() > 0" 
-                class="absolute top-0 right-0 bg-red-600 text-[8px] md:text-[9px] font-black text-white w-3 h-3 md:w-4 md:h-4 flex items-center justify-center rounded-full animate-pulse">
-            {{cartService.cartCount()}}
-          </span>
+          @if (cartService.cartCount() > 0) {
+            <span class="absolute top-0 right-0 bg-red-600 text-[8px] md:text-[9px] font-black text-white w-3 h-3 md:w-4 md:h-4 flex items-center justify-center rounded-full animate-pulse">
+              {{cartService.cartCount()}}
+            </span>
+          }
         </button>
       </div>
 

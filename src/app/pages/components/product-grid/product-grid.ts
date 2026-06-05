@@ -1,22 +1,13 @@
-import { Component, inject, OnInit, effect, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatChipsModule } from '@angular/material/chips';
+import { Component, inject, OnInit, computed } from '@angular/core';
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product';
 import { ProductModalComponent } from "./product-model/product-model";
-import { MatDialog } from '@angular/material/dialog';
 import { ProductCarouselComponent } from '../product-carousel/product-carousel';
 
 @Component({
   selector: 'app-product-grid',
   standalone: true,
   imports: [
-    CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatChipsModule,
     ProductModalComponent,
     ProductCarouselComponent
   ],
@@ -55,12 +46,13 @@ import { ProductCarouselComponent } from '../product-carousel/product-carousel';
       </div>
     </section>
     <!-- Product Modal -->
-    <app-product-modal
-      *ngIf="selectedProduct"
-      [product]="selectedProduct"
-      [isOpen]="isModalOpen"
-      (close)="closeProductModal()"
-    ></app-product-modal>
+    @if (selectedProduct) {
+      <app-product-modal
+        [product]="selectedProduct"
+        [isOpen]="isModalOpen"
+        (close)="closeProductModal()"
+      ></app-product-modal>
+    }
   `,
   styles: [`
     .container {
