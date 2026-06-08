@@ -64,10 +64,10 @@ import { OrderService } from '../../services/order.service';
                     <td class="px-6 py-6">
                       <div class="flex items-center gap-3">
                         <div class="w-8 h-8 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center text-[10px] font-bold text-white uppercase">
-                           {{order.shipping_address?.full_name?.slice(0,1) || '?'}}
+                         {{order.shipping_address?.name?.slice(0,1) || '?'}}
                         </div>
                         <div class="flex flex-col">
-                          <span class="text-[11px] font-bold text-white">{{order.shipping_address?.full_name || 'Sin Nombre'}}</span>
+                          <span class="text-[11px] font-bold text-white">{{order.shipping_address?.name || 'Sin Nombre'}}</span>
                           <span class="text-[9px] text-zinc-600 font-medium">{{order.contact_phone || 'Sin Teléfono'}}</span>
                         </div>
                       </div>
@@ -121,7 +121,7 @@ import { OrderService } from '../../services/order.service';
                        #{{order.id.slice(-4)}}
                     </div>
                     <div>
-                      <h4 class="text-sm font-bold text-white uppercase">{{order.shipping_address?.full_name || 'N/A'}}</h4>
+                      <h4 class="text-sm font-bold text-white uppercase">{{order.shipping_address?.name || 'N/A'}}</h4>
                       <p class="text-[10px] text-zinc-500 uppercase font-medium">{{order.created_at | date:'dd MMM · HH:mm'}}</p>
                     </div>
                   </div>

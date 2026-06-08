@@ -36,7 +36,7 @@ import { ProductService } from '../../../services/product';
           >
           </button>
 
-          <div class="grid grid-cols-1 lg:grid-cols-2 lg:h-[600px]">
+          <div class="grid grid-cols-1 lg:grid-cols-2 h-full">
             <!-- Product Image -->
             <div class="relative group h-[420px] lg:h-full bg-gray-100 overflow-hidden"
                 (mousemove)="onMouseMove($event)"
@@ -78,7 +78,7 @@ import { ProductService } from '../../../services/product';
             </div>
 
             <!-- Product Details -->
-            <div class="p-8 flex flex-col justify-between overflow-y-auto">
+            <div class="p-8 flex flex-col justify-between max-h-fit">
               <div>
                 <!-- Brand -->
                 <div class="text-sm text-gray-500 mb-2">NYXOR FIT</div>
@@ -106,7 +106,7 @@ import { ProductService } from '../../../services/product';
                 </div>
 
                 <!-- Description -->
-                <div class="mb-6">
+                  <div class="mb-6 ">
                   <p
                     class="text-[14px] md:text-base text-gray-600 overflow-hidden whitespace-pre-line transition-all duration-300"
                     [class.line-clamp-3]="!showFullDescription()"
@@ -347,7 +347,7 @@ export class ProductModalComponent implements OnInit, OnChanges {
     const weight = this.userWeight();
     if (!height || !weight) return null;
     const bmi = weight / ((height / 100) ** 2);
-    
+
     // Baseline size
     let baseSize: 'S' | 'M' | 'L' | 'XL' = 'M';
     if (height < 165) {
@@ -363,7 +363,7 @@ export class ProductModalComponent implements OnInit, OnChanges {
     // Shift based on fit preference
     const sizes: ('S' | 'M' | 'L' | 'XL')[] = ['S', 'M', 'L', 'XL'];
     const index = sizes.indexOf(baseSize);
-    
+
     if (this.fitPreference() === 'slim' && index > 0) {
       return sizes[index - 1];
     } else if (this.fitPreference() === 'oversized' && index < sizes.length - 1) {
