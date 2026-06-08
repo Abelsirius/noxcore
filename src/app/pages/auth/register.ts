@@ -101,9 +101,8 @@ export class RegisterComponent {
       this.errorMessage.set(error.message);
       this.loading.set(false);
     } else {
-      // Supabase sends a confirmation email by default
       this.errorMessage.set('Revisa tu email para confirmar la cuenta');
-      this.loading.set(false);
+      this.loading.set(true);
     }
   }
 }
