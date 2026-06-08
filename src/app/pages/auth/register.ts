@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -56,14 +56,19 @@ import { AuthService } from '../services/auth.service';
             </div>
           </div>
 
-          <div *ngIf="errorMessage" class="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-bold uppercase tracking-widest text-center">
-            <i class="ti ti-alert-triangle mr-2"></i> {{errorMessage}}
+          @if(errorMessage()){
+          <div class="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-bold uppercase tracking-widest text-center">
+            <i class="ti ti-alert-triangle mr-2"></i> {{errorMessage()}}
           </div>
-
-          <button type="submit" [disabled]="loading" class="w-full btn-premium py-5 mt-4">
+          }
+          <button type="submit" [disabled]="loading()" class="w-full btn-premium py-5 mt-4">
             <span class="flex items-center justify-center gap-3 text-[12px] font-black tracking-[0.2em] uppercase">
-              <i *ngIf="loading" class="ti ti-loader-2 animate-spin"></i>
-              {{ loading ? 'CREANDO...' : 'COMENZAR AHORA' }}
+              @if(loading()){
+              <i class="ti ti-loader-2 animate-spin"></i>
+              } @else {
+              <i class="ti ti-user-plus"></i>
+              }
+              {{ loading() ? 'CREANDO...' : 'COMENZAR AHORA' }}
             </span>
           </button>
         </form>
@@ -85,21 +90,20 @@ export class RegisterComponent {
   fullName = '';
   email = '';
   password = '';
-  loading = false;
-  errorMessage = '';
+  loading = signal(false);
+  errorMessage = signal('');
 
   async onSubmit() {
-    this.loading = true;
-    this.errorMessage = '';
+    this.loading.set(true);
+    this.errorMessage.set('');
     const { error } = await this.authService.signUp(this.email, this.password, this.fullName);
-    
     if (error) {
-      this.errorMessage = error.message;
-      this.loading = false;
+      this.errorMessage.set(error.message);
+      this.loading.set(false);
     } else {
       // Supabase sends a confirmation email by default
-      this.errorMessage = 'Revisa tu email para confirmar la cuenta';
-      this.loading = false;
+      this.errorMessage.set('Revisa tu email para confirmar la cuenta');
+      this.loading.set(false);
     }
   }
 }
