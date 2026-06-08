@@ -108,11 +108,8 @@ import { ProductService } from '../../../services/product';
                 <!-- Description -->
                 <div class="mb-6">
                   <p
-                    class="text-[14px] md:text-base text-gray-600 transition-all duration-300"
-                    [style.display]="'-webkit-box'"
-                    [style.webkitBoxOrient]="'vertical'"
-                    [style.overflow]="showFullDescription() ? 'visible' : 'hidden'"
-                    [style.webkitLineClamp]="showFullDescription() ? 'unset' : '3'"
+                    class="text-[14px] md:text-base text-gray-600 overflow-hidden transition-all duration-300"
+                    [class.line-clamp-3]="!showFullDescription()"
                   >{{product?.description}}</p>
                   @if ((product?.description?.length ?? 0) > 120) {
                     <button
