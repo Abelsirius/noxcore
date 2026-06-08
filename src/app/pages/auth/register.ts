@@ -102,7 +102,8 @@ export class RegisterComponent {
       this.loading.set(false);
     } else {
       this.errorMessage.set('Revisa tu email para confirmar la cuenta');
-      this.loading.set(true);
+      this.loading.set(false);
+      this.router.navigate(['/auth/login']);
     }
   }
 }
