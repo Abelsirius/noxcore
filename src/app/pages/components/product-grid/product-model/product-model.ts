@@ -36,7 +36,7 @@ import { ProductService } from '../../../services/product';
           >
           </button>
 
-          <div class="grid grid-cols-1 lg:grid-cols-2 h-full">
+          <div class="grid grid-cols-1 lg:grid-cols-2 lg:h-[600px]">
             <!-- Product Image -->
             <div class="relative group h-[420px] lg:h-full bg-gray-100 overflow-hidden"
                 (mousemove)="onMouseMove($event)"
@@ -78,7 +78,7 @@ import { ProductService } from '../../../services/product';
             </div>
 
             <!-- Product Details -->
-            <div class="p-8 flex flex-col justify-between max-h-fit overflow-y-auto">
+            <div class="p-8 flex flex-col justify-between overflow-y-auto">
               <div>
                 <!-- Brand -->
                 <div class="text-sm text-gray-500 mb-2">NYXOR FIT</div>
