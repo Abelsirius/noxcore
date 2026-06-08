@@ -106,7 +106,23 @@ import { ProductService } from '../../../services/product';
                 </div>
 
                 <!-- Description -->
-                <p class="text-[14px] md:text-base text-gray-600 mb-6">{{product?.description}}</p>
+                <div class="mb-6">
+                  <p
+                    class="text-[14px] md:text-base text-gray-600 transition-all duration-300"
+                    [style.display]="'-webkit-box'"
+                    [style.webkitBoxOrient]="'vertical'"
+                    [style.overflow]="showFullDescription() ? 'visible' : 'hidden'"
+                    [style.webkitLineClamp]="showFullDescription() ? 'unset' : '3'"
+                  >{{product?.description}}</p>
+                  @if ((product?.description?.length ?? 0) > 120) {
+                    <button
+                      (click)="showFullDescription.set(!showFullDescription())"
+                      class="text-[11px] font-black text-red-600 uppercase tracking-widest hover:underline mt-1"
+                    >
+                      {{ showFullDescription() ? 'Ver menos ▲' : 'Ver más ▼' }}
+                    </button>
+                  }
+                </div>
 
                 <!-- Size Selection -->
                 <div class="mb-6">
@@ -309,6 +325,7 @@ export class ProductModalComponent implements OnInit, OnChanges {
   loading = signal(false);
   errorMessage = signal('');
   showSizeGuide = signal(false);
+  showFullDescription = signal(false);
 
   // Zoom state
   isZooming = signal(false);
@@ -393,6 +410,7 @@ export class ProductModalComponent implements OnInit, OnChanges {
       this.selectedImage.set(this.product.images?.[0] ?? '');
       this.quantity.set(1);
       this.showSizeGuide.set(false);
+      this.showFullDescription.set(false);
       this.errorMessage.set('');
       this.userHeight.set(null);
       this.userWeight.set(null);
