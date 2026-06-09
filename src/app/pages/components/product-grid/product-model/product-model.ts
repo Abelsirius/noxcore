@@ -46,7 +46,7 @@ import { ProductService } from '../../../services/product';
                   #productImage
                 [src]="selectedImage()"
                 [alt]="product?.name"
-                class="w-full h-full object-cover"
+                class="w-full h-full  bg-black"
               >
               <!-- Lupa con glassmorphism -->
               @if (isZooming()) {
@@ -78,16 +78,16 @@ import { ProductService } from '../../../services/product';
             </div>
 
             <!-- Product Details -->
-            <div class="p-8 flex flex-col justify-between max-h-fit">
+            <div class="p-8 flex flex-col justify-between max-h-[700px] overflow-y-auto">
               <div>
                 <!-- Brand -->
                 <div class="text-sm text-gray-500 mb-2">NYXOR FIT</div>
 
                 <!-- Product Name -->
-                <h2 class="text-[18px] md:text-3xl font-bold text-gray-900 mb-4">{{product?.name}}</h2>
+                <h2 class="text-[18px] md:text-3xl font-bold text-gray-900 mb-2">{{product?.name}}</h2>
 
                 <!-- Price -->
-                <div class="flex items-center gap-4 mb-6">
+                <div class="flex items-center gap-4 mb-3">
                   <div class="flex flex-col">
                     @if (product?.discount_percent) {
                       <span class="text-gray-400 line-through text-xs mb-1">
@@ -108,7 +108,7 @@ import { ProductService } from '../../../services/product';
                 <!-- Description -->
                   <div class="mb-6 ">
                   <p
-                    class="text-[14px] md:text-base text-gray-600 overflow-hidden whitespace-pre-line transition-all duration-300"
+                    class="text-[14px]  md:text-base text-gray-600 overflow-hidden whitespace-pre-line transition-all duration-300 max-h-[200px] overflow-y-auto scrollbar-thin"
                     [class.line-clamp-3]="!showFullDescription()"
                   >{{product?.description}}</p>
                   @if ((product?.description?.length ?? 0) > 120) {
@@ -120,8 +120,9 @@ import { ProductService } from '../../../services/product';
                     </button>
                   }
                 </div>
-
-                <!-- Size Selection -->
+                  <!-- scroll col -->
+                 <div >
+                  <!-- Size Selection -->
                 <div class="mb-6">
                   <div class="flex items-center justify-between mb-3">
                     <label class="block text-sm font-medium text-gray-700">Talla</label>
@@ -260,9 +261,27 @@ import { ProductService } from '../../../services/product';
                   </div>
                 </div>
               </div>
-
+              <!-- Related Products Section -->
+              @if (relatedProducts().length > 0) {
+                <div class=" pt-2 border-t border-gray-100">
+                  <h3 class="text-[10px] font-black tracking-[0.2em] uppercase text-gray-400 mb-6">Completa tu Look</h3>
+                  <div class="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+                    @for (rel of relatedProducts(); track rel.id) {
+                      <div (click)="switchProduct(rel)" class="flex-shrink-0 w-32 cursor-pointer group">
+                        <div class="relative aspect-[3/4] rounded-lg overflow-hidden mb-2">
+                          <img [src]="rel.images[0]" class="w-full h-full object-cover transition-transform group-hover:scale-110">
+                          <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        </div>
+                        <p class="text-[9px] font-bold uppercase truncate">{{rel.name}}</p>
+                        <p class="text-[9px] text-red-600 font-black">S/. {{rel.base_price | number:'1.2-2'}}</p>
+                      </div>
+                    }
+                  </div>
+                </div>
+              }
+                 </div>
               <!-- Action Buttons -->
-              <div class="space-y-4">
+              <div class="space-y-3 sticky bottom-0  h-50 bg-white z-10 ">
                 @if (errorMessage()) {
                   <div class="text-red-600 text-[10px] font-bold uppercase mb-2">{{errorMessage()}}</div>
                 }
@@ -283,25 +302,6 @@ import { ProductService } from '../../../services/product';
                   CONSULTAR POR WHATSAPP
                 </button>
               </div>
-
-              <!-- Related Products Section -->
-              @if (relatedProducts().length > 0) {
-                <div class="mt-12 pt-8 border-t border-gray-100">
-                  <h3 class="text-[10px] font-black tracking-[0.2em] uppercase text-gray-400 mb-6">Completa tu Look</h3>
-                  <div class="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-                    @for (rel of relatedProducts(); track rel.id) {
-                      <div (click)="switchProduct(rel)" class="flex-shrink-0 w-32 cursor-pointer group">
-                        <div class="relative aspect-[3/4] rounded-lg overflow-hidden mb-2">
-                          <img [src]="rel.images[0]" class="w-full h-full object-cover transition-transform group-hover:scale-110">
-                          <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        </div>
-                        <p class="text-[9px] font-bold uppercase truncate">{{rel.name}}</p>
-                        <p class="text-[9px] text-red-600 font-black">S/. {{rel.base_price | number:'1.2-2'}}</p>
-                      </div>
-                    }
-                  </div>
-                </div>
-              }
 
             </div>
           </div>

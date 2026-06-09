@@ -1,0 +1,13 @@
+/* Aplica esto a la sección o contenedor específico */
+#black-friday-collection .overflow-x-auto,
+.tu-contenedor-con-scroll {
+    -ms-overflow-style: none;
+    /* IE y Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+/* Ocultar en Chrome, Safari y Opera */
+.tu-contenedor-con-scroll::-webkit-scrollbar {
+    display: none;
+}

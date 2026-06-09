@@ -7,12 +7,12 @@ import { Product, Collection } from '../models/product';
 })
 export class ProductService {
   private supabase = inject(SupabaseService).client;
-  
+
   products = signal<Product[]>([]);
   collections = signal<Collection[]>([]);
   loading = signal<boolean>(false);
 
-  constructor() {}
+  constructor() { }
 
   async fetchProducts(filters?: { collectionId?: string, search?: string, sort?: string }) {
     this.loading.set(true);
@@ -46,6 +46,7 @@ export class ProductService {
     if (!error && data) {
       this.products.set(data as unknown as Product[]);
     }
+    await new Promise(resolve => setTimeout(resolve, 1000));
     this.loading.set(false);
   }
 
@@ -81,7 +82,7 @@ export class ProductService {
       .eq('id', id);
 
     if (error) throw error;
-    
+
     // Update local state
     this.products.set(this.products().filter(p => p.id !== id));
   }
