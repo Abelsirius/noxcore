@@ -5,6 +5,15 @@ import { CartItem, Product, ProductVariant } from '../../../models/product';
 import { CartService } from '../../../services/cart';
 import { ProductService } from '../../../services/product';
 
+interface Particle {
+  x: number;
+  y: number;
+  size: number;
+  delay: number;
+  duration: number;
+  opacity: number;
+  color: string;
+}
 @Component({
   selector: 'app-product-modal',
   standalone: true,
@@ -38,10 +47,20 @@ import { ProductService } from '../../../services/product';
 
           <div class="grid grid-cols-1 lg:grid-cols-2 h-full">
             <!-- Product Image -->
+                                 <!-- Particles Effect -->
             <div class="relative group h-[420px] lg:h-full bg-gray-100 overflow-hidden"
                 (mousemove)="onMouseMove($event)"
                 (mouseleave)="onMouseLeave()"
             >
+                                <div class="particles-container absolute inset-0 pointer-events-none z-30">
+                        @for(p of productParticles(); track $index) {
+                        <div class="particle absolute rounded-full" [style.left.%]="p.x" [style.top.%]="p.y"
+                            [style.width.px]="p.size" [style.height.px]="p.size" [style.backgroundColor]="p.color"
+                            [style.opacity]="p.opacity" [style.animationDelay.s]="p.delay"
+                            [style.animationDuration.s]="p.duration">
+                        </div>
+                        } 
+                    </div>
               <img
                   #productImage
                 [src]="selectedImage()"
@@ -281,13 +300,13 @@ import { ProductService } from '../../../services/product';
               }
                  </div>
               <!-- Action Buttons -->
-              <div class="space-y-3 sticky bottom-0  h-50 bg-white z-10 ">
+              <div class="space-y-4  ">
                 @if (errorMessage()) {
                   <div class="text-red-600 text-[10px] font-bold uppercase mb-2">{{errorMessage()}}</div>
                 }
 
                 <button
-                  class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-4 px-6 rounded-md transition-all disabled:opacity-50"
+                  class="w-full bg-red-600 text-sm md:text-base cursor-pointer  hover:bg-red-700 text-white font-semibold py-4 px-6 rounded-md transition-all disabled:opacity-50"
                   (click)="addToCart()"
                   [disabled]="!selectedVariant() || loading()"
                 >
@@ -295,7 +314,7 @@ import { ProductService } from '../../../services/product';
                 </button>
 
                 <button
-                  class="w-full bg-black hover:bg-gray-800 text-white font-semibold py-4 px-6 rounded-md transition-all"
+                  class="w-full bg-black  text-sm md:text-base cursor-pointer hover:bg-gray-800 text-white font-semibold py-4 px-6 rounded-md transition-all"
                   (click)="buyNow()"
                   [disabled]="!selectedVariant()"
                 >
@@ -308,7 +327,8 @@ import { ProductService } from '../../../services/product';
         </div>
       </div>
     }
-  `
+  `,
+  styleUrl: './product-model.scss'
 })
 export class ProductModalComponent implements OnInit, OnChanges {
   @Input() product: Product | null = null;
@@ -341,7 +361,8 @@ export class ProductModalComponent implements OnInit, OnChanges {
   touchCurrentY = 0;
   modalTransform = signal('');
   isDragging = signal(false);
-
+  productParticles = signal<Particle[]>([]);
+  @Input() themeColor: string = '#ef4444';
   recommendedSize = computed(() => {
     const height = this.userHeight();
     const weight = this.userWeight();
@@ -404,6 +425,7 @@ export class ProductModalComponent implements OnInit, OnChanges {
 
   initProduct() {
     if (this.product) {
+      this.generateAllParticles();
       this.selectedImage.set(this.product.images?.[0] ?? '');
       this.quantity.set(1);
       this.showSizeGuide.set(false);
@@ -520,7 +542,34 @@ export class ProductModalComponent implements OnInit, OnChanges {
       this.modalTransform.set(`translateY(${deltaY}px)`);
     }
   }
+  generateAllParticles() {
+    const particles: Particle[] = [];
+    const particleCount = 25; // More particles for ash effect
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        size: Math.random() * 2 + 0.5,
+        delay: Math.random() * 8,
+        duration: Math.random() * 4 + 4,
+        opacity: Math.random() * 0.4 + 0.1,
+        color: this.getAshColor(i)
+      });
+    }
+    this.productParticles.set(particles);
+  }
 
+  getAshColor(seed: number): string {
+    const colors = [
+      '#ffffff',
+      '#cccccc',
+      '#888888',
+      '#ff4d4d',
+      '#ff8c00',
+      this.themeColor
+    ];
+    return colors[seed % colors.length];
+  }
   onTouchEnd() {
     this.isDragging.set(false);
     const deltaY = this.touchCurrentY - this.touchStartY;
